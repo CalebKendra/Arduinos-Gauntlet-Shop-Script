@@ -10,11 +10,16 @@ from rich.table import Table
 CONSOLE = Console()
 
 
+
 # Change this from 1 to 10 to bias the shop toward weaker or stronger items.
 CHARACTER_LEVEL = 2
 
+# Set to True to show target ItemValue and per-row ItemValue numbers.
+DEBUG_MODE = True
+
 # Exponential scaling for target ItemValue growth by level.
 # 1.0 = linear, >1.0 grows slower early and faster later, <1.0 does the opposite.
+# Means the target ItemValue at level 10 will be 100.0, and at level 1 will be 0.0, with the curve shape determined by the exponent.
 TARGET_VALUE_SCALING_EXPONENT = 1.6
 
 # Controls how wide the offered ItemValue band is around the level target.
@@ -22,14 +27,12 @@ TARGET_VALUE_SCALING_EXPONENT = 1.6
 BIG_SIX_ITEMVALUE_RANGE_WIDTH = 2.0
 POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH = 5.0
 UNIQUES_ITEMVALUE_RANGE_WIDTH = 5.0
+
 # Additional width added per level above 1.
 # Example: 1.0 means level 10 adds +9 width.
 BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
 POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
 UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
-
-# Set to True to show target ItemValue and per-row ItemValue numbers.
-DEBUG_MODE = True
 
 # Number of items to show per shop section.
 BIG_SIX_ITEMS_PER_SECTION = 3
@@ -37,9 +40,13 @@ POTIONS_AND_SCROLLS_ITEMS_PER_SECTION = 3
 UNIQUES_ITEMS_PER_SECTION = 5
 
 # Change these values to adjust token pricing per CSV.
-BIG_SIX_TOKEN_SCALE = 1.0
+BIG_SIX_TOKEN_SCALE = 3.0
 POTIONS_AND_SCROLLS_TOKEN_SCALE = 1.0
 UNIQUES_TOKEN_SCALE = 1.0
+
+# Lower than 1.0 makes scrolls less likely to be selected in Potions and Scrolls.
+# Example: 0.5 means scrolls get half the normal selection weight.
+POTIONS_AND_SCROLLS_SCROLL_WEIGHT_MULTIPLIER = 0.1
 
 CSV_CONFIGS = [
 	{
@@ -54,6 +61,7 @@ CSV_CONFIGS = [
 		"path": Path("potions_and_scrolls.csv"),
 		"label": "Potions and Scrolls",
 		"token_scale": POTIONS_AND_SCROLLS_TOKEN_SCALE,
+		"scroll_weight_multiplier": POTIONS_AND_SCROLLS_SCROLL_WEIGHT_MULTIPLIER,
 		"items_per_section": POTIONS_AND_SCROLLS_ITEMS_PER_SECTION,
 		"range_width": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH,
 		"range_growth_per_level": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
@@ -114,6 +122,7 @@ def weighted_sample(
 	frame: pd.DataFrame,
 	target_value: float,
 	range_width: float,
+	scroll_weight_multiplier: float = 1.0,
 	count: int = 3,
 ) -> pd.DataFrame:
 	pool = frame.copy()
@@ -135,6 +144,22 @@ def weighted_sample(
 	for _ in range(min(count, len(remaining))):
 		distances = (remaining["ItemValue"] - target_value).abs()
 		weights = 1 / (1 + distances)
+
+		if "Group" in remaining.columns:
+			group_lower = remaining["Group"].fillna("").astype(str).str.lower().str.strip()
+			scroll_mask = group_lower == "scroll"
+		elif "Name" in remaining.columns:
+			name_lower = remaining["Name"].fillna("").astype(str).str.lower().str.strip()
+			scroll_mask = name_lower.str.startswith("scroll of ")
+		else:
+			scroll_mask = pd.Series(False, index=remaining.index)
+
+		if scroll_mask.any():
+			weights = weights.where(~scroll_mask, weights * max(0.0, float(scroll_weight_multiplier)))
+
+		if float(weights.sum()) <= 0.0:
+			weights = pd.Series([1.0] * len(remaining), index=remaining.index)
+
 		chosen_index = random.choices(
 			population=list(remaining.index),
 			weights=weights.tolist(),
@@ -158,7 +183,6 @@ def print_shop_section(
 		return
 
 	table = Table(show_header=True, header_style="bold", expand=False, show_lines=True)
-	table.add_column("#", justify="right", width=3)
 	table.add_column("Name", width=34)
 	if debug_mode:
 		table.add_column("ItemValue", justify="right", width=10)
@@ -175,7 +199,6 @@ def print_shop_section(
 
 		if debug_mode:
 			table.add_row(
-				str(number),
 				name_text,
 				f"{item_value:.2f}",
 				str(tokens),
@@ -183,7 +206,6 @@ def print_shop_section(
 			)
 		else:
 			table.add_row(
-				str(number),
 				name_text,
 				str(tokens),
 				description_text,
@@ -231,6 +253,7 @@ def main() -> None:
 			frame,
 			target_value,
 			range_width=range_width,
+			scroll_weight_multiplier=config.get("scroll_weight_multiplier", 1.0),
 			count=config["items_per_section"],
 		)
 		print_shop_section(

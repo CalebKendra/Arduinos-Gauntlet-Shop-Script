@@ -297,7 +297,7 @@ extra_magic_weapons["CL"] = (
 	extra_magic_weapons["Name"].str.extract(r"\+(\d+)", expand=False).astype(int) * 3
 )
 extra_magic_weapons["PriceValue"] = [2000, 8000, 18000]
-extra_magic_weapons["Group"] = "Weapon"
+extra_magic_weapons["Group"] = "Weapon Upgrade"
 extra_magic_weapons["Slot"] = "none"
 
 existing_big_six_names = set(ability_and_defense_df["Name"].fillna("").str.lower())
@@ -319,7 +319,7 @@ extra_magic_armor["CL"] = (
 	extra_magic_armor["Name"].str.extract(r"\+(\d+)", expand=False).astype(int) * 3
 )
 extra_magic_armor["PriceValue"] = [1000, 4000, 9000]
-extra_magic_armor["Group"] = "Armor"
+extra_magic_armor["Group"] = "Armor Upgrade"
 extra_magic_armor["Slot"] = "armor"
 
 existing_big_six_names = set(ability_and_defense_df["Name"].fillna("").str.lower())
