@@ -4,8 +4,7 @@ import pandas as pd
 
 
 CSV_FILES = ["big_six.csv", "potions_and_scrolls.csv", "uniques.csv"]
-CL_WEIGHT = 0.1
-PRICE_WEIGHT = 0.9
+
 # Lower values compress ItemValue toward the mean; higher values spread it out.
 ITEMVALUE_STDDEV_SCALE = 1.0
 # Values above 1.0 make high ItemValue items grow faster than low ones.
@@ -73,15 +72,12 @@ def compute_item_value(frame: pd.DataFrame) -> pd.DataFrame:
 	has_price = result["PriceValue"].notna()
 	result["ItemValue"] = 0.0
 
-	both = has_cl & has_price
 	only_cl = has_cl & ~has_price
-	only_price = ~has_cl & has_price
+	any_price = has_price
 
-	result.loc[both, "ItemValue"] = (
-		cl_score[both] * CL_WEIGHT + price_score[both] * PRICE_WEIGHT
-	)
+	# If PriceValue exists, it fully determines ItemValue; CL is only a fallback.
+	result.loc[any_price, "ItemValue"] = price_score[any_price]
 	result.loc[only_cl, "ItemValue"] = cl_score[only_cl]
-	result.loc[only_price, "ItemValue"] = price_score[only_price]
 	result["ItemValue"] = apply_stddev_spread(result["ItemValue"], ITEMVALUE_STDDEV_SCALE)
 	result["ItemValue"] = apply_exponential_curve(result["ItemValue"], ITEMVALUE_EXPONENT).round(2)
 	return result

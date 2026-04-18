@@ -11,7 +11,7 @@ CONSOLE = Console()
 
 
 # Change this from 1 to 10 to bias the shop toward weaker or stronger items.
-CHARACTER_LEVEL = 2
+CHARACTER_LEVEL = 3
 
 # Set to True to show target ItemValue and per-row ItemValue numbers.
 DEBUG_MODE = True
@@ -23,7 +23,7 @@ DEBUG_MODE = True
 # Determines the rate at which target ItemValue increasingly grows by level.
 # Linear means the target ItemValue at level 10 will be 100.0, and at level 1 will be 0.0, with the curve shape determined by the exponent.
 # 1.0 = linear, >1.0 grows slower early and faster later, <1.0 does the opposite.
-TARGET_VALUE_SCALING_EXPONENT = 1.6
+TARGET_VALUE_SCALING_EXPONENT = 3.0
 
 #
 # ITEMVALUE RANGE SETTINGS
@@ -33,22 +33,22 @@ TARGET_VALUE_SCALING_EXPONENT = 1.6
 # Example: 15 means roughly target +/- 15 ItemValue.
 BIG_SIX_ITEMVALUE_RANGE_WIDTH = 2.0
 POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH = 5.0
-UNIQUES_ITEMVALUE_RANGE_WIDTH = 10.0
+UNIQUES_ITEMVALUE_RANGE_WIDTH = 2.0
 
 # Additional width added per level above 1.
 # Example: 1.0 means level 10 adds +9 width.
-BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
+BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.5
 POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
-UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
+UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.75
 
 #
 # ITEMS PER SECTION SETTINGS
 #
 
 # Number of items to show per shop section.
-BIG_SIX_ITEMS_PER_SECTION = 3
-POTIONS_AND_SCROLLS_ITEMS_PER_SECTION = 3
-UNIQUES_ITEMS_PER_SECTION = 5
+BIG_SIX_ITEMS_PER_SECTION = 2
+POTIONS_AND_SCROLLS_ITEMS_PER_SECTION = 4
+UNIQUES_ITEMS_PER_SECTION = 4
 
 #
 # GROUP TOKEN COST SETTINGS
@@ -56,9 +56,9 @@ UNIQUES_ITEMS_PER_SECTION = 5
 
 # Per-CSV token modifiers applied to every item in that CSV.
 # 1.0 = no change, 1.2 = 20% more expensive, 0.8 = 20% cheaper.
-BIG_SIX_TOKEN_CSV_MODIFIER = 1.3
-POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER = 0.5
-UNIQUES_TOKEN_CSV_MODIFIER = 1.0
+BIG_SIX_TOKEN_CSV_MODIFIER = 1.5
+POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER = 0.4
+UNIQUES_TOKEN_CSV_MODIFIER = 1.6
 
 
 # Specific item group token cost modifiers.
@@ -67,6 +67,8 @@ UNIQUES_TOKEN_CSV_MODIFIER = 1.0
 BIG_SIX_TOKEN_SPECIAL_MODIFIERS = {
 	'Wondrous Item': 1.3,
 	'Ring': 1.3,
+	'Weapon Upgrade': 1.15,
+	'Armor Upgrade': 1.15,
 }
 POTIONS_AND_SCROLLS_TOKEN_SPECIAL_MODIFIERS = {
 }
@@ -81,10 +83,10 @@ UNIQUES_TOKEN_SPECIAL_MODIFIERS = {
 TOKEN_BASE_COST_AT_TARGET = 4.0
 # Cost shift applied per 1x range width above target.
 # Higher values make items above target ramp up faster.
-TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 5.0
+TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
 # Cost shift applied per 1x range width below target.
 # Higher values make items below target drop faster.
-TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 5.0
+TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 1.0
 
 #
 # ITEM SELECTION AMOUNT RATIO SETTINGS
