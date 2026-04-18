@@ -48,11 +48,17 @@ UNIQUES_TOKEN_SCALE = 1.0
 # Example: 0.5 means scrolls get half the normal selection weight.
 POTIONS_AND_SCROLLS_SCROLL_WEIGHT_MULTIPLIER = 0.1
 
+# Big Six group weight tuning. Lower than 1.0 makes that group less likely.
+BIG_SIX_ARMOR_SPECIAL_MODIFIER = 0.02
+BIG_SIX_WEAPON_SPECIAL_MODIFIER = 0.02
+
 CSV_CONFIGS = [
 	{
 		"path": Path("big_six.csv"),
 		"label": "Big Six",
 		"token_scale": BIG_SIX_TOKEN_SCALE,
+		"armor_special_modifier": BIG_SIX_ARMOR_SPECIAL_MODIFIER,
+		"weapon_special_modifier": BIG_SIX_WEAPON_SPECIAL_MODIFIER,
 		"items_per_section": BIG_SIX_ITEMS_PER_SECTION,
 		"range_width": BIG_SIX_ITEMVALUE_RANGE_WIDTH,
 		"range_growth_per_level": BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
@@ -123,6 +129,8 @@ def weighted_sample(
 	target_value: float,
 	range_width: float,
 	scroll_weight_multiplier: float = 1.0,
+	armor_special_modifier: float = 1.0,
+	weapon_special_modifier: float = 1.0,
 	count: int = 3,
 ) -> pd.DataFrame:
 	pool = frame.copy()
@@ -157,6 +165,22 @@ def weighted_sample(
 		if scroll_mask.any():
 			weights = weights.where(~scroll_mask, weights * max(0.0, float(scroll_weight_multiplier)))
 
+		if "Group" in remaining.columns:
+			armor_mask = group_lower == "armor"
+			weapon_mask = group_lower == "weapon"
+
+			if armor_mask.any():
+				weights = weights.where(
+					~armor_mask,
+					weights * max(0.0, float(armor_special_modifier)),
+				)
+
+			if weapon_mask.any():
+				weights = weights.where(
+					~weapon_mask,
+					weights * max(0.0, float(weapon_special_modifier)),
+				)
+
 		if float(weights.sum()) <= 0.0:
 			weights = pd.Series([1.0] * len(remaining), index=remaining.index)
 
@@ -182,20 +206,27 @@ def print_shop_section(
 		CONSOLE.print("[yellow]No items available.[/yellow]")
 		return
 
-	table = Table(show_header=True, header_style="bold", expand=False, show_lines=True)
-	table.add_column("Name", width=34)
+	table = Table(show_header=True, header_style="bold", expand=True, show_lines=True)
+	table.add_column("Name", ratio=2, overflow="fold")
 	if debug_mode:
 		table.add_column("ItemValue", justify="right", width=10)
 	table.add_column("Tokens", justify="right", width=8)
-	table.add_column("Description", width=54)
+	table.add_column("Description", ratio=3, overflow="fold")
+
+	# Estimate description width from console width so we can cap description to 3 lines.
+	fixed_columns_width = 8 + (10 if debug_mode else 0)
+	available_text_width = max(24, CONSOLE.width - fixed_columns_width - 12)
+	description_wrap_width = max(20, int(available_text_width * (3 / 5)))
 
 	for number, (_, row) in enumerate(items.iterrows(), start=1):
 		name = clean_description(row.get("Name", ""))
 		description = clean_description(row.get("Description", ""))
 		item_value = float(pd.to_numeric(row.get("ItemValue"), errors="coerce"))
 		tokens = token_cost_for_item(item_value, token_scale)
-		name_text = "\n".join(wrap_cell(name, 34))
-		description_text = "\n".join(wrap_cell(description, 54, max_lines=3))
+		name_text = name
+		description_text = "\n".join(
+			wrap_cell(description, description_wrap_width, max_lines=3)
+		)
 
 		if debug_mode:
 			table.add_row(
@@ -254,6 +285,8 @@ def main() -> None:
 			target_value,
 			range_width=range_width,
 			scroll_weight_multiplier=config.get("scroll_weight_multiplier", 1.0),
+			armor_special_modifier=config.get("armor_special_modifier", 1.0),
+			weapon_special_modifier=config.get("weapon_special_modifier", 1.0),
 			count=config["items_per_section"],
 		)
 		print_shop_section(

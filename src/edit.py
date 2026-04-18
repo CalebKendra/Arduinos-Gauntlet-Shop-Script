@@ -207,6 +207,23 @@ mask_ability_and_defense = name_lower.str.contains(
 )
 mask_ability_and_defense &= name_lower != "ring of protection from lycanthropy"
 
+# Exclude high-tier variants from Big Six.
+mask_disallowed_tiers = (
+	(
+		name_lower.str.contains(r"(?:belt|headband)", regex=True)
+		& name_lower.str.contains(r"\+\s*6\b", regex=True)
+	)
+	|
+	(
+		name_lower.str.contains(
+			r"(?:ring of protection|amulet of natural armor|cloak of resistance)",
+			regex=True,
+		)
+		& name_lower.str.contains(r"\+\s*[45]\b", regex=True)
+	)
+)
+mask_ability_and_defense &= ~mask_disallowed_tiers
+
 # CSV 2: all potions and scrolls.
 mask_potions_and_scrolls = (
 	group_lower.isin(["potion", "scroll"])
