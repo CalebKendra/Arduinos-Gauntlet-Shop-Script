@@ -1,1 +1,1 @@
-# Arduino-s-Gauntlet-Shop-Script
+# Arduino's Gauntlet Shop Script
