@@ -3,20 +3,38 @@ import random
 import textwrap
 
 import pandas as pd
+from rich.console import Console
+from rich.table import Table
+
+
+CONSOLE = Console()
 
 
 # Change this from 1 to 10 to bias the shop toward weaker or stronger items.
-CHARACTER_LEVEL = 10
+CHARACTER_LEVEL = 2
+
+# Exponential scaling for target ItemValue growth by level.
+# 1.0 = linear, >1.0 grows slower early and faster later, <1.0 does the opposite.
+TARGET_VALUE_SCALING_EXPONENT = 1.6
 
 # Controls how wide the offered ItemValue band is around the level target.
 # Example: 15 means roughly target +/- 15 ItemValue.
-ITEMVALUE_RANGE_WIDTH = 8.0
+BIG_SIX_ITEMVALUE_RANGE_WIDTH = 2.0
+POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH = 5.0
+UNIQUES_ITEMVALUE_RANGE_WIDTH = 5.0
 # Additional width added per level above 1.
 # Example: 1.0 means level 10 adds +9 width.
-ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
+BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
+POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
+UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 1.0
 
 # Set to True to show target ItemValue and per-row ItemValue numbers.
 DEBUG_MODE = True
+
+# Number of items to show per shop section.
+BIG_SIX_ITEMS_PER_SECTION = 3
+POTIONS_AND_SCROLLS_ITEMS_PER_SECTION = 3
+UNIQUES_ITEMS_PER_SECTION = 5
 
 # Change these values to adjust token pricing per CSV.
 BIG_SIX_TOKEN_SCALE = 1.0
@@ -28,28 +46,39 @@ CSV_CONFIGS = [
 		"path": Path("big_six.csv"),
 		"label": "Big Six",
 		"token_scale": BIG_SIX_TOKEN_SCALE,
+		"items_per_section": BIG_SIX_ITEMS_PER_SECTION,
+		"range_width": BIG_SIX_ITEMVALUE_RANGE_WIDTH,
+		"range_growth_per_level": BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
 	},
 	{
 		"path": Path("potions_and_scrolls.csv"),
 		"label": "Potions and Scrolls",
 		"token_scale": POTIONS_AND_SCROLLS_TOKEN_SCALE,
+		"items_per_section": POTIONS_AND_SCROLLS_ITEMS_PER_SECTION,
+		"range_width": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH,
+		"range_growth_per_level": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
 	},
 	{
 		"path": Path("uniques.csv"),
 		"label": "Uniques",
 		"token_scale": UNIQUES_TOKEN_SCALE,
+		"items_per_section": UNIQUES_ITEMS_PER_SECTION,
+		"range_width": UNIQUES_ITEMVALUE_RANGE_WIDTH,
+		"range_growth_per_level": UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
 	},
 ]
 
 
 def level_to_target_value(level: int) -> float:
 	level = max(1, min(10, int(level)))
-	return ((level - 1) / 9) * 100.0
+	normalized_level = (level - 1) / 9
+	exponent = max(0.01, float(TARGET_VALUE_SCALING_EXPONENT))
+	return (normalized_level**exponent) * 100.0
 
 
-def level_to_range_width(level: int) -> float:
+def level_to_range_width(level: int, base_width: float, growth_per_level: float) -> float:
 	level = max(1, min(10, int(level)))
-	return max(0.0, ITEMVALUE_RANGE_WIDTH + ((level - 1) * ITEMVALUE_RANGE_GROWTH_PER_LEVEL))
+	return max(0.0, float(base_width) + ((level - 1) * float(growth_per_level)))
 
 
 def clean_description(value) -> str:
@@ -123,65 +152,70 @@ def print_shop_section(
 	token_scale: float,
 	debug_mode: bool,
 ) -> None:
-	print(f"\n== {label} ==")
+	CONSOLE.print(f"\n[bold cyan]{label}[/bold cyan]")
 	if items.empty:
-		print("No items available.")
+		CONSOLE.print("[yellow]No items available.[/yellow]")
 		return
 
+	table = Table(show_header=True, header_style="bold", expand=False, show_lines=True)
+	table.add_column("#", justify="right", width=3)
+	table.add_column("Name", width=34)
 	if debug_mode:
-		columns = ["#", "Name", "ItemValue", "Tokens", "Description"]
-		widths = [3, 34, 10, 8, 54]
-	else:
-		columns = ["#", "Name", "Tokens", "Description"]
-		widths = [3, 34, 8, 54]
-	description_width = widths[-1]
-	separator = "+" + "+".join("-" * (width + 2) for width in widths) + "+"
-
-	def format_row(values: list[str]) -> str:
-		return "|" + "|".join(f" {value:<{width}} " for value, width in zip(values, widths)) + "|"
-
-	print(separator)
-	print(format_row(columns))
-	print(separator)
+		table.add_column("ItemValue", justify="right", width=10)
+	table.add_column("Tokens", justify="right", width=8)
+	table.add_column("Description", width=54)
 
 	for number, (_, row) in enumerate(items.iterrows(), start=1):
 		name = clean_description(row.get("Name", ""))
 		description = clean_description(row.get("Description", ""))
 		item_value = float(pd.to_numeric(row.get("ItemValue"), errors="coerce"))
 		tokens = token_cost_for_item(item_value, token_scale)
-		name_lines = wrap_cell(name, widths[1])
-		description_lines = wrap_cell(description, description_width, max_lines=3)
-		row_height = max(len(name_lines), len(description_lines))
+		name_text = "\n".join(wrap_cell(name, 34))
+		description_text = "\n".join(wrap_cell(description, 54, max_lines=3))
 
-		for index in range(row_height):
-			if debug_mode:
-				row_values = [
-					str(number) if index == 0 else "",
-					name_lines[index] if index < len(name_lines) else "",
-					f"{item_value:.2f}" if index == 0 else "",
-					str(tokens) if index == 0 else "",
-					description_lines[index] if index < len(description_lines) else "",
-				]
-			else:
-				row_values = [
-					str(number) if index == 0 else "",
-					name_lines[index] if index < len(name_lines) else "",
-					str(tokens) if index == 0 else "",
-					description_lines[index] if index < len(description_lines) else "",
-				]
-			print(format_row(row_values))
-		print(separator)
+		if debug_mode:
+			table.add_row(
+				str(number),
+				name_text,
+				f"{item_value:.2f}",
+				str(tokens),
+				description_text,
+			)
+		else:
+			table.add_row(
+				str(number),
+				name_text,
+				str(tokens),
+				description_text,
+			)
+
+	CONSOLE.print(table)
 
 
 def main() -> None:
 	target_value = level_to_target_value(CHARACTER_LEVEL)
-	range_width = level_to_range_width(CHARACTER_LEVEL)
 	print(f"Character level: {CHARACTER_LEVEL}")
 	if DEBUG_MODE:
 		print(f"Target ItemValue: {target_value:.2f}")
-		print(f"ItemValue range width: +/-{range_width:.2f}")
+		print("\nItemValue range width settings:")
+		for config in CSV_CONFIGS:
+			range_width = level_to_range_width(
+				CHARACTER_LEVEL,
+				config["range_width"],
+				config["range_growth_per_level"],
+			)
+			print(
+				f"- [{config['label']}] +/-{range_width:.2f} "
+				f"(base {config['range_width']}, growth {config['range_growth_per_level']})"
+			)
 
 	for config in CSV_CONFIGS:
+		range_width = level_to_range_width(
+			CHARACTER_LEVEL,
+			config["range_width"],
+			config["range_growth_per_level"],
+		)
+
 		if not config["path"].exists():
 			print(f"\n== {config['label']} ==")
 			print(f"Missing file: {config['path']}")
@@ -193,7 +227,12 @@ def main() -> None:
 			print("ItemValue column not found.")
 			continue
 
-		items = weighted_sample(frame, target_value, range_width=range_width, count=3)
+		items = weighted_sample(
+			frame,
+			target_value,
+			range_width=range_width,
+			count=config["items_per_section"],
+		)
 		print_shop_section(
 			config["label"],
 			items,

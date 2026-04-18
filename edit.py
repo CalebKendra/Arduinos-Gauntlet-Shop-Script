@@ -34,6 +34,28 @@ def most_common_nonzero_price(row, columns):
 		return float(fallback) if pd.notna(fallback) else pd.NA
 	return Counter(prices).most_common(1)[0][0]
 
+
+def armor_special_price_to_value(base_price_text):
+	text = str(base_price_text).strip()
+	flat_price_match = re.fullmatch(r"\+(\d[\d,]*)", text)
+	if flat_price_match:
+		return int(flat_price_match.group(1).replace(",", ""))
+
+	bonus_match = re.fullmatch(r"\+(\d+)\s+bonus", text)
+	if bonus_match:
+		bonus = int(bonus_match.group(1))
+		return int((bonus*bonus) * 1000)
+
+	return pd.NA
+
+
+def bonus_from_base_price_modifier(base_price_text):
+	text = str(base_price_text).strip()
+	bonus_match = re.fullmatch(r"\+(\d+)\s+bonus", text)
+	if not bonus_match:
+		return None
+	return int(bonus_match.group(1))
+
 # Remove entries in ammunition/cursed groups and empty rows before splitting.
 raw_group_lower = df["Group"].fillna("").str.lower()
 raw_name_lower = df["Name"].fillna("").str.lower()
@@ -262,6 +284,406 @@ extra_scrolls = extra_scrolls[
 ].copy()
 potions_and_scrolls_df = pd.concat(
 	[potions_and_scrolls_df, extra_scrolls], ignore_index=True
+)
+
+# Add simple magic weapon entries to the Big Six table.
+extra_magic_weapons = pd.DataFrame(columns=df.columns)
+extra_magic_weapons["Name"] = [
+	"+1 Magic Weapon",
+	"+2 Magic Weapon",
+	"+3 Magic Weapon",
+]
+extra_magic_weapons["CL"] = (
+	extra_magic_weapons["Name"].str.extract(r"\+(\d+)", expand=False).astype(int) * 3
+)
+extra_magic_weapons["PriceValue"] = [2000, 8000, 18000]
+extra_magic_weapons["Group"] = "Weapon"
+extra_magic_weapons["Slot"] = "none"
+
+existing_big_six_names = set(ability_and_defense_df["Name"].fillna("").str.lower())
+extra_magic_weapons = extra_magic_weapons[
+	~extra_magic_weapons["Name"].str.lower().isin(existing_big_six_names)
+].copy()
+ability_and_defense_df = pd.concat(
+	[ability_and_defense_df, extra_magic_weapons], ignore_index=True
+)
+
+# Add simple magic armor entries to the Big Six table.
+extra_magic_armor = pd.DataFrame(columns=df.columns)
+extra_magic_armor["Name"] = [
+	"+1 Magic Armor",
+	"+2 Magic Armor",
+	"+3 Magic Armor",
+]
+extra_magic_armor["CL"] = (
+	extra_magic_armor["Name"].str.extract(r"\+(\d+)", expand=False).astype(int) * 3
+)
+extra_magic_armor["PriceValue"] = [1000, 4000, 9000]
+extra_magic_armor["Group"] = "Armor"
+extra_magic_armor["Slot"] = "armor"
+
+existing_big_six_names = set(ability_and_defense_df["Name"].fillna("").str.lower())
+extra_magic_armor = extra_magic_armor[
+	~extra_magic_armor["Name"].str.lower().isin(existing_big_six_names)
+].copy()
+ability_and_defense_df = pd.concat(
+	[ability_and_defense_df, extra_magic_armor], ignore_index=True
+)
+
+# Add armor special abilities from the provided tables.
+armor_special_abilities = [
+	(1, "Benevolent", "+2,000"),
+	(1, "Billowing", "+1 bonus"),
+	(1, "Cocooning", "+1 bonus"),
+	(1, "Poison-resistant", "+2,250"),
+	(1, "Balanced", "+1 bonus"),
+	(1, "Bitter", "+1 bonus"),
+	(1, "Bolstering", "+1 bonus"),
+	(1, "Champion", "+1 bonus"),
+	(1, "Dastard", "+1 bonus"),
+	(1, "Deathless", "+1 bonus"),
+	(1, "Defiant", "+1 bonus"),
+	(1, "Fortification (light)", "+1 bonus"),
+	(1, "Grinding", "+1 bonus"),
+	(1, "Impervious", "+1 bonus"),
+	(1, "Mirrored", "+1 bonus"),
+	(1, "Spell storing", "+1 bonus"),
+	(1, "Stanching", "+1 bonus"),
+	(1, "Warding", "+1 bonus"),
+	(2, "Glamered", "+2,700"),
+	(2, "Jousting", "+3,750"),
+	(2, "Shadow", "+3,750"),
+	(2, "Slick", "+3,750"),
+	(2, "Expeditious", "+4,000"),
+	(2, "Creeping", "+5,000"),
+	(2, "Rallying", "+5,000"),
+	(2, "Spell resistance (13)", "+2 bonus"),
+	(3, "Adhesive", "+7,000"),
+	(3, "Cotraveling", "+3 bonus"),
+	(3, "Brawling", "+3 bonus"),
+	(3, "Hosteling", "+7,500"),
+	(3, "Radiant", "+7,500"),
+	(3, "Delving", "+10,000"),
+	(3, "Putrid", "+10,000"),
+	(3, "Fortification (moderate)", "+3 bonus"),
+	(3, "Ghost touch", "+3 bonus"),
+	(3, "Invulnerability", "+3 bonus"),
+	(3, "Shadow blending", "+3 bonus"),
+	(3, "Spell resistance (15)", "+3 bonus"),
+	(3, "Titanic", "+3 bonus"),
+	(3, "Wild", "+3 bonus"),
+	(4, "Harmonizing", "+15,000"),
+	(4, "Shadow, improved", "+15,000"),
+	(4, "Slick, improved", "+15,000"),
+	(4, "Energy resistance", "+18,000"),
+	(4, "Martyring", "+18,000"),
+	(4, "Spell resistance (17)", "+4 bonus"),
+	(5, "Righteous", "+27,000"),
+	(5, "Unbound", "+27,000"),
+	(5, "Unrighteous", "+27,000"),
+	(5, "Vigilant", "+27,000"),
+	(5, "Determination", "+30,000"),
+	(5, "Shadow, greater", "+33,750"),
+	(5, "Slick, greater", "+33,750"),
+	(5, "Energy resistance, improved", "+42,000"),
+	(5, "Etherealness", "+49,000"),
+	(5, "Undead controlling", "+49,000"),
+	(5, "Energy resistance, greater", "+66,000"),
+	(5, "Fortification (heavy)", "+5 bonus"),
+	(5, "Spell resistance (19)", "+5 bonus"),
+]
+
+armor_special_cl_by_name = {
+	"Benevolent": 5,
+	"Billowing": 3,
+	"Cocooning": 9,
+	"Poison-resistant": 7,
+	"Balanced": 5,
+	"Bitter": 5,
+	"Bolstering": 5,
+	"Champion": 5,
+	"Dastard": 5,
+	"Deathless": 7,
+	"Defiant": 8,
+	"Fortification (light)": 13,
+	"Grinding": 5,
+	"Impervious": 7,
+	"Mirrored": 8,
+	"Spell storing": 12,
+	"Stanching": 7,
+	"Warding": 12,
+	"Glamered": 10,
+	"Jousting": 5,
+	"Shadow": 5,
+	"Slick": 4,
+	"Expeditious": 5,
+	"Creeping": 7,
+	"Rallying": 5,
+	"Spell resistance (13)": 15,
+	"Adhesive": 10,
+	"Cotraveling": 14,
+	"Brawling": 5,
+	"Hosteling": 9,
+	"Radiant": 6,
+	"Delving": 5,
+	"Putrid": 5,
+	"Fortification (moderate)": 13,
+	"Ghost touch": 15,
+	"Invulnerability": 18,
+	"Shadow blending": 11,
+	"Spell resistance (15)": 15,
+	"Titanic": 7,
+	"Wild": 9,
+	"Harmonizing": 7,
+	"Shadow, improved": 10,
+	"Slick, improved": 10,
+	"Energy resistance": 3,
+	"Martyring": 9,
+	"Spell resistance (17)": 15,
+	"Righteous": 10,
+	"Unbound": 10,
+	"Unrighteous": 10,
+	"Vigilant": 10,
+	"Determination": 10,
+	"Shadow, greater": 15,
+	"Slick, greater": 15,
+	"Energy resistance, improved": 7,
+	"Etherealness": 13,
+	"Undead controlling": 13,
+	"Energy resistance, greater": 11,
+	"Fortification (heavy)": 13,
+	"Spell resistance (19)": 15,
+}
+
+armor_special_df = pd.DataFrame(columns=df.columns)
+armor_special_df["Name"] = [
+	f"+{item[1]} Magic Armor" for item in armor_special_abilities
+]
+armor_special_df["CL"] = [armor_special_cl_by_name[item[1]] for item in armor_special_abilities]
+armor_special_df["PriceValue"] = [
+	armor_special_price_to_value(item[2]) for item in armor_special_abilities
+]
+armor_special_df["Group"] = "Armor"
+armor_special_df["Slot"] = "armor"
+
+existing_big_six_names = set(ability_and_defense_df["Name"].fillna("").str.lower())
+armor_special_df = armor_special_df[
+	~armor_special_df["Name"].str.lower().isin(existing_big_six_names)
+].copy()
+ability_and_defense_df = pd.concat(
+	[ability_and_defense_df, armor_special_df], ignore_index=True
+)
+
+# Add weapon special abilities from the provided tables.
+weapon_special_abilities = [
+	(1, "Impervious", "+3,000"),
+	(1, "Glamered", "+4,000"),
+	(1, "Allying", "+1 bonus"),
+	(1, "Bane", "+1 bonus"),
+	(1, "Benevolent", "+1 bonus"),
+	(1, "Called", "+1 bonus"),
+	(1, "Conductive", "+1 bonus"),
+	(1, "Corrosive", "+1 bonus"),
+	(1, "Countering", "+1 bonus"),
+	(1, "Courageous", "+1 bonus"),
+	(1, "Cruel", "+1 bonus"),
+	(1, "Cunning", "+1 bonus"),
+	(1, "Deadly", "+1 bonus"),
+	(1, "Defending", "+1 bonus"),
+	(1, "Dispelling", "+1 bonus"),
+	(1, "Flaming", "+1 bonus"),
+	(1, "Frost", "+1 bonus"),
+	(1, "Furious", "+1 bonus"),
+	(1, "Ghost touch", "+1 bonus"),
+	(1, "Grayflame", "+1 bonus"),
+	(1, "Grounding", "+1 bonus"),
+	(1, "Guardian", "+1 bonus"),
+	(1, "Heartseeker", "+1 bonus"),
+	(1, "Huntsman", "+1 bonus"),
+	(1, "Jurist", "+1 bonus"),
+	(1, "Keen", "+1 bonus"),
+	(1, "Ki focus", "+1 bonus"),
+	(1, "Limning", "+1 bonus"),
+	(1, "Menacing", "+1 bonus"),
+	(1, "Merciful", "+1 bonus"),
+	(1, "Mighty cleaving", "+1 bonus"),
+	(1, "Mimetic", "+1 bonus"),
+	(1, "Neutralizing", "+1 bonus"),
+	(1, "Ominous", "+1 bonus"),
+	(1, "Planar", "+1 bonus"),
+	(1, "Quenching", "+1 bonus"),
+	(1, "Seaborne", "+1 bonus"),
+	(1, "Shock", "+1 bonus"),
+	(1, "Spell storing", "+1 bonus"),
+	(1, "Thawing", "+1 bonus"),
+	(1, "Throwing", "+1 bonus"),
+	(1, "Thundering", "+1 bonus"),
+	(1, "Unaligned", "+1 bonus"),
+	(1, "Valiant", "+1 bonus"),
+	(1, "Vicious", "+1 bonus"),
+	(2, "Advancing", "+2 bonus"),
+	(2, "Anarchic", "+2 bonus"),
+	(2, "Anchoring", "+2 bonus"),
+	(2, "Axiomatic", "+2 bonus"),
+	(2, "Corrosive burst", "+2 bonus"),
+	(2, "Defiant", "+2 bonus"),
+	(2, "Dispelling burst", "+2 bonus"),
+	(2, "Disruption", "+2 bonus"),
+	(2, "Flaming burst", "+2 bonus"),
+	(2, "Furyborn", "+2 bonus"),
+	(2, "Glorious", "+2 bonus"),
+	(2, "Holy", "+2 bonus"),
+	(2, "Icy burst", "+2 bonus"),
+	(2, "Igniting", "+2 bonus"),
+	(2, "Impact", "+2 bonus"),
+	(2, "Invigorating", "+2 bonus"),
+	(2, "Ki intensifying", "+2 bonus"),
+	(2, "Lifesurge", "+2 bonus"),
+	(2, "Negating", "+2 bonus"),
+	(2, "Phase locking", "+2 bonus"),
+	(2, "Planestriking", "+2 bonus"),
+	(2, "Shocking burst", "+2 bonus"),
+	(2, "Stalking", "+2 bonus"),
+	(2, "Unholy", "+2 bonus"),
+	(2, "Wounding", "+2 bonus"),
+	(3, "Nullifying", "+3 bonus"),
+	(3, "Repositioning", "+3 bonus"),
+	(3, "Speed", "+3 bonus"),
+	(3, "Spell stealing", "+3 bonus"),
+	(4, "Brilliant energy", "+4 bonus"),
+	(4, "Dancing", "+4 bonus"),
+	(5, "Vorpal", "+5 bonus"),
+	(4, "Transformative", "+10,000"),
+	(4, "Dueling", "+14,000"),
+	(1, "Adaptive", "+1,000"),
+	(1, "Conserving", "+1 bonus"),
+	(1, "Distance", "+1 bonus"),
+	(1, "Lucky", "+1 bonus"),
+	(1, "Reliable", "+1 bonus"),
+	(1, "Returning", "+1 bonus"),
+	(1, "Seeking", "+1 bonus"),
+	(2, "Designating, lesser", "+2 bonus"),
+	(2, "Endless ammunition", "+2 bonus"),
+	(3, "Lucky, greater", "+3 bonus"),
+	(3, "Reliable, greater", "+3 bonus"),
+	(4, "Designating, greater", "+4 bonus"),
+	(4, "Nimble shot", "+4 bonus"),
+	(4, "Second chance", "+4 bonus"),
+]
+
+weapon_special_cl_by_name = {
+	"+Impervious Magic Weapon": 7,
+	"+Glamered Magic Weapon": 10,
+	"+Allying Magic Weapon": 5,
+	"+Bane Magic Weapon": 8,
+	"+Benevolent Magic Weapon": 5,
+	"+Called Magic Weapon": 9,
+	"+Conductive Magic Weapon": 8,
+	"+Corrosive Magic Weapon": 10,
+	"+Countering Magic Weapon": 5,
+	"+Courageous Magic Weapon": 3,
+	"+Cruel Magic Weapon": 5,
+	"+Cunning Magic Weapon": 6,
+	"+Deadly Magic Weapon": 5,
+	"+Defending Magic Weapon": 8,
+	"+Dispelling Magic Weapon": 10,
+	"+Flaming Magic Weapon": 10,
+	"+Frost Magic Weapon": 8,
+	"+Furious Magic Weapon": 8,
+	"+Ghost touch Magic Weapon": 9,
+	"+Grayflame Magic Weapon": 6,
+	"+Grounding Magic Weapon": 5,
+	"+Guardian Magic Weapon": 8,
+	"+Heartseeker Magic Weapon": 7,
+	"+Huntsman Magic Weapon": 7,
+	"+Jurist Magic Weapon": 4,
+	"+Keen Magic Weapon": 10,
+	"+Ki focus Magic Weapon": 8,
+	"+Limning Magic Weapon": 5,
+	"+Menacing Magic Weapon": 10,
+	"+Merciful Magic Weapon": 5,
+	"+Mighty cleaving Magic Weapon": 8,
+	"+Mimetic Magic Weapon": 5,
+	"+Neutralizing Magic Weapon": 5,
+	"+Ominous Magic Weapon": 5,
+	"+Planar Magic Weapon": 9,
+	"+Quenching Magic Weapon": 5,
+	"+Seaborne Magic Weapon": 7,
+	"+Shock Magic Weapon": 8,
+	"+Spell storing Magic Weapon": 12,
+	"+Thawing Magic Weapon": 5,
+	"+Throwing Magic Weapon": 5,
+	"+Thundering Magic Weapon": 5,
+	"+Unaligned Magic Weapon": 5,
+	"+Valiant Magic Weapon": 5,
+	"+Vicious Magic Weapon": 9,
+	"+Advancing Magic Weapon": 5,
+	"+Anarchic Magic Weapon": 7,
+	"+Anchoring Magic Weapon": 10,
+	"+Axiomatic Magic Weapon": 7,
+	"+Corrosive burst Magic Weapon": 12,
+	"+Defiant Magic Weapon": 10,
+	"+Dispelling burst Magic Weapon": 12,
+	"+Disruption Magic Weapon": 14,
+	"+Flaming burst Magic Weapon": 12,
+	"+Furyborn Magic Weapon": 7,
+	"+Glorious Magic Weapon": 5,
+	"+Holy Magic Weapon": 7,
+	"+Icy burst Magic Weapon": 10,
+	"+Igniting Magic Weapon": 12,
+	"+Impact Magic Weapon": 9,
+	"+Invigorating Magic Weapon": 5,
+	"+Ki intensifying Magic Weapon": 12,
+	"+Lifesurge Magic Weapon": 8,
+	"+Negating Magic Weapon": 5,
+	"+Phase locking Magic Weapon": 7,
+	"+Planestriking Magic Weapon": 9,
+	"+Shocking burst Magic Weapon": 10,
+	"+Stalking Magic Weapon": 10,
+	"+Unholy Magic Weapon": 7,
+	"+Wounding Magic Weapon": 10,
+	"+Nullifying Magic Weapon": 12,
+	"+Repositioning Magic Weapon": 10,
+	"+Speed Magic Weapon": 7,
+	"+Spell stealing Magic Weapon": 13,
+	"+Brilliant energy Magic Weapon": 16,
+	"+Dancing Magic Weapon": 15,
+	"+Vorpal Magic Weapon": 18,
+	"+Transformative Magic Weapon": 10,
+	"+Dueling Magic Weapon": 5,
+	"+Adaptive Magic Weapon": 1,
+	"+Conserving Magic Weapon": 7,
+	"+Distance Magic Weapon": 6,
+	"+Lucky Magic Weapon": 8,
+	"+Reliable Magic Weapon": 8,
+	"+Returning Magic Weapon": 7,
+	"+Seeking Magic Weapon": 12,
+	"+Designating, lesser Magic Weapon": 7,
+	"+Endless ammunition Magic Weapon": 9,
+	"+Lucky, greater Magic Weapon": 12,
+	"+Reliable, greater Magic Weapon": 12,
+	"+Designating, greater Magic Weapon": 12,
+	"+Nimble shot Magic Weapon": 11,
+	"+Second chance Magic Weapon": 11,
+}
+
+weapon_special_df = pd.DataFrame(columns=df.columns)
+weapon_special_df["Name"] = [
+	f"+{item[1]} Magic Weapon" for item in weapon_special_abilities
+]
+weapon_special_df["CL"] = [weapon_special_cl_by_name[name] for name in weapon_special_df["Name"]]
+weapon_special_df["PriceValue"] = [
+	armor_special_price_to_value(item[2]) for item in weapon_special_abilities
+]
+weapon_special_df["Group"] = "Weapon"
+weapon_special_df["Slot"] = "none"
+
+existing_big_six_names = set(ability_and_defense_df["Name"].fillna("").str.lower())
+weapon_special_df = weapon_special_df[
+	~weapon_special_df["Name"].str.lower().isin(existing_big_six_names)
+].copy()
+ability_and_defense_df = pd.concat(
+	[ability_and_defense_df, weapon_special_df], ignore_index=True
 )
 
 ability_and_defense_df.to_csv("big_six.csv", index=False)
