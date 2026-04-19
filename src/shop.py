@@ -11,7 +11,7 @@ CONSOLE = Console()
 
 
 # Change this from 1 to 20 to bias the shop toward weaker or stronger items.
-CHARACTER_LEVEL = 7
+CHARACTER_LEVEL = 1
 
 # Set to True to show target ItemValue and per-row ItemValue numbers.
 DEBUG_MODE = True
@@ -42,19 +42,19 @@ UNIQUES_ITEMVALUE_RANGE_WIDTH = 0.5
 
 # Maximum width allowed for each CSV's ItemValue band.
 BIG_SIX_ITEMVALUE_RANGE_MAX = 15.0
-POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_MAX = 15.0
-UNIQUES_ITEMVALUE_RANGE_MAX = 15.0
+POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_MAX = 10.0
+UNIQUES_ITEMVALUE_RANGE_MAX = 5.0
 
 # Additional width added per level above 1.
 # Example: 1.0 means level 10 adds +9 width.
 BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.5
 POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.7
-UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.5
+UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.25
 
 # Controls how strongly items closer to target ItemValue are favored during selection.
 # 1.0 = standard inverse-distance weighting, >1.0 = strongly prefer items near target,
 # <1.0 = items more evenly weighted regardless of distance.
-TARGET_ITEMVALUE_CONCENTRATION = 1.15
+TARGET_ITEMVALUE_CONCENTRATION = 1.2
 
 #
 # ITEMS PER SECTION SETTINGS
@@ -72,7 +72,7 @@ UNIQUES_ITEMS_PER_SECTION = 5
 # Per-CSV token modifiers applied to every item in that CSV.
 # 1.0 = no change, 1.2 = 20% more expensive, 0.8 = 20% cheaper.
 BIG_SIX_TOKEN_CSV_MODIFIER = 1.7
-POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER = 0.45
+POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER = 0.5
 UNIQUES_TOKEN_CSV_MODIFIER = 1.6
 
 # Per-CSV level cost scales.
@@ -87,8 +87,8 @@ UNIQUES_TOKEN_LEVEL_COST_SCALE = 1.0
 # JSON-style token modifiers applied after the base relative price is calculated.
 # Keys are checked as substrings against the item group, and matching entries multiply the final token cost.
 BIG_SIX_TOKEN_SPECIAL_MODIFIERS = {
-	'Weapon': 0.75,
-	'Armor': 0.75,
+	'Weapon': 0.7,
+	'Armor': 0.7,
 }
 POTIONS_AND_SCROLLS_TOKEN_SPECIAL_MODIFIERS = {
 }
@@ -111,7 +111,7 @@ UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
 # Higher values make items below target drop faster.
 BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 1.0
 POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 2.0
-UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 3.0
+UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 2.5
 
 #
 # ITEM SELECTION AMOUNT RATIO SETTINGS
@@ -127,8 +127,8 @@ POTIONS_AND_SCROLLS_POTION_WEIGHT_MULTIPLIER = 0.5
 
 # Special Ability percent chance modifier. Lower than 1.0 makes that group less likely.
 # These only affect the Big Six table, where Armor and Weapon rows are weighted separately.
-BIG_SIX_ARMOR_SPECIAL_MODIFIER = 0.06
-BIG_SIX_WEAPON_SPECIAL_MODIFIER = 0.06
+BIG_SIX_ARMOR_SPECIAL_MODIFIER = 0.07
+BIG_SIX_WEAPON_SPECIAL_MODIFIER = 0.07
 
 
 CSV_CONFIGS = [

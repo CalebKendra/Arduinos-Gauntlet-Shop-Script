@@ -256,6 +256,24 @@ all_other_items_df = df[
 	~(mask_ability_and_defense | mask_potions_and_scrolls)
 ].copy()
 
+# Remove Big Six-style items from the uniques output even when they do not
+# qualify for the Big Six table itself.
+all_other_name_lower = all_other_items_df["Name"].fillna("").str.lower()
+mask_remove_from_uniques = (
+	all_other_name_lower.str.contains(r"ring of protection", regex=True)
+	| all_other_name_lower.str.contains(r"amulet of natural armor", regex=True)
+	| all_other_name_lower.str.contains(r"cloak of resistance", regex=True)
+	| all_other_name_lower.str.contains(
+		r"\b(?:belt of giant strength|belt of incredible dexterity|belt of mighty constitution|belt of physical might|belt of physical perfection)\b",
+		regex=True,
+	)
+	| all_other_name_lower.str.contains(
+		r"\b(?:headband of alluring charisma|headband of inspired wisdom|headband of vast intelligence|headband of mental prowess|headband of mental superiority)\b",
+		regex=True,
+	)
+)
+all_other_items_df = all_other_items_df[~mask_remove_from_uniques].copy()
+
 # Add extra potions from source_csv/potions.csv into Name and PriceValue.
 potions_source_df = pd.read_csv("source_csv/potions.csv")
 extra_potions = pd.DataFrame(columns=df.columns)
