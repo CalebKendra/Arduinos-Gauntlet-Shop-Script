@@ -63,7 +63,7 @@ Scroll of Alleviate Addiction,"alchemist 1, cleric/oracle 1, druid 1, paladin 1,
 Scroll of Celestial Healing,"bloodrager 1, cleric/oracle 1, magus 1, sorcerer/wizard 1, summoner/unchained summoner 1, witch 1",,25.0,25.0,0.0,0.0,25.0
 Scroll of Desperate Weapon,"antipaladin 1, bard 1, bloodrager 1, cleric/oracle 1, inquisitor 1, magus 1, occultist 1, ranger 1, sorcerer/wizard 1",Create an improvised weapon.,25.0,25.0,25.0,25.0,25.0
 Scroll of Guardian Armor,"antipaladin 1, bloodrager 1, cleric/oracle 1, inquisitor 1, magus 1, occultist 1, paladin 1, sorcerer/wizard 1",,25.0,25.0,0.0,25.0,25.0
-Scroll of Barbed Chains,"antipaladin 1, bloodrager 1, cleric/oracle 1, inquisitor 1, occultist 1, shaman 1, summoner/unchained summoner 1", Hellish chains attack and cause a target to become shaken.,25.0,0.0,0.0,0.0,25.0
+Scroll of Barbed Chains,"antipaladin 1, bloodrager 1, cleric/oracle 1, inquisitor 1, occultist 1, shaman 1, summoner/unchained summoner 1"," Hellish chains attack and cause a target to become shaken.",25.0,0.0,0.0,0.0,25.0
 Scroll of Bless Water,"cleric/oracle 1, paladin 1, inquisitor 1",Makes holy water.,25.0,0.0,0.0,25.0,25.0
 Scroll of Curse Water,"cleric/oracle 1, inquisitor 1, antipaladin 1",Makes water unholy.,25.0,0.0,0.0,0.0,25.0
 Scroll of Deathwatch,"cleric/oracle 1, spiritualist 1, medium 1", Reveals how near death subjects within 30 ft. are.,25.0,0.0,0.0,0.0,25.0
@@ -140,8 +140,8 @@ Scroll of Find Traps,"cleric/oracle 2, witch 2, inquisitor 2, occultist 2, psych
 Scroll of Touch Of Blindness,"antipaladin 1, bard 1, cleric/oracle 1, sorcerer/wizard 1, shaman 1, witch 1",,25.0,25.0,25.0,0.0,25.0
 Scroll of Status,"cleric/oracle 2, witch 2, occultist 2, psychic 2, spiritualist 2, medium 2"," Monitors condition, position of allies.",150.0,0.0,0.0,0.0,150.0
 Scroll of Obscure Poison,"alchemist 1, antipaladin 1, bard 1, cleric/oracle 1, druid 1, mesmerist 1, shaman 1, sorcerer/wizard 1, witch 1",Make it harder to detect a poison or a venomous creature.,25.0,25.0,25.0,0.0,25.0
-Scroll of Grasping Corpse,"antipaladin 1, cleric/oracle 1, occultist 1, shaman 1, sorcerer/wizard 1, spiritualist 1, witch 1", Cause a corpse to grab or trip a foe.,25.0,25.0,0.0,0.0,25.0
-Scroll of Hedging Weapons,"antipaladin 1, cleric/oracle 1, inquisitor 1, paladin 1", Floating weapons protect you and make ranged attacks.,25.0,0.0,0.0,25.0,25.0
+Scroll of Grasping Corpse,"antipaladin 1, cleric/oracle 1, occultist 1, shaman 1, sorcerer/wizard 1, spiritualist 1, witch 1"," Cause a corpse to grab or trip a foe.",25.0,25.0,0.0,0.0,25.0
+Scroll of Hedging Weapons,"antipaladin 1, cleric/oracle 1, inquisitor 1, paladin 1"," Floating weapons protect you and make ranged attacks.",25.0,0.0,0.0,25.0,25.0
 Scroll of Rite Of Bodily Purity,"cleric/oracle 1, druid 1, paladin 1, ranger 1, shaman 1",,25.0,0.0,0.0,25.0,25.0
 Scroll of Rite Of Centered Mind,"cleric/oracle 1, druid 1, shaman 1, wizard 1",,25.0,0.0,0.0,0.0,25.0
 Scroll of Scarify,"adept 1, alchemist 1, antipaladin 1, cleric/oracle 1, druid 1, inquisitor 1, shaman 1, spiritualist 1, witch 1",,25.0,0.0,0.0,0.0,25.0
@@ -174,11 +174,11 @@ Scroll of Touch Of Mercy,"bard 2, cleric/oracle 2, sorcerer/wizard 2",,150.0,200
 Scroll of Vexing Miscalculation,"cleric/oracle 2, inquisitor 2, witch 2",,150.0,0.0,0.0,0.0,150.0
 Scroll of Compel Tongue,"bard 1, cleric/oracle 2, druid 2, medium 2, mesmerist 2, sorcerer/wizard 2, witch 2",,150.0,200.0,25.0,0.0,25.0
 Scroll of Hold Fey,"bard 2, cleric/oracle 2, inquisitor 2, sorcerer/wizard 3, witch 2",,150.0,450.0,200.0,0.0,150.0
-Scroll of Sense Fear,"antipaladin 1, bloodrager 1, cleric/oracle 2, druid 2, inquisitor 2, medium 1, mesmerist 2, occultist 2, psychic 2, ranger 2, shaman 2, spiritualist 2, witch 2", Perceive nearby creatures that are experiencing fear.,150.0,0.0,0.0,200.0,150.0
+Scroll of Sense Fear,"antipaladin 1, bloodrager 1, cleric/oracle 2, druid 2, inquisitor 2, medium 1, mesmerist 2, occultist 2, psychic 2, ranger 2, shaman 2, spiritualist 2, witch 2"," Perceive nearby creatures that are experiencing fear.",150.0,0.0,0.0,200.0,150.0
 Scroll of Bear's Endurance,"cleric/oracle 2, druid 2, ranger 2, sorcerer/wizard 2, summoner/unchained summoner 2, alchemist 2, magus 2, bloodrager 2, shaman 2, psychic 2, medium 2",Subject gains +4 to Con for 1 min./level.,150.0,200.0,0.0,200.0,150.0
 Scroll of Bull's Strength,"cleric/oracle 2, druid 2, paladin 2, sorcerer/wizard 2, summoner/unchained summoner 2, alchemist 2, antipaladin 2, magus 2, bloodrager 2, shaman 2, psychic 2, medium 2",Subject gains +4 to Str for 1 min./level.,150.0,200.0,0.0,200.0,150.0
 Scroll of Eagle's Splendor,"bard 2, cleric/oracle 2, paladin 2, sorcerer/wizard 2, alchemist 2, summoner/unchained summoner 2, antipaladin 2, bloodrager 2, shaman 2, psychic 2, mesmerist 2, medium 2",Subject gains +4 to Cha for 1 min./level.,150.0,200.0,200.0,200.0,150.0
-Scroll of Sense Madness,"cleric/oracle 2, inquisitor 2, medium 2, occultist 2, paladin 2, psychic 2", Determine mental disturbances in nearby creatures.,150.0,0.0,0.0,200.0,150.0
+Scroll of Sense Madness,"cleric/oracle 2, inquisitor 2, medium 2, occultist 2, paladin 2, psychic 2"," Determine mental disturbances in nearby creatures.",150.0,0.0,0.0,200.0,150.0
 Scroll of Make Whole,"cleric/oracle 2, sorcerer/wizard 2, occultist 2, psychic 2",Repairs an object.,150.0,200.0,0.0,0.0,150.0
 Scroll of Owl's Wisdom,"cleric/oracle 2, druid 2, paladin 2, ranger 2, sorcerer/wizard 2, alchemist 2, summoner/unchained summoner 2, shaman 2, psychic 2, medium 2",Subject gains +4 to Wis for 1 min./level.,150.0,200.0,0.0,200.0,150.0
 Scroll of Resist Energy,"alchemist 2, cleric/oracle 2, druid 2, inquisitor 2, paladin 2, ranger 1, sorcerer/wizard 2, summoner/unchained summoner 2, bloodrager 2, shaman 2, occultist 2, psychic 2, spiritualist 2",Ignores 10 (or more) points of damage/attack from specified energy type.,150.0,200.0,0.0,25.0,25.0
@@ -211,8 +211,8 @@ Scroll of Enchantment Sight,"alchemist 2, bard 2, cleric/oracle 2, inquisitor 2,
 Scroll of Locate Object,"bard 2, cleric/oracle 3, sorcerer/wizard 2, witch 3, inquisitor 3, occultist 2, psychic 2, mesmerist 2, spiritualist 2, medium 2",Senses direction toward object (specific or type).,150.0,200.0,200.0,0.0,150.0
 "Scroll of Share Language, Communal","bard 2, cleric/oracle 3, druid 3, sorcerer/wizard 3, occultist 3, psychic 2, mesmerist 2","As share language, but you may divide the duration among creatures touched.",375.0,450.0,200.0,0.0,200.0
 Scroll of Bone Fists,"bloodrager 2, cleric/oracle 2, druid 2, psychic 2, shaman 2, sorcerer/wizard 2, witch 2",,150.0,200.0,0.0,0.0,150.0
-Scroll of Bloodbath,"antipaladin 1, bloodrager 1, cleric/oracle 2, inquisitor 2, medium 1, psychic 2, sorcerer/wizard 2, spiritualist 2, witch 2", Cause yourself and enemies to bleed.,150.0,200.0,0.0,0.0,150.0
-Scroll of Contact Entity I,"cleric/oracle 2, medium 1, occultist 2, psychic 2, shaman 2, sorcerer/wizard 2, summoner/unchained summoner 2, witch 2", Ask eldritch entities to find and converse with you.,150.0,200.0,0.0,0.0,150.0
+Scroll of Bloodbath,"antipaladin 1, bloodrager 1, cleric/oracle 2, inquisitor 2, medium 1, psychic 2, sorcerer/wizard 2, spiritualist 2, witch 2"," Cause yourself and enemies to bleed.",150.0,200.0,0.0,0.0,150.0
+Scroll of Contact Entity I,"cleric/oracle 2, medium 1, occultist 2, psychic 2, shaman 2, sorcerer/wizard 2, summoner/unchained summoner 2, witch 2"," Ask eldritch entities to find and converse with you.",150.0,200.0,0.0,0.0,150.0
 Scroll of Detect Anxieties,"antipaladin 2, bard 3, cleric/oracle 3, inquisitor 3, medium 2, mesmerist 2, paladin 3, psychic 2, sorcerer/wizard 3, spiritualist 3, witch 3",Learn what makes creatures anxious.,375.0,450.0,525.0,525.0,375.0
 Scroll of Detect Desires,"antipaladin 2, bard 2, cleric/oracle 3, inquisitor 3, medium 2, mesmerist 3, paladin 3, psychic 2, sorcerer/wizard 3, spiritualist 3, witch 3",Learn what creatures desire.,375.0,450.0,200.0,525.0,200.0
 Scroll of Overstimulate,"alchemist 2, bard 2, bloodrager 2, cleric/oracle 2, druid 2, psychic 2, ranger 2, shaman 2, summoner/unchained summoner 2, witch 2",,150.0,0.0,200.0,200.0,150.0
@@ -344,10 +344,10 @@ Scroll of Dress Corpse,"cleric/oracle 2, sorcerer/wizard 2, witch 2",Doctor the 
 Scroll of Shield Of Shards,"bloodrager 1, cleric/oracle 2, inquisitor 2, magus 2, medium 2, paladin 1, shaman 2",,150.0,0.0,0.0,25.0,25.0
 Scroll of Spiritual Squire,"antipaladin 2, cleric/oracle 2, inquisitor 2, paladin 2, shaman 2, spiritualist 2",,150.0,0.0,0.0,200.0,150.0
 Scroll of Violent Accident,"cleric/oracle 2, mesmerist 2, occultist 2, witch 2",,150.0,0.0,0.0,0.0,150.0
-Scroll of Boneshaker,"antipaladin 1, cleric/oracle 2, inquisitor 2, sorcerer/wizard 2, spiritualist 2, witch 2", Momentarily control a living or undead creature’s skeleton.,150.0,200.0,0.0,0.0,150.0
-"Scroll of Curse Terrain, Lesser","cleric/oracle 2, druid 2, shaman 2, sorcerer/wizard 2, witch 2", Curse an area with three mild hazards.,150.0,200.0,0.0,0.0,150.0
-Scroll of Flickering Lights,"bard 2, cleric/oracle 2, inquisitor 2, magus 2, occultist 2, shaman 2, sorcerer/wizard 2", Create an area of inconsistent lighting.,150.0,200.0,200.0,0.0,150.0
-Scroll of Stave Off Corruption,"cleric/oracle 2, paladin 2", Protect against a corruption’s progression.,150.0,0.0,0.0,200.0,150.0
+Scroll of Boneshaker,"antipaladin 1, cleric/oracle 2, inquisitor 2, sorcerer/wizard 2, spiritualist 2, witch 2"," Momentarily control a living or undead creature’s skeleton.",150.0,200.0,0.0,0.0,150.0
+"Scroll of Curse Terrain, Lesser","cleric/oracle 2, druid 2, shaman 2, sorcerer/wizard 2, witch 2"," Curse an area with three mild hazards.",150.0,200.0,0.0,0.0,150.0
+Scroll of Flickering Lights,"bard 2, cleric/oracle 2, inquisitor 2, magus 2, occultist 2, shaman 2, sorcerer/wizard 2"," Create an area of inconsistent lighting.",150.0,200.0,200.0,0.0,150.0
+Scroll of Stave Off Corruption,"cleric/oracle 2, paladin 2"," Protect against a corruption’s progression.",150.0,0.0,0.0,200.0,150.0
 Scroll of Urgathoa's Beacon,"antipaladin 2, cleric/oracle 2, inquisitor 2",,150.0,0.0,0.0,0.0,150.0
 Scroll of Visualization Of The Body,"cleric/oracle 2, druid 2, magus 2, ranger 2, shaman 2, wizard 2",,150.0,0.0,0.0,200.0,150.0
 Scroll of Visualization Of The Mind,"cleric/oracle 2, shaman 2, wizard 2",,150.0,0.0,0.0,0.0,150.0
@@ -414,8 +414,8 @@ Scroll of Disrupt Silence,"bard 2, cleric/oracle 3, inquisitor 3, psychic 3",Dis
 Scroll of Share Senses,"sorcerer/wizard 4, witch 3, psychic 3, medium 3",See/hear/smell what your familiar is.,700.0,800.0,0.0,0.0,700.0
 Scroll of Spellcurse,"antipaladin 2, cleric/oracle 3, inquisitor 2, occultist 4, psychic 3, shaman 4, witch 3",,375.0,0.0,0.0,0.0,375.0
 Scroll of Daggermark's Exchange,"alchemist 2, cleric/oracle 3, druid 2, occultist 3, psychic 3, sorcerer/wizard 3",,150.0,450.0,0.0,0.0,150.0
-Scroll of Appearance Of Life,"cleric/oracle 3, medium 2, mesmerist 3, psychic 3, sorcerer/wizard 3, spiritualist 3, witch 3", Undead appear to be alive.,375.0,450.0,0.0,0.0,375.0
-Scroll of Contact Entity II,"cleric/oracle 3, medium 2, occultist 3, psychic 3, shaman 3, sorcerer/wizard 3, summoner/unchained summoner 3, witch 3", Ask more powerful eldritch entities to find and converse with you.,375.0,450.0,0.0,0.0,375.0
+Scroll of Appearance Of Life,"cleric/oracle 3, medium 2, mesmerist 3, psychic 3, sorcerer/wizard 3, spiritualist 3, witch 3"," Undead appear to be alive.",375.0,450.0,0.0,0.0,375.0
+Scroll of Contact Entity II,"cleric/oracle 3, medium 2, occultist 3, psychic 3, shaman 3, sorcerer/wizard 3, summoner/unchained summoner 3, witch 3"," Ask more powerful eldritch entities to find and converse with you.",375.0,450.0,0.0,0.0,375.0
 Scroll of Horrifying Visage,"bard 3, cleric/oracle 3, inquisitor 3, magus 3, psychic 3, shaman 3, sorcerer/wizard 3, spiritualist 3, witch 3",,375.0,450.0,525.0,0.0,375.0
 Scroll of Guarding Knowledge,"alchemist 3, bard 3, cleric/oracle 3, inquisitor 2, occultist 3, psychic 3, sorcerer/wizard 3",,375.0,450.0,525.0,0.0,375.0
 Scroll of Free Swim,"alchemist 3, bard 3, cleric/oracle 3, druid 3, inquisitor 3, medium 3, mesmerist 3, occultist 3, psychic 3, ranger 3, spiritualist 3",,375.0,0.0,525.0,525.0,375.0
@@ -440,7 +440,7 @@ Scroll of Accept Affliction,"bard 3, cleric/oracle 3, druid 3, paladin 3, witch 
 Scroll of Storm Of Blades,"cleric/oracle 3, magusUM 2, sorcerer/wizard 2",,150.0,200.0,0.0,0.0,150.0
 Scroll of Life Shield,"cleric/oracle 3, druid 3, paladin 2",,375.0,0.0,0.0,200.0,200.0
 Scroll of Irradiate,"cleric/oracle 3, druid 4, magus 3, sorcerer/wizard 3, summoner/unchained summoner 3, witch 3",,375.0,450.0,0.0,0.0,375.0
-Scroll of Holy Javelin,"cleric/oracle 3, inquisitor 3, paladin 2", Deal ongoing damage to evil creatures and apply penalties.,375.0,0.0,0.0,200.0,200.0
+Scroll of Holy Javelin,"cleric/oracle 3, inquisitor 3, paladin 2"," Deal ongoing damage to evil creatures and apply penalties.",375.0,0.0,0.0,200.0,200.0
 Scroll of Spiral Ascent,"cleric/oracle 3, inquisitor 3",,375.0,0.0,0.0,0.0,375.0
 Scroll of Curative Distillation,"alchemist 2, cleric/oracle 3",,375.0,0.0,0.0,0.0,375.0
 Scroll of Life Current,"cleric/oracle 3, druid 3, paladin 3, ranger 3, shaman 3",,375.0,0.0,0.0,525.0,375.0
@@ -525,10 +525,10 @@ Scroll of Wall Of Split Illumination,"bard 3, cleric/oracle 3, sorcerer/wizard 3
 Scroll of Irregular Size,"antipaladin 3, bloodrager 4, cleric/oracle 3, medium 2, mesmerist 3, occultist 3, shaman 3, sorcerer/wizard 4, spiritualist 4, witch 3",,375.0,800.0,0.0,0.0,375.0
 Scroll of Kalistocrat's Nightmare,"alchemist 2, bard 2, cleric/oracle 3, inquisitor 2, investigator 2, magus 2, occultist 2, sorcerer/wizard 3, witch 2",,375.0,450.0,200.0,0.0,200.0
 Scroll of Trial By Fire,"antipaladin 3, cleric/oracle 3, inquisitor 3, paladin 3",,375.0,0.0,0.0,525.0,375.0
-Scroll of Damnation,"cleric/oracle 3, inquisitor 3, paladin 3", Punish creatures for evil spells they know or that affect them.,375.0,0.0,0.0,525.0,375.0
-Scroll of Flesh Puppet,"antipaladin 2, cleric/oracle 3, occultist 3, shaman 3, sorcerer/wizard 4, spiritualist 3, witch 4", Control a zombie in human guise.,375.0,800.0,0.0,0.0,375.0
-Scroll of Screaming Flames,"antipaladin 3, cleric/oracle 3", Send forth a wave of flames screaming with the agony of the damned.,375.0,0.0,0.0,0.0,375.0
-Scroll of Symbol Of Exsanguination,"bloodrager 2, cleric/oracle 3, occultist 2, sorcerer/wizard 3, witch 3", Triggered rune causes nearby creatures to bleed.,375.0,450.0,0.0,0.0,375.0
+Scroll of Damnation,"cleric/oracle 3, inquisitor 3, paladin 3"," Punish creatures for evil spells they know or that affect them.",375.0,0.0,0.0,525.0,375.0
+Scroll of Flesh Puppet,"antipaladin 2, cleric/oracle 3, occultist 3, shaman 3, sorcerer/wizard 4, spiritualist 3, witch 4"," Control a zombie in human guise.",375.0,800.0,0.0,0.0,375.0
+Scroll of Screaming Flames,"antipaladin 3, cleric/oracle 3"," Send forth a wave of flames screaming with the agony of the damned.",375.0,0.0,0.0,0.0,375.0
+Scroll of Symbol Of Exsanguination,"bloodrager 2, cleric/oracle 3, occultist 2, sorcerer/wizard 3, witch 3"," Triggered rune causes nearby creatures to bleed.",375.0,450.0,0.0,0.0,375.0
 Scroll of Rumormonger,"bard 2, inquisitor 2, medium 1, mesmerist 2, psychic 3",Follow a rumor to see where it spreads.,0.0,0.0,200.0,0.0,200.0
 Scroll of Akashic Communion,"bard 3, medium 3, mesmerist 4, occultist 3, psychic 3, shaman 3, sorcerer/wizard 4, spiritualist 4, witch 3",,700.0,800.0,525.0,0.0,525.0
 Scroll of Free Spirit,"bard 3, cleric/oracle 3, druid 3, medium 3, shaman 3, spiritualist 3, witch 3",,375.0,0.0,525.0,0.0,375.0
@@ -582,9 +582,9 @@ Scroll of Arcane Eye,"sorcerer/wizard 4, witch 4, alchemist 4, occultist 4, psyc
 Scroll of Quieting Weapons,"bard 4, cleric/oracle 4, inquisitor 4, magus 4, occultist 4, psychic 4, ranger 3, sorcerer/wizard 4, spiritualist 4",Weapons make no sound and quiet their victims.,700.0,800.0,1000.0,525.0,525.0
 Scroll of Warp Metal,"bloodrager 4, cleric/oracle 4, druid 4, medium 4, occultist 4, psychic 4, sorcerer/wizard 4",,700.0,800.0,0.0,0.0,700.0
 Scroll of Wall Of Bone,"antipaladin 4, bloodrager 4, cleric/oracle 4, psychic 4, sorcerer/wizard 4, spiritualist 4",,700.0,800.0,0.0,0.0,700.0
-Scroll of Borrow Corruption,"antipaladin 2, cleric/oracle 4, druid 4, medium 2, occultist 3, psychic 4, shaman 4, witch 4", Temporarily gain the effects of a corrupted creature’s manifestations.,700.0,0.0,0.0,0.0,700.0
-Scroll of Hunger For Flesh,"antipaladin 3, cleric/oracle 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 4, witch 4", Give a creature a bite attack and a hunger for its own kind’s flesh.,700.0,800.0,0.0,0.0,700.0
-Scroll of Rigor Mortis,"cleric/oracle 4, magus 4, occultist 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 3, witch 4", Painfully swell a target’s joints.,700.0,800.0,0.0,0.0,700.0
+Scroll of Borrow Corruption,"antipaladin 2, cleric/oracle 4, druid 4, medium 2, occultist 3, psychic 4, shaman 4, witch 4"," Temporarily gain the effects of a corrupted creature’s manifestations.",700.0,0.0,0.0,0.0,700.0
+Scroll of Hunger For Flesh,"antipaladin 3, cleric/oracle 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 4, witch 4"," Give a creature a bite attack and a hunger for its own kind’s flesh.",700.0,800.0,0.0,0.0,700.0
+Scroll of Rigor Mortis,"cleric/oracle 4, magus 4, occultist 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 3, witch 4"," Painfully swell a target’s joints.",700.0,800.0,0.0,0.0,700.0
 Scroll of Bit Of Luck,"alchemist 4, bard 3, cleric/oracle 4, psychic 4, shaman 4, sorcerer/wizard 4, witch 4",,700.0,800.0,525.0,0.0,525.0
 Scroll of Charon's Dispensation,"cleric/oracle 4, inquisitor 4, medium 4, mesmerist 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 4, witch 4",,700.0,800.0,0.0,0.0,700.0
 Scroll of Bestow Planar Infusion II,"cleric/oracle 4, inquisitor 4, magus 4, medium 4, occultist 4, psychic 4, sorcerer/wizard 4, summoner 4, witch 4",Grant a target the effects of an improved planar infusion.,700.0,800.0,0.0,0.0,700.0
@@ -683,9 +683,9 @@ Scroll of Rags To Riches,"alchemist 3, bard 3, cleric/oracle 4, medium 3, occult
 Scroll of Absolution,"cleric/oracle 4, paladin 4",Removes enchantments and forgives actions taken under their effects.,700.0,0.0,0.0,1000.0,700.0
 Scroll of Majestic Image,"bard 4, cleric/oracle 4, medium 4, mesmerist 4, occultist 4, sorcerer/wizard 4, spiritualist 4","As enter image, but also gain bonuses on social skills while in the image.",700.0,800.0,1000.0,0.0,700.0
 Scroll of Revenant Armor,"antipaladin 3, cleric/oracle 4, magus 4, medium 4, occultist 4, paladin 3, shaman 3, sorcerer/wizard 4, spiritualist 3, witch 3",,700.0,800.0,0.0,525.0,525.0
-Scroll of Curse Terrain,"cleric/oracle 4, druid 4, shaman 4, sorcerer/wizard 4, witch 4", Curse an area with four hazards.,700.0,800.0,0.0,0.0,700.0
-Scroll of Flesh Puppet Horde,"antipaladin 3, cleric/oracle 4, occultist 4, shaman 4, sorcerer/wizard 5, spiritualist 4, witch 5", Control multiple zombies in human guise.,700.0,1250.0,0.0,0.0,700.0
-Scroll of Torpid Reanimation,"antipaladin 4, cleric/oracle 4, occultist 4, shaman 4, sorcerer/wizard 5, spiritualist 4", Animate dead when a specific trigger condition occurs.,700.0,1250.0,0.0,0.0,700.0
+Scroll of Curse Terrain,"cleric/oracle 4, druid 4, shaman 4, sorcerer/wizard 4, witch 4"," Curse an area with four hazards.",700.0,800.0,0.0,0.0,700.0
+Scroll of Flesh Puppet Horde,"antipaladin 3, cleric/oracle 4, occultist 4, shaman 4, sorcerer/wizard 5, spiritualist 4, witch 5"," Control multiple zombies in human guise.",700.0,1250.0,0.0,0.0,700.0
+Scroll of Torpid Reanimation,"antipaladin 4, cleric/oracle 4, occultist 4, shaman 4, sorcerer/wizard 5, spiritualist 4"," Animate dead when a specific trigger condition occurs.",700.0,1250.0,0.0,0.0,700.0
 Scroll of Frigid Souls,"cleric/oracle 4, druid 4, ranger 3, shaman 4, sorcerer/wizard 4, witch 4",,700.0,800.0,0.0,525.0,525.0
 Scroll of Firewalker's Meditation,"cleric/oracle 4, druid 4, paladin 3, shaman 4, wizard 4",,700.0,0.0,0.0,525.0,525.0
 Scroll of Concealed Breath,"alchemist 4, cleric/oracle 4, druid 4, shaman 4, sorcerer/wizard 4, summoner/unchained summoner 4",,700.0,800.0,0.0,0.0,700.0
@@ -705,7 +705,7 @@ Scroll of Coordinated Effort,"bard 3, inquisitor 3, psychic 4",Grants a teamwork
 "Scroll of Forbid Action, Greater","cleric/oracle 5, inquisitor 5, occultist 5, psychic 5, mesmerist 4","As forbid action, but 1 creature/level.",1125.0,0.0,0.0,0.0,1125.0
 Scroll of Serenity,"bard 4, cleric/oracle 5, sorcerer/wizard 6, psychic 5, mesmerist 4",Peaceful feelings harm those attempting violence.,1125.0,1800.0,1000.0,0.0,1000.0
 Scroll of Seek Shelter,"bard 4, cleric/oracle 5, inquisitor 4, mesmerist 4, psychic 5, sorcerer/wizard 5, summoner/unchained summoner 4, witch 5",,1125.0,1250.0,1000.0,0.0,1000.0
-Scroll of Compelling Rant,"bard 5, cleric/oracle 5, inquisitor 5, mesmerist 5, psychic 5, sorcerer/wizard 5", People believe your ridiculous speech as long as you keep talking.,1125.0,1250.0,1625.0,0.0,1125.0
+Scroll of Compelling Rant,"bard 5, cleric/oracle 5, inquisitor 5, mesmerist 5, psychic 5, sorcerer/wizard 5"," People believe your ridiculous speech as long as you keep talking.",1125.0,1250.0,1625.0,0.0,1125.0
 Scroll of Touch Of Slumber,"bard 6, cleric/oracle 5, druid 5, psychic 6, shaman 5, sorcerer/wizard 5, witch 6",,1125.0,1250.0,2400.0,0.0,1125.0
 Scroll of Symbol of Sleep,"cleric/oracle 5, sorcerer/wizard 5, witch 5, occultist 4, mesmerist 5",Triggered rune puts nearby creatures into catatonic slumber.,1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Constricting Coils,"cleric/oracle 5, sorcerer/wizard 5",,1125.0,1250.0,0.0,0.0,1125.0
@@ -733,15 +733,15 @@ Scroll of Wall Of Ectoplasm,"cleric/oracle 5, psychic 5, sorcerer/wizard 5, spir
 Scroll of Darkvault,"alchemist 3, cleric/oracle 5, druid 5, psychic 5, shaman 5, sorcerer/wizard 5, witch 5",,1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Flexile Curse,"bard 3, cleric/oracle 5, inquisitor 3, psychic 5, sorcerer/wizard 5, witch 3",,1125.0,1250.0,525.0,0.0,525.0
 Scroll of Blood Ties,"antipaladin 4, cleric/oracle 5, druid 5, inquisitor 5, psychic 5, shaman 5, witch 5"," When a target is harmed, so is the target’s relative.",1125.0,0.0,0.0,0.0,1125.0
-Scroll of Charnel House,"antipaladin 3, cleric/oracle 5, mesmerist 5, psychic 5, sorcerer/wizard 5, witch 5", Create an area of semi-real gore.,1125.0,1250.0,0.0,0.0,1125.0
+Scroll of Charnel House,"antipaladin 3, cleric/oracle 5, mesmerist 5, psychic 5, sorcerer/wizard 5, witch 5"," Create an area of semi-real gore.",1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Contact Entity III,"cleric/oracle 5, medium 3, occultist 4, psychic 5, shaman 5, sorcerer/wizard 5, summoner/unchained summoner 4, witch 5"," Ask very powerful eldritch entities to find and converse with you, or they may reply telepathically.",1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Thoughtsense,"medium 4, mesmerist 4, psychic 4, sorcerer/wizard 5, spiritualist 4",Automatically detect nearby conscious creatures.,1125.0,1250.0,0.0,0.0,1125.0
-Scroll of Slough,"cleric/oracle 5, occultist 4, psychic 5, sorcerer/wizard 5, spiritualist 4, witch 5", Slough off a target’s skin.,1125.0,1250.0,0.0,0.0,1125.0
+Scroll of Slough,"cleric/oracle 5, occultist 4, psychic 5, sorcerer/wizard 5, spiritualist 4, witch 5"," Slough off a target’s skin.",1125.0,1250.0,0.0,0.0,1125.0
 "Scroll of Appearance Of Life, Greater","cleric/oracle 5, medium 4, mesmerist 5, psychic 5, sorcerer/wizard 5, spiritualist 4, witch 5",,1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Trace Teleport,"psychic 4, sorcerer/wizard 5","Determine where and when teleportation occurred, and glimpse the origin or destination.",1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Vicarious View,"bard 4, medium 3, mesmerist 4, occultist 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 4, witch 4","Plant a scrying sensor that you can use to spy on a creature, object, or location.",700.0,800.0,1000.0,0.0,700.0
 "Scroll of Curse, Major","cleric/oracle 5, sorcerer/wizard 6, witch 5, shaman 5, occultist 5, psychic 6, mesmerist 4, spiritualist 5","As bestow curse, but harder to remove.",1125.0,1800.0,0.0,0.0,1125.0
-Scroll of Decollate,"alchemist 4, antipaladin 4, cleric/oracle 5, psychic 6, sorcerer/wizard 5, spiritualist 4, witch 5", A target can safely remove its head.,1125.0,1250.0,0.0,0.0,1125.0
+Scroll of Decollate,"alchemist 4, antipaladin 4, cleric/oracle 5, psychic 6, sorcerer/wizard 5, spiritualist 4, witch 5"," A target can safely remove its head.",1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Greater Reversion,"cleric/oracle 5, psychic 4, sorcerer/wizard 5",,1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Plane Shift,"cleric/oracle 5, sorcerer/wizard 7, summoner 5, witch 7, shaman 7, psychic 5, spiritualist 5, unchained summoner 6, medium 4",As many as 8 subjects travel to another plane.,1125.0,2450.0,0.0,0.0,1125.0
 Scroll of Summon Monster V,"bard 5, cleric/oracle 5, sorcerer/wizard 5, summoner/unchained summoner 4, witch 5, psychic 5, spiritualist 5, medium 4",Summons extraplanar creature to fight for you.,1125.0,1250.0,1625.0,0.0,1125.0
@@ -804,7 +804,7 @@ Scroll of Spawn Ward,"cleric/oracle 5, inquisitor 5",,1125.0,0.0,0.0,0.0,1125.0
 Scroll of Angelic Aspect,"cleric/oracle 5, paladin 3, sorcerer/wizard 5",,1125.0,1250.0,0.0,525.0,525.0
 Scroll of Sanctify Weapons,"cleric/oracle 5, paladin 3",,1125.0,0.0,0.0,525.0,525.0
 Scroll of True Seeing,"cleric/oracle 5, druid 7, sorcerer/wizard 6, alchemist 6, summoner 5, witch 6, inquisitor 5, magus 6, shaman 5, occultist 5, psychic 5, mesmerist 6, spiritualist 6, unchained summoner 6, medium 4",Lets you see all things as they really are.,1125.0,1800.0,0.0,0.0,1125.0
-Scroll of Locate Gate,"bard 5, cleric/oracle 5, occultist 5, psychic 5, sorcerer/wizard 5, summoner/unchained summoner 5", Find a nearby magical portal.,1125.0,1250.0,1625.0,0.0,1125.0
+Scroll of Locate Gate,"bard 5, cleric/oracle 5, occultist 5, psychic 5, sorcerer/wizard 5, summoner/unchained summoner 5"," Find a nearby magical portal.",1125.0,1250.0,1625.0,0.0,1125.0
 Scroll of Sphere Of Warding,"cleric/oracle 5, inquisitor 4, witch 5",,1125.0,0.0,0.0,0.0,1125.0
 Scroll of Caustic Blood,"alchemist 4, cleric/oracle 5, druid 4, magus 4, sorcerer/wizard 5, summoner/unchained summoner 4",,700.0,1250.0,0.0,0.0,700.0
 Scroll of Hunter's Blessing,"cleric/oracle 5, druid 5, inquisitor 5",,1125.0,0.0,0.0,0.0,1125.0
@@ -817,10 +817,10 @@ Scroll of Daywalker,"antipaladin 4, cleric/oracle 5, sorcerer/wizard 5, witch 5"
 Scroll of Sessile Spirit,"cleric/oracle 5, inquisitor 4, medium 2, occultist 3, shaman 4, spiritualist 3, witch 5",Cause a spirit inhabiting a creature or an object to go dormant.,1125.0,0.0,0.0,0.0,1125.0
 Scroll of Respectful Quiet,"bard 3, cleric/oracle 5, inquisitor 3",,1125.0,0.0,525.0,0.0,525.0
 Scroll of Blood Tentacles,"antipaladin 4, cleric/oracle 5, shaman 5, sorcerer/wizard 5, summoner/unchained summoner 4, witch 5",,1125.0,1250.0,0.0,0.0,1125.0
-Scroll of Ban Corruption,"cleric/oracle 5, inquisitor 4, medium 3, occultist 4, paladin 4, shaman 5", Eliminate the gifts of nearby corrupted creatures.,1125.0,0.0,0.0,1000.0,1000.0
-Scroll of Profane Nimbus,"antipaladin 4, cleric/oracle 5, inquisitor 5", Unholy energy damages good creatures that attack you and protects you from good attacks.,1125.0,0.0,0.0,0.0,1125.0
-Scroll of Sacred Nimbus,"cleric/oracle 5, inquisitor 5, paladin 4", Holy energy damages evil creatures that attack you and protects you from evil attacks.,1125.0,0.0,0.0,1000.0,1000.0
-Scroll of Vile Dog Transformation,"antipaladin 3, cleric/oracle 5, druid 5, shaman 5, sorcerer/wizard 5, witch 5", Transform ordinary dogs into fiendish minions.,1125.0,1250.0,0.0,0.0,1125.0
+Scroll of Ban Corruption,"cleric/oracle 5, inquisitor 4, medium 3, occultist 4, paladin 4, shaman 5"," Eliminate the gifts of nearby corrupted creatures.",1125.0,0.0,0.0,1000.0,1000.0
+Scroll of Profane Nimbus,"antipaladin 4, cleric/oracle 5, inquisitor 5"," Unholy energy damages good creatures that attack you and protects you from good attacks.",1125.0,0.0,0.0,0.0,1125.0
+Scroll of Sacred Nimbus,"cleric/oracle 5, inquisitor 5, paladin 4"," Holy energy damages evil creatures that attack you and protects you from evil attacks.",1125.0,0.0,0.0,1000.0,1000.0
+Scroll of Vile Dog Transformation,"antipaladin 3, cleric/oracle 5, druid 5, shaman 5, sorcerer/wizard 5, witch 5"," Transform ordinary dogs into fiendish minions.",1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Besmara's Grasping Depths,"cleric/oracle 5, inquisitor 6, shaman 6, spiritualist 5, witch 6",,1125.0,0.0,0.0,0.0,1125.0
 Scroll of Shroud Of Darkness,"antipaladin 4, bard 5, cleric/oracle 5, inquisitor 5, mesmerist 4, shaman 5, sorcerer/wizard 5",,1125.0,1250.0,1625.0,0.0,1125.0
 Scroll of Cleansing Fire,"cleric/oracle 5, inquisitor 4, paladin 4",,1125.0,0.0,0.0,1000.0,1000.0
@@ -853,7 +853,7 @@ Scroll of Truespeak,"bard 4, cleric/oracle 6, sorcerer/wizard 5, witch 5, psychi
 Scroll of Alaznist's Jinx,"antipaladin 4, bard 4, cleric/oracle 6, inquisitor 5, occultist 5, psychic 6, shaman 5, sorcerer/wizard 6, witch 5",,1650.0,1800.0,1000.0,0.0,1000.0
 Scroll of Commune with Nature,"druid 5, ranger 4, shaman 5, psychic 5",Learn about terrain for 1 mile/level.,1125.0,0.0,0.0,1000.0,1000.0
 Scroll of Dream Reality,"alchemist 5, bard 5, cleric/oracle 6, mesmerist 5, occultist 5, psychic 6, sorcerer/wizard 6",,1650.0,1800.0,1625.0,0.0,1625.0
-Scroll of Alleviate Corruption,"cleric/oracle 6, psychic 6, shaman 6, spiritualist 6, witch 6", Attempt to weaken a corruption’s effect at risk to yourself.,1650.0,0.0,0.0,0.0,1650.0
+Scroll of Alleviate Corruption,"cleric/oracle 6, psychic 6, shaman 6, spiritualist 6, witch 6"," Attempt to weaken a corruption’s effect at risk to yourself.",1650.0,0.0,0.0,0.0,1650.0
 "Scroll of Knock, Mass","cleric/oracle 6, inquisitor 6, mesmerist 6, occultist 6, psychic 6, sorcerer/wizard 6",,1650.0,1800.0,0.0,0.0,1650.0
 Scroll of Betraying Sting,"cleric/oracle 6, occultist 6, psychic 6, shaman 6, witch 6",,1650.0,0.0,0.0,0.0,1650.0
 Scroll of What Grows Within,"bard 6, cleric/oracle 6, druid 6, mesmerist 6, psychic 6, sorcerer/wizard 6, witch 6",,1650.0,1800.0,2400.0,0.0,1650.0
@@ -913,9 +913,9 @@ Scroll of Oasis,"cleric/oracle 6, druid 5, sorcerer/wizard 6",,1125.0,1800.0,0.0
 Scroll of Seer's Bane,"cleric/oracle 6, inquisitor 6, sorcerer/wizard 6",,1650.0,1800.0,0.0,0.0,1650.0
 Scroll of Emblem Of Greed,"cleric/oracle 6, inquisitor 6, magus 6, medium 6, shaman 7, sorcerer/wizard 6",,1650.0,1800.0,0.0,0.0,1650.0
 Scroll of Overwhelming Poison,"antipaladin 4, cleric/oracle 6, druid 6, ranger 4, shaman 6, witch 6",Make a poison more difficult to resist.,1650.0,0.0,0.0,1000.0,1000.0
-"Scroll of Curse Terrain, Greater","cleric/oracle 6, druid 6, shaman 6, sorcerer/wizard 6, witch 6", Curse an area with six dangerous hazards.,1650.0,1800.0,0.0,0.0,1650.0
-Scroll of Flesh Wall,"cleric/oracle 6, shaman 6, sorcerer/wizard 6, spiritualist 5, summoner/unchained summoner 5, witch 6", Create a wall of zombies.,1650.0,1800.0,0.0,0.0,1650.0
-Scroll of Wither Limb,"cleric/oracle 6, inquisitor 6, shaman 6, sorcerer/wizard 6, spiritualist 5, witch 6", Make one of the target’s limbs useless.,1650.0,1800.0,0.0,0.0,1650.0
+"Scroll of Curse Terrain, Greater","cleric/oracle 6, druid 6, shaman 6, sorcerer/wizard 6, witch 6"," Curse an area with six dangerous hazards.",1650.0,1800.0,0.0,0.0,1650.0
+Scroll of Flesh Wall,"cleric/oracle 6, shaman 6, sorcerer/wizard 6, spiritualist 5, summoner/unchained summoner 5, witch 6"," Create a wall of zombies.",1650.0,1800.0,0.0,0.0,1650.0
+Scroll of Wither Limb,"cleric/oracle 6, inquisitor 6, shaman 6, sorcerer/wizard 6, spiritualist 5, witch 6"," Make one of the target’s limbs useless.",1650.0,1800.0,0.0,0.0,1650.0
 Scroll of Enlightened Step,"cleric/oracle 6, druid 6, shaman 6",,1650.0,0.0,0.0,0.0,1650.0
 Scroll of Metabolic Molting,"cleric/oracle 6, druid 6, shaman 6, witch 6",,1650.0,0.0,0.0,0.0,1650.0
 Scroll of Dream Scan,"bard 6, medium 4, mesmerist 5, psychic 5, sorcerer/wizard 6",Read a dreaming creature’s thoughts.,1650.0,1800.0,2400.0,0.0,1650.0
@@ -939,7 +939,7 @@ Scroll of Terraform,"cleric/oracle 7, druid 6, sorcerer/wizard 7, witch 7, psych
 Scroll of Umbral Strike,"cleric/oracle 7, druid 7, inquisitor 6, magus 6, occultist 6, psychic 7, shaman 7, sorcerer/wizard 7, spiritualist 6, witch 7",,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Particulate Form,"cleric/oracle 7, occultist 5, psychic 7, sorcerer/wizard 7, witch 7",,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Contact Entity IV,"cleric/oracle 7, medium 4, occultist 6, psychic 7, shaman 7, sorcerer/wizard 7, summoner/unchained summoner 6, witch 7"," Ask extraordinarily powerful eldritch entities to find and converse with you, or they may reply telepathically.",2275.0,2450.0,0.0,0.0,2275.0
-"Scroll of Hunger For Flesh, Mass","cleric/oracle 7, psychic 7, shaman 7, sorcerer/wizard 7, spiritualist 6, witch 7", Give creatures bite attacks and a hunger for their own kind’s flesh.,2275.0,2450.0,0.0,0.0,2275.0
+"Scroll of Hunger For Flesh, Mass","cleric/oracle 7, psychic 7, shaman 7, sorcerer/wizard 7, spiritualist 6, witch 7"," Give creatures bite attacks and a hunger for their own kind’s flesh.",2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Bestow Planar Infusion III,"cleric/oracle 7, psychic 7, sorcerer/wizard 7, witch 7",Grant a target the effects of a greater planar infusion.,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Blasphemy,"cleric/oracle 7, inquisitor 6"," Kills, paralyzes, weakens, or dazes nonevil subjects.",2275.0,0.0,0.0,0.0,2275.0
 Scroll of Control Weather,"cleric/oracle 7, druid 7, sorcerer/wizard 7, witch 7, shaman 7",Changes weather in local area.,2275.0,2450.0,0.0,0.0,2275.0
@@ -977,7 +977,7 @@ Scroll of Infuse Robot,"cleric/oracle 7, druid 7, sorcerer/wizard 7, witch 7",,2
 Scroll of Memory Of Function,"cleric/oracle 7, sorcerer/wizard 7",,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Poison Breath,"cleric/oracle 7, druid 6, witch 7",,1650.0,0.0,0.0,0.0,1650.0
 Scroll of Artificer's Curse,"bard 6, cleric/oracle 7, inquisitor 6, occultist 6, shaman 7, sorcerer/wizard 7, witch 7",,2275.0,2450.0,2400.0,0.0,2275.0
-Scroll of Plundered Power,"cleric/oracle 7, druid 7, occultist 6, shaman 7, sorcerer/wizard 7, summoner/unchained summoner 6, witch 7", Kill a creature and steal its strongest spell-like ability.,2275.0,2450.0,0.0,0.0,2275.0
+Scroll of Plundered Power,"cleric/oracle 7, druid 7, occultist 6, shaman 7, sorcerer/wizard 7, summoner/unchained summoner 6, witch 7"," Kill a creature and steal its strongest spell-like ability.",2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Grim Stalker,"cleric/oracle 7, magus 6, shaman 7, sorcerer/wizard 7, summoner/unchained summoner 6, witch 7",,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Morning Sun,"cleric/oracle 7, druid 7, inquisitor 6, shaman 7",,2275.0,0.0,0.0,0.0,2275.0
 Scroll of Remote Viewing,"medium 4, occultist 5, psychic 5, spiritualist 5",Gain psychic impressions from a distant location.,0.0,0.0,0.0,0.0,0.0
@@ -995,7 +995,7 @@ Scroll of Orb Of The Void,"cleric/oracle 8, sorcerer/wizard 8, psychic 8",Sphere
 Scroll of Frightful Aspect,"cleric/oracle 8, druid 8, sorcerer/wizard 8, witch 8, psychic 8","You take on a terrifying, Large-sized form of yourself and emit an aura that causes creatures to become shaken or frightened.",3000.0,3200.0,0.0,0.0,3000.0
 Scroll of Synapse Overload,"mesmerist 4, psychic 5",Deal 1d6 points of damage per level and stagger target for 1 minute.,0.0,0.0,0.0,0.0,0.0
 Scroll of Phasic Challenge,"cleric/oracle 8, psychic 8, shaman 8, sorcerer/wizard 8, spiritualist 6, witch 7",,3000.0,3200.0,0.0,0.0,3000.0
-Scroll of Death Clutch,"cleric/oracle 8, druid 9, psychic 8, sorcerer/wizard 8, witch 8", Rip out someone’s heart.,3000.0,3200.0,0.0,0.0,3000.0
+Scroll of Death Clutch,"cleric/oracle 8, druid 9, psychic 8, sorcerer/wizard 8, witch 8"," Rip out someone’s heart.",3000.0,3200.0,0.0,0.0,3000.0
 Scroll of Cloak of Chaos,cleric/oracle 8," +4 to AC, +4 resistance, and SR 25 against lawful spells.",3000.0,0.0,0.0,0.0,3000.0
 Scroll of Create Greater Undead,"cleric/oracle 8, sorcerer/wizard 8, shaman 8","Create shadows, wraiths, spectres, or devourers.",3000.0,3200.0,0.0,0.0,3000.0
 Scroll of Fire Storm,"cleric/oracle 8, druid 7, shaman 8",Deals 1d6/level fire damage.,2275.0,0.0,0.0,0.0,2275.0
@@ -1029,9 +1029,9 @@ Scroll of Symbol Of Dispelling,"cleric/oracle 8, sorcerer/wizard 8, witch 8",,30
 "Scroll of Spellcrash, Greater","cleric/oracle 8, sorcerer/wizard 8, witch 8",Target loses a 7th-level prepared spell or spell slot.,3000.0,3200.0,0.0,0.0,3000.0
 "Scroll of Umbral Infusion, Mass","cleric/oracle 8, sorcerer/wizard 8, witch 8",,3000.0,3200.0,0.0,0.0,3000.0
 Scroll of Rotting Alliance,"cleric/oracle 8, druid 8, inquisitor 6, occultist 6, witch 8",,3000.0,0.0,0.0,0.0,3000.0
-Scroll of Curse Of Night,"cleric/oracle 8, druid 8, sorcerer/wizard 8, witch 8", Curse an area with eternal night.,3000.0,3200.0,0.0,0.0,3000.0
-"Scroll of Curse Terrain, Supreme","cleric/oracle 8, druid 8, shaman 8, sorcerer/wizard 8, witch 8", Curse an area with seven deadly hazards.,3000.0,3200.0,0.0,0.0,3000.0
-Scroll of Sacramental Seal,cleric/oracle 8, Seal a creature away inside the spell’s focus.,3000.0,0.0,0.0,0.0,3000.0
+Scroll of Curse Of Night,"cleric/oracle 8, druid 8, sorcerer/wizard 8, witch 8"," Curse an area with eternal night.",3000.0,3200.0,0.0,0.0,3000.0
+"Scroll of Curse Terrain, Supreme","cleric/oracle 8, druid 8, shaman 8, sorcerer/wizard 8, witch 8"," Curse an area with seven deadly hazards.",3000.0,3200.0,0.0,0.0,3000.0
+Scroll of Sacramental Seal,cleric/oracle 8," Seal a creature away inside the spell’s focus.",3000.0,0.0,0.0,0.0,3000.0
 Scroll of Wandering Weather,"cleric/oracle 8, druid 8, shaman 8, sorcerer/wizard 8, witch 8",Control weather in a large area that moves with you.,3000.0,3200.0,0.0,0.0,3000.0
 Scroll of Counterbalancing Aura,cleric/oracle 8,Targets gain +4 to AC and saves; resist attacks and spells from neutral creatures.,3000.0,0.0,0.0,0.0,3000.0
 Scroll of Quintessence Mastery,"cleric/oracle 8, sorcerer/wizard 8, witch 8","Exercise limited control over the quintessence of an Outer Plane, creating or shaping terrain.",3000.0,3200.0,0.0,0.0,3000.0
@@ -1046,7 +1046,7 @@ Scroll of Implosion,"cleric/oracle 9, psychic 9", Inflict 10 damage/level to on
 Scroll of Soul Bind,"cleric/oracle 9, sorcerer/wizard 9, witch 9, shaman 9, psychic 9",Traps newly dead soul to prevent resurrection.,3825.0,4050.0,0.0,0.0,3825.0
 "Scroll of Spell Immunity, Greater Communal","cleric/oracle 9, psychic 9","As greater spell immunity, but you may divide the duration among creatures touched.",3825.0,0.0,0.0,0.0,3825.0
 Scroll of Ascension,"cleric/oracle 9, druid 9, sorcerer/wizard 9, witch 9, psychic 9",,3825.0,4050.0,0.0,0.0,3825.0
-Scroll of Massacre,"cleric/oracle 9, psychic 9, shaman 9, sorcerer/wizard 9, witch 9", Slaughter creatures in a line.,3825.0,4050.0,0.0,0.0,3825.0
+Scroll of Massacre,"cleric/oracle 9, psychic 9, shaman 9, sorcerer/wizard 9, witch 9"," Slaughter creatures in a line.",3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Parasitic Soul,"cleric/oracle 9, psychic 9, shaman 9, sorcerer/wizard 9, witch 9",,3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Judgment Undone,"cleric/oracle 9, psychic 9, shaman 9",Restores a petitioner to its mortal life.,3825.0,0.0,0.0,0.0,3825.0
 Scroll of Energy Drain,"cleric/oracle 9, sorcerer/wizard 9, shaman 9",Subject gains 2d4 negative levels.,3825.0,4050.0,0.0,0.0,3825.0
@@ -1154,7 +1154,7 @@ Scroll of Incessant Buzzing,"antipaladin 1, bard 1, psychic 1, shaman 1, sorcere
 Scroll of Lightfingers,"psychic 1, spiritualist 1, witch 1",,0.0,0.0,0.0,0.0,0.0
 Scroll of Hide Bruises,"antipaladin 1, bard 1, inquisitor 1, mesmerist 1, occultist 1, psychic 1, sorcerer/wizard 1, witch 1",,25.0,25.0,25.0,0.0,25.0
 Scroll of Fool's Gold,"bard 1, medium 1, mesmerist 1, psychic 1, sorcerer/wizard 1",,25.0,25.0,25.0,0.0,25.0
-Scroll of Echo,"bard 1, druid 1, medium 1, mesmerist 1, occultist 1, psychic 1, ranger 1, spiritualist 1, witch 1", Cause a sound to repeat itself.,25.0,0.0,25.0,25.0,25.0
+Scroll of Echo,"bard 1, druid 1, medium 1, mesmerist 1, occultist 1, psychic 1, ranger 1, spiritualist 1, witch 1"," Cause a sound to repeat itself.",25.0,0.0,25.0,25.0,25.0
 Scroll of Alter Self,"bard 2, sorcerer/wizard 2, witch 2, summoner/unchained summoner 2, alchemist 2, magus 2, shaman 2, psychic 2, mesmerist 2, medium 2",Assume form of a Small or Medium humanoid.,150.0,200.0,200.0,0.0,150.0
 Scroll of Blur,"bard 2, sorcerer/wizard 2, summoner/unchained summoner 2, alchemist 2, magus 2, occultist 2, psychic 2, mesmerist 2, spiritualist 2, medium 2",Attacks miss subject 20% of the time.,150.0,200.0,200.0,0.0,150.0
 Scroll of Cat's Grace,"bard 2, druid 2, ranger 2, sorcerer/wizard 2, summoner/unchained summoner 2, alchemist 2, magus 2, bloodrager 2, psychic 2, mesmerist 2, medium 2",Subject gains +4 to Dex for 1 min./level.,150.0,200.0,200.0,200.0,150.0
@@ -1249,7 +1249,7 @@ Scroll of Sure Casting,"bard 1, cleric/oracle 1, inquisitor 1, sorcerer/wizard 1
 Scroll of Shifted Steps,"alchemist 2, antipaladin 2, bard 2, inquisitor 2, magus 2, medium 2, mesmerist 2, occultist 2, psychic 2, sorcerer/wizard 2, spiritualist 2",Make a target sound as if elsewhere.,150.0,200.0,200.0,0.0,150.0
 Scroll of Assumed Likeness,"bard 1, magus 2, medium 1, mesmerist 1, occultist 2, psychic 2, sorcerer/wizard 2",,150.0,200.0,25.0,0.0,25.0
 Scroll of Garrulous Grin,"antipaladin 2, bard 2, inquisitor 2, mesmerist 2, psychic 2, shaman 2, spiritualist 2, witch 3",,0.0,0.0,200.0,0.0,200.0
-Scroll of Absurdity,"bard 2, medium 2, mesmerist 2, psychic 2, spiritualist 2", Threats seem like a ridiculous farce.,0.0,0.0,200.0,0.0,200.0
+Scroll of Absurdity,"bard 2, medium 2, mesmerist 2, psychic 2, spiritualist 2"," Threats seem like a ridiculous farce.",0.0,0.0,200.0,0.0,200.0
 Scroll of Crafter's Nightmare,"bard 2, druid 2, medium 1, mesmerist 2, occultist 2, psychic 2, sorcerer/wizard 2, spiritualist 2, witch 2",,150.0,200.0,200.0,0.0,150.0
 Scroll of Unsettling Presence,"bard 2, medium 1, mesmerist 2, occultist 2, psychic 2, shaman 2, sorcerer/wizard 2, witch 2",,150.0,200.0,200.0,0.0,150.0
 Scroll of Painful Revelation,"antipaladin 2, bard 2, mesmerist 2, psychic 2, sorcerer/wizard 2",,150.0,200.0,200.0,0.0,150.0
@@ -1354,7 +1354,7 @@ Scroll of Phantasmal Reminder,"antipaladin 3, bard 4, mesmerist 3, psychic 3, sh
 Scroll of Animal Purpose Training,"antipaladin 1, bard 2, druid 2, inquisitor 1, paladin 1, ranger 1, shaman 2, witch 1, psychic 1",Animal gains a new general purpose.,150.0,0.0,200.0,25.0,25.0
 Scroll of Memorize Page,"bard 1, sorcerer/wizard 1, witch 1, occultist 1, psychic 1, mesmerist 1",Target perfectly memorizes one page of information.,25.0,25.0,25.0,0.0,25.0
 Scroll of Scales Of Deflection,"bloodrager 2, magus 3, occultist 3, paladin 3, psychic 3, sorcerer/wizard 3, spiritualist 3, summoner/unchained summoner 3",,375.0,450.0,0.0,525.0,375.0
-Scroll of Assume Appearance,"alchemist 3, bard 3, medium 3, mesmerist 3, occultist 3, psychic 3, shaman 3, sorcerer/wizard 3, spiritualist 3, summoner/unchained summoner 3, witch 3", Use a creature’s corpse to adopt its form.,375.0,450.0,525.0,0.0,375.0
+Scroll of Assume Appearance,"alchemist 3, bard 3, medium 3, mesmerist 3, occultist 3, psychic 3, shaman 3, sorcerer/wizard 3, spiritualist 3, summoner/unchained summoner 3, witch 3"," Use a creature’s corpse to adopt its form.",375.0,450.0,525.0,0.0,375.0
 Scroll of Deja Vu,"bard 1, mesmerist 1, psychic 1, sorcerer/wizard 1",Make a creature repeat its actions.,25.0,25.0,25.0,0.0,25.0
 Scroll of Telempathic Projection,"mesmerist 1, psychic 1, spiritualist 1",Alter the target’s attitude or give bonuses to those interacting with the target.,0.0,0.0,0.0,0.0,0.0
 Scroll of Shroud Of Innocuity,"bard 3, medium 3, mesmerist 3, psychic 3, shaman 3, sorcerer/wizard 3, witch 3",,375.0,450.0,525.0,0.0,375.0
@@ -1458,11 +1458,11 @@ Scroll of Storm Sight,"cleric/oracle 2, druid 2, shaman 2, sorcerer/wizard 2, wi
 Scroll of Innocuous Shape,"alchemist 4, psychic 4, shaman 4, sorcerer/wizard 4, witch 4",,700.0,800.0,0.0,0.0,700.0
 Scroll of Deflect Blame,"bard 2, mesmerist 2, psychic 2, sorcerer/wizard 3",Blame someone else for your action.,375.0,450.0,200.0,0.0,200.0
 Scroll of Halfling Vengeance,"antipaladin 1, cleric/oracle 2, inquisitor 2",,150.0,0.0,0.0,0.0,150.0
-"Scroll of Assume Appearance, Greater","alchemist 4, bard 4, medium 4, mesmerist 4, occultist 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 4, summoner/unchained summoner 4, witch 4", Use a likeness to adopt a dead creature’s form.,700.0,800.0,1000.0,0.0,700.0
-Scroll of Dreadscape,"bard 3, medium 3, mesmerist 3, psychic 4, sorcerer/wizard 4", Surroundings and unfamiliar creatures seem like something out of a nightmare.,700.0,800.0,525.0,0.0,525.0
-Scroll of Horrific Doubles,"bard 4, bloodrager 4, medium 3, mesmerist 4, psychic 4, sorcerer/wizard 4", Call forth disturbing mirror images.,700.0,800.0,1000.0,0.0,700.0
+"Scroll of Assume Appearance, Greater","alchemist 4, bard 4, medium 4, mesmerist 4, occultist 4, psychic 4, shaman 4, sorcerer/wizard 4, spiritualist 4, summoner/unchained summoner 4, witch 4"," Use a likeness to adopt a dead creature’s form.",700.0,800.0,1000.0,0.0,700.0
+Scroll of Dreadscape,"bard 3, medium 3, mesmerist 3, psychic 4, sorcerer/wizard 4"," Surroundings and unfamiliar creatures seem like something out of a nightmare.",700.0,800.0,525.0,0.0,525.0
+Scroll of Horrific Doubles,"bard 4, bloodrager 4, medium 3, mesmerist 4, psychic 4, sorcerer/wizard 4"," Call forth disturbing mirror images.",700.0,800.0,1000.0,0.0,700.0
 Scroll of False Belief,"bard 2, mesmerist 2, psychic 2",Temporarily plant a false memory.,0.0,0.0,200.0,0.0,200.0
-Scroll of Phantasmal Asphyxiation,"medium 3, mesmerist 4, psychic 4, sorcerer/wizard 4, spiritualist 4, witch 4", Trick a creature into thinking it can’t breathe.,700.0,800.0,0.0,0.0,700.0
+Scroll of Phantasmal Asphyxiation,"medium 3, mesmerist 4, psychic 4, sorcerer/wizard 4, spiritualist 4, witch 4"," Trick a creature into thinking it can’t breathe.",700.0,800.0,0.0,0.0,700.0
 Scroll of Hidden Presence,"bard 2, inquisitor 2, mesmerist 2, psychic 2, sorcerer/wizard 2, witch 2",Prevent creatures from noticing your presence.,150.0,200.0,200.0,0.0,150.0
 Scroll of Elemental Speech,"bard 3, cleric/oracle 3, druid 2, sorcerer/wizard 2, mesmerist 3",Enables you to speak to elementals and some creatures.,150.0,200.0,525.0,0.0,150.0
 Scroll of Passing Fancy,"bard 2, mesmerist 2, psychic 2, sorcerer/wizard 2, witch 2",,150.0,200.0,200.0,0.0,150.0
@@ -1548,7 +1548,7 @@ Scroll of Nex's Secret Workshop,"medium 4, mesmerist 5, occultist 5, psychic 5, 
 Scroll of Stage Fright,"antipaladin 3, bard 3, inquisitor 3, mesmerist 3, psychic 3, sorcerer/wizard 3, witch 3",,375.0,450.0,525.0,0.0,375.0
 Scroll of Aura Of The Unremarkable,"bard 3, medium 2, mesmerist 3, psychic 3, sorcerer/wizard 4",Make actions seem mundane to nearby creatures.,700.0,800.0,525.0,0.0,525.0
 Scroll of Demanding Message,"bard 3, medium 3, mesmerist 3, occultist 4, psychic 3, sorcerer/wizard 4, witch 4",Send messages as per message with a suggestion for one creature.,700.0,800.0,525.0,0.0,525.0
-Scroll of Impossible Angles,"medium 3, mesmerist 4, occultist 4, psychic 5, sorcerer/wizard 5", Distort geometry in an area.,1125.0,1250.0,0.0,0.0,1125.0
+Scroll of Impossible Angles,"medium 3, mesmerist 4, occultist 4, psychic 5, sorcerer/wizard 5"," Distort geometry in an area.",1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Shamefully Overdressed,"bard 2, inquisitor 2, mesmerist 2, psychic 3",Force target to remove equipment.,0.0,0.0,200.0,0.0,200.0
 Scroll of Inveigle Person,"bard 3, mesmerist 3, psychic 3, sorcerer/wizard 4, witch 4",,700.0,800.0,525.0,0.0,525.0
 Scroll of Pillow Talk,"bard 3, inquisitor 3, mesmerist 3, psychic 3, sorcerer/wizard 3, witch 3",,375.0,450.0,525.0,0.0,375.0
@@ -1618,8 +1618,8 @@ Scroll of Triggered Hallucination,"bard 6, magus 6, mesmerist 6, occultist 6, ps
 Scroll of Lost Passage,"bard 4, mesmerist 3, psychic 4, sorcerer/wizard 4",,700.0,800.0,1000.0,0.0,700.0
 Scroll of Overlook,"bard 3, mesmerist 3, psychic 4",,0.0,0.0,525.0,0.0,525.0
 Scroll of Out Of Sight,"medium 3, mesmerist 3, psychic 4",,0.0,0.0,0.0,0.0,0.0
-Scroll of Decapitate,"inquisitor 5, magus 6, psychic 6, sorcerer/wizard 6", Turn a critical hit into a decapitation.,1650.0,1800.0,0.0,0.0,1650.0
-Scroll of Night Terrors,"bard 6, mesmerist 6, psychic 6, sorcerer/wizard 6, witch 6", Disturb a creature’s rest with dark dreams.,1650.0,1800.0,2400.0,0.0,1650.0
+Scroll of Decapitate,"inquisitor 5, magus 6, psychic 6, sorcerer/wizard 6"," Turn a critical hit into a decapitation.",1650.0,1800.0,0.0,0.0,1650.0
+Scroll of Night Terrors,"bard 6, mesmerist 6, psychic 6, sorcerer/wizard 6, witch 6"," Disturb a creature’s rest with dark dreams.",1650.0,1800.0,2400.0,0.0,1650.0
 Scroll of Hollow Heroism,"bard 3, bloodrager 4, inquisitor 4, medium 3, psychic 4, sorcerer/wizard 4, spiritualist 4, summoner/unchained summoner 4, witch 4",Provide a heroism effect that you can reverse at any time.,700.0,800.0,525.0,0.0,525.0
 Scroll of Rend Body II,psychic 6,,0.0,0.0,0.0,0.0,0.0
 Scroll of Symbol of Scrying,"cleric/oracle 5, sorcerer/wizard 5, witch 5, occultist 4",Triggered rune activates scrying sensor.,1125.0,1250.0,0.0,0.0,1125.0
@@ -1632,7 +1632,7 @@ Scroll of Seeds Of Influence,"bard 3, medium 3, mesmerist 3, psychic 4, sorcerer
 Scroll of Limited Wish,"sorcerer/wizard 7, psychic 7", Alters reality (within limits).,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Mage's Sword,"sorcerer/wizard 7, psychic 7", Floating magic blade strikes opponents.,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Mind Blank,"sorcerer/wizard 8, witch 8, psychic 7", Subject is protected from mental/emotional magic and scrying.,3000.0,3200.0,0.0,0.0,3000.0
-Scroll of Mad Sultan's Melody,"bard 3, mesmerist 4, occultist 4, psychic 4, sorcerer/wizard 4, witch 4", Bizarre cacophony fascinates eldritch creatures.,700.0,800.0,525.0,0.0,525.0
+Scroll of Mad Sultan's Melody,"bard 3, mesmerist 4, occultist 4, psychic 4, sorcerer/wizard 4, witch 4"," Bizarre cacophony fascinates eldritch creatures.",700.0,800.0,525.0,0.0,525.0
 Scroll of Project Image,"bard 6, sorcerer/wizard 7, occultist 6, psychic 7, mesmerist 6",Illusory double can talk and cast spells.,2275.0,2450.0,2400.0,0.0,2275.0
 Scroll of Reverse Gravity,"druid 8, sorcerer/wizard 7, psychic 7",Objects and creatures fall upward.,2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Sequester,"sorcerer/wizard 7, summoner 5, psychic 7, unchained summoner 6", Subject is invisible to sight and scrying; renders creature comatose.,2275.0,2450.0,0.0,0.0,2275.0
@@ -1707,7 +1707,7 @@ Scroll of Freedom,"sorcerer/wizard 9, psychic 9", Releases creature from impris
 "Scroll of Passing Fancy, Mass","bard 4, mesmerist 4, psychic 5, sorcerer/wizard 5, witch 5",,1125.0,1250.0,1000.0,0.0,1000.0
 Scroll of Imprisonment,"sorcerer/wizard 9, psychic 9", Entombs subject beneath the earth.,3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Mage's Disjunction,"sorcerer/wizard 9, psychic 9"," Dispels magic, disenchants magic items.",3825.0,4050.0,0.0,0.0,3825.0
-Scroll of Pessimism,"bard 4, medium 4, mesmerist 4, psychic 5, sorcerer/wizard 5, witch 5", Force a creature to see the negative side of things.,1125.0,1250.0,1000.0,0.0,1000.0
+Scroll of Pessimism,"bard 4, medium 4, mesmerist 4, psychic 5, sorcerer/wizard 5, witch 5"," Force a creature to see the negative side of things.",1125.0,1250.0,1000.0,0.0,1000.0
 Scroll of Time Stop,"sorcerer/wizard 9, psychic 9", You act freely for 1d4+1 rounds.,3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Wail of the Banshee,"sorcerer/wizard 9, witch 9, shaman 9, psychic 9", Deals 10 damage/level to 1 creature/level.,3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Weird,"sorcerer/wizard 9, psychic 9"," As phantasmal killer, but affects all within 30 ft.",3825.0,4050.0,0.0,0.0,3825.0
@@ -1715,7 +1715,7 @@ Scroll of Wish,"sorcerer/wizard 9, psychic 9"," As limited wish, but with fewer
 "Scroll of Suffocation, Mass","sorcerer/wizard 9, witch 9, psychic 9",One creature/level suffocates to death.,3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Wall of Suppression,"sorcerer/wizard 9, psychic 9",Creates wall that disables magic.,3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Transmute Blood To Acid,"sorcerer/wizard 9, psychic 9","Target takes acid damage each round, and its attackers take acid damage.",3825.0,4050.0,0.0,0.0,3825.0
-Scroll of Sleepwalking Suggestion,"bard 4, medium 3, mesmerist 4, psychic 5, sorcerer/wizard 5, witch 5", Cause a creature to perform a suggested action while asleep.,1125.0,1250.0,1000.0,0.0,1000.0
+Scroll of Sleepwalking Suggestion,"bard 4, medium 3, mesmerist 4, psychic 5, sorcerer/wizard 5, witch 5"," Cause a creature to perform a suggested action while asleep.",1125.0,1250.0,1000.0,0.0,1000.0
 Scroll of Akashic Form,psychic 9,"Store a copy of your body in the Akashic Record, and restore yourself to that form upon your death.",0.0,0.0,0.0,0.0,0.0
 Scroll of Contagious Suggestion,"bard 4, medium 4, mesmerist 4, occultist 5, psychic 5, sorcerer/wizard 5, witch 5",,1125.0,1250.0,1000.0,0.0,1000.0
 Scroll of Microcosm,psychic 9,"Trap creatures in a veiled mindscape permanently, causing their bodies to waste away in the real world.",0.0,0.0,0.0,0.0,0.0
@@ -1911,7 +1911,7 @@ Scroll of Death Pact,"bard 5, mesmerist 5, psychic 6, witch 6",,0.0,0.0,1625.0,0
 "Scroll of Demanding Message, Mass","bard 6, mesmerist 6, occultist 6, psychic 6, sorcerer/wizard 7, witch 7",Send messages as per message with one suggestion for each creature.,2275.0,2450.0,2400.0,0.0,2275.0
 Scroll of Campfire Wall,"bard 3, druid 2, ranger 2, sorcerer/wizard 3, occultist 2",Creates a shelter around a campfire.,150.0,450.0,525.0,200.0,150.0
 Scroll of Inveigle Monster,"bard 5, mesmerist 5, psychic 6, sorcerer/wizard 7, witch 7",,2275.0,2450.0,1625.0,0.0,1625.0
-Scroll of Phobia,"bard 5, mesmerist 5, psychic 6, sorcerer/wizard 6, witch 6", Induce an irrational fear in a creature to the point of madness.,1650.0,1800.0,1625.0,0.0,1625.0
+Scroll of Phobia,"bard 5, mesmerist 5, psychic 6, sorcerer/wizard 6, witch 6"," Induce an irrational fear in a creature to the point of madness.",1650.0,1800.0,1625.0,0.0,1625.0
 "Scroll of Hold Person, Mass","sorcerer/wizard 7, witch 7, psychic 7, mesmerist 6"," As hold person, but all within 30 ft.",2275.0,2450.0,0.0,0.0,2275.0
 Scroll of Chameleon Stride,ranger 2,Gives a +4 bonus on Stealth checks and concealment.,0.0,0.0,0.0,200.0,200.0
 Scroll of Cloak of Shade,"druid 1, ranger 1",Reduces effects of sun exposure and heat.,25.0,0.0,0.0,25.0,25.0
@@ -2177,7 +2177,7 @@ Scroll of Bladed Dash,"bard 2, magus 2",,0.0,0.0,200.0,0.0,200.0
 "Scroll of Bladed Dash, Greater","bard 5, magus 5",,0.0,0.0,1625.0,0.0,1625.0
 Scroll of Blast Barrier,"druid 4, ranger 3, sorcerer/wizard 3, witch 4",,375.0,450.0,0.0,525.0,375.0
 Scroll of Call Weapon,"bard 1, magus 1, ranger 1",,0.0,0.0,25.0,25.0,25.0
-Scroll of Maze Of Madness And Suffering,"psychic 9, sorcerer/wizard 9, witch 9", Send a target into a dangerous extradimensional maze.,3825.0,4050.0,0.0,0.0,3825.0
+Scroll of Maze Of Madness And Suffering,"psychic 9, sorcerer/wizard 9, witch 9"," Send a target into a dangerous extradimensional maze.",3825.0,4050.0,0.0,0.0,3825.0
 Scroll of Eldritch Conduit,"sorcerer/wizard 2, witch 2",,150.0,200.0,0.0,0.0,150.0
 "Scroll of Eldritch Conduit, Greater","sorcerer/wizard 6, witch 6",,1650.0,1800.0,0.0,0.0,1650.0
 Scroll of Fleshcurdle,sorcerer/wizard 2,,150.0,200.0,0.0,0.0,150.0
@@ -2252,7 +2252,6 @@ Scroll of Siege Of Trees,druid 7,Transforms Large trees into arboreal catapults 
 "Scroll of Siege of Trees, Greater",druid 9,"As siege of trees, but can transform Huge and Gargantuan trees into arboreal catapults of the same size.",3825.0,0.0,0.0,0.0,3825.0
 Scroll of Stabilize Powder,"sorcerer/wizard 2, witch 2",Ammunition in the targeted firearm is less likely to misfire.,150.0,200.0,0.0,0.0,150.0
 Scroll of Tar Pool,"druid 6, sorcerer/wizard 6, summoner 5, unchained summoner 6",Converts the top layer of the ground into hot tar.,1650.0,1800.0,0.0,0.0,1650.0
-Scroll of Targeted Bomb Admixture,alchemist 1,Empowers bombs you throw to deal more damage to a single creature.,0.0,0.0,0.0,0.0,0.0
 "Scroll of Castigate, Mass","inquisitor 5, mesmerist 5","As castigate, but affects multiple creatures.",0.0,0.0,0.0,0.0,0.0
 Scroll of Thunder Fire,"bard 2, sorcerer/wizard 2, witch 2",Ammunition in the targeted firearm deafens opponents.,150.0,200.0,200.0,0.0,150.0
 Scroll of Sepia Snake Sigil,"bard 3, sorcerer/wizard 3, witch 3, occultist 3",Creates a snake-shaped text symbol that immobilizes reader.,375.0,450.0,525.0,0.0,375.0
@@ -2709,16 +2708,16 @@ Scroll of Form Of The Exotic Dragon II,"druid 8, sorcerer/wizard 7",,2275.0,2450
 Scroll of Form Of The Exotic Dragon III,"druid 9, sorcerer/wizard 8",,3000.0,3200.0,0.0,0.0,3000.0
 Scroll of Tail Strike,"alchemist 4, antipaladin 3, bloodrager 3, medium 3, paladin 3, sorcerer/wizard 3",,375.0,450.0,0.0,525.0,375.0
 Scroll of Garden Of Peril,"druid 2, ranger 2, sorcerer/wizard 2, summoner/unchained summoner 2, witch 2",,150.0,200.0,0.0,200.0,150.0
-Scroll of Curse Of Fell Seasons,"druid 9, shaman 9, sorcerer/wizard 9, witch 9", Curse an area’s weather.,3825.0,4050.0,0.0,0.0,3825.0
-Scroll of Green Caress,"druid 6, ranger 4, shaman 6, witch 6", Slowly transform a creature into an inanimate plant.,1650.0,0.0,0.0,1000.0,1000.0
+Scroll of Curse Of Fell Seasons,"druid 9, shaman 9, sorcerer/wizard 9, witch 9"," Curse an area’s weather.",3825.0,4050.0,0.0,0.0,3825.0
+Scroll of Green Caress,"druid 6, ranger 4, shaman 6, witch 6"," Slowly transform a creature into an inanimate plant.",1650.0,0.0,0.0,1000.0,1000.0
 Scroll of Grasping Tentacles,"bloodrager 3, magus 3, sorcerer/wizard 3, summoner/unchained summoner 3, witch 3",,375.0,450.0,0.0,0.0,375.0
-Scroll of Life Blast,"druid 4, ranger 3, shaman 4", Drain life from local vegetation to launch a blast of positive energy.,700.0,0.0,0.0,525.0,525.0
-Scroll of Phantasmal Putrefaction,"medium 4, mesmerist 5, sorcerer/wizard 6, witch 6", Trick creatures into thinking their flesh is rotting.,1650.0,1800.0,0.0,0.0,1650.0
-Scroll of Pyrotechnic Eruption,"bloodrager 3, magus 4, occultist 4, sorcerer/wizard 4", Erupting flames burn a target several times.,700.0,800.0,0.0,0.0,700.0
-Scroll of Quick Change,"alchemist 2, bard 2, bloodrager 2, druid 2, inquisitor 2, magus 2, medium 2, mesmerist 2, occultist 2, ranger 2, shaman 2, sorcerer/wizard 2, spiritualist 2, summoner/unchained summoner 2, witch 2", Use change shape as a swift action and surprise foes.,150.0,200.0,200.0,200.0,150.0
+Scroll of Life Blast,"druid 4, ranger 3, shaman 4"," Drain life from local vegetation to launch a blast of positive energy.",700.0,0.0,0.0,525.0,525.0
+Scroll of Phantasmal Putrefaction,"medium 4, mesmerist 5, sorcerer/wizard 6, witch 6"," Trick creatures into thinking their flesh is rotting.",1650.0,1800.0,0.0,0.0,1650.0
+Scroll of Pyrotechnic Eruption,"bloodrager 3, magus 4, occultist 4, sorcerer/wizard 4"," Erupting flames burn a target several times.",700.0,800.0,0.0,0.0,700.0
+Scroll of Quick Change,"alchemist 2, bard 2, bloodrager 2, druid 2, inquisitor 2, magus 2, medium 2, mesmerist 2, occultist 2, ranger 2, shaman 2, sorcerer/wizard 2, spiritualist 2, summoner/unchained summoner 2, witch 2"," Use change shape as a swift action and surprise foes.",150.0,200.0,200.0,200.0,150.0
 "Scroll of Grease, Greater","bard 5, magus 5, sorcerer/wizard 5, summoner/unchained summoner 5",,1125.0,1250.0,1625.0,0.0,1125.0
-Scroll of Temporary Graft,"alchemist 3, bloodrager 3, magus 4, occultist 3, sorcerer/wizard 4", Graft a body part onto yourself to gain one of several benefits.,700.0,800.0,0.0,0.0,700.0
-Scroll of Verminous Transformation,"alchemist 6, shaman 7, witch 7", Partially transform into a swarm.,0.0,0.0,0.0,0.0,0.0
+Scroll of Temporary Graft,"alchemist 3, bloodrager 3, magus 4, occultist 3, sorcerer/wizard 4"," Graft a body part onto yourself to gain one of several benefits.",700.0,800.0,0.0,0.0,700.0
+Scroll of Verminous Transformation,"alchemist 6, shaman 7, witch 7"," Partially transform into a swarm.",0.0,0.0,0.0,0.0,0.0
 Scroll of Mischievous Shadow,"bard 4, magus 4, medium 3, shaman 4, sorcerer/wizard 4, spiritualist 4, summoner/unchained summoner 4, witch 4",,700.0,800.0,1000.0,0.0,700.0
 Scroll of Skin Tag,"alchemist 1, medium 1, occultist 1, shaman 1, sorcerer/wizard 1, witch 1",,25.0,25.0,0.0,0.0,25.0
 Scroll of Crime Of Opportunity,"antipaladin 1, mesmerist 1",Compel a target to take a criminal action.,0.0,0.0,0.0,0.0,0.0
@@ -2804,7 +2803,7 @@ Scroll of Release The Hounds,"bard 5, druid 5, shaman 5, sorcerer/wizard 5, summ
 Scroll of Secluded Grimoire,"magus 1, sorcerer/wizard 1",,25.0,25.0,0.0,0.0,25.0
 Scroll of Forest's Sense,"druid 4, ranger 3, shaman 4",Sense the location of a distant target that is near a plant or fungus.,700.0,0.0,0.0,525.0,525.0
 Scroll of Sealed Sending,sorcerer/wizard 5,,1125.0,1250.0,0.0,0.0,1125.0
-Scroll of Straitjacket,"inquisitor 4, occultist 4, sorcerer/wizard 5, summoner/unchained summoner 5", Restrain a creature’s arms and grant it a second saving throw against certain magic.,1125.0,1250.0,0.0,0.0,1125.0
+Scroll of Straitjacket,"inquisitor 4, occultist 4, sorcerer/wizard 5, summoner/unchained summoner 5"," Restrain a creature’s arms and grant it a second saving throw against certain magic.",1125.0,1250.0,0.0,0.0,1125.0
 Scroll of Invoke Primal Power,druid 5,,1125.0,0.0,0.0,0.0,1125.0
 Scroll of Mark Of Blood,"bloodrager 2, inquisitor 2, sorcerer/wizard 2, witch 2",,150.0,200.0,0.0,0.0,150.0
 Scroll of Tieldlara's Feint,bard 2,,0.0,0.0,200.0,0.0,200.0
@@ -2817,12 +2816,12 @@ Scroll of Sylvan Hideaway,"druid 3, ranger 3, shaman 3",,375.0,0.0,0.0,525.0,375
 Scroll of Earth Tremor,"bloodrager 3, druid 3, magus 3, shaman 3, sorcerer/wizard 3, witch 3",Unleash a tremor that creates difficult terrain and can knock foes down and damage them.,375.0,450.0,0.0,0.0,375.0
 Scroll of Explosion Of Rot,druid 4,Call forth a burst of decay that damages and can stagger targets.,700.0,0.0,0.0,0.0,700.0
 Scroll of Fey Form I,"alchemist 3, bloodrager 3, druid 3, magus 4, shaman 3, sorcerer/wizard 4, witch 4",Assume the form of a Small or Medium fey creature.,375.0,800.0,0.0,0.0,375.0
-Scroll of Fey Form II,"alchemist 5, druid 5, magus 6, shaman 5, sorcerer/wizard 6, witch 6", Assume the form of a Tiny or Large fey creature.,1125.0,1800.0,0.0,0.0,1125.0
+Scroll of Fey Form II,"alchemist 5, druid 5, magus 6, shaman 5, sorcerer/wizard 6, witch 6"," Assume the form of a Tiny or Large fey creature.",1125.0,1800.0,0.0,0.0,1125.0
 Scroll of Fey Form III,"alchemist 6, druid 6, shaman 6, sorcerer/wizard 7, witch 7",Assume the form of a Diminutive or Huge fey creature.,1650.0,2450.0,0.0,0.0,1650.0
 Scroll of Fey Form IV,"druid 8, shaman 8, sorcerer/wizard 9, witch 9",Assume the form of a powerful fey creature.,3000.0,4050.0,0.0,0.0,3000.0
 Scroll of Alluring Spores,"druid 2, shaman 2, witch 2",,150.0,0.0,0.0,0.0,150.0
 Scroll of Flashfire,"druid 3, shaman 3",Cause smoky fires to spring up to burn foes and set them alight.,375.0,0.0,0.0,0.0,375.0
-Scroll of Signs Of The Land,"druid 3, ranger 3, shaman 3", Learn up to three details about the surrounding territory.,375.0,0.0,0.0,525.0,375.0
+Scroll of Signs Of The Land,"druid 3, ranger 3, shaman 3"," Learn up to three details about the surrounding territory.",375.0,0.0,0.0,525.0,375.0
 Scroll of Greensight,"druid 2, ranger 2, shaman 2, sorcerer/wizard 2",Grant a target the ability to see through plant matter as if it were transparent.,150.0,200.0,0.0,200.0,150.0
 Scroll of Burning Sands,"druid 1, ranger 1, shaman 1, sorcerer/wizard 1, witch 1",,25.0,25.0,0.0,25.0,25.0
 Scroll of Magical Beast Shape,sorcerer/wizard 7,Assume the form of a magical beast.,2275.0,2450.0,0.0,0.0,2275.0
@@ -2849,7 +2848,7 @@ Scroll of Callback,"shaman 2, sorcerer/wizard 2, witch 2",Teleport a familiar or
 "Scroll of Callback, Greater","shaman 5, sorcerer/wizard 5, witch 5",Teleport a familiar or spirit animal from miles away to your side when it is injured.,1125.0,1250.0,0.0,0.0,1125.0
 Scroll of With The Wind,"bloodrager 2, druid 2, magus 2, occultist 2, ranger 2, sorcerer/wizard 2, spiritualist 2",Protect a target from being blown away by wind of less than windstorm forc,150.0,200.0,0.0,200.0,150.0
 Scroll of Bleed For Your Master,"antipaladin 2, druid 3, ranger 3, sorcerer/wizard 3, witch 3",Compel a companion to take damage for you.,375.0,450.0,0.0,525.0,375.0
-Scroll of Cave Fangs,"druid 5, shaman 5, witch 5", Create a trap from stalactites and stalagmites.,1125.0,0.0,0.0,0.0,1125.0
+Scroll of Cave Fangs,"druid 5, shaman 5, witch 5"," Create a trap from stalactites and stalagmites.",1125.0,0.0,0.0,0.0,1125.0
 Scroll of Companion Transposition,"antipaladin 4, druid 5, paladin 4, ranger 4, shaman 5, sorcerer/wizard 5, witch 5","Swap places with your animal companion, familiar, or spirit animal via teleportation.",1125.0,1250.0,0.0,1000.0,1000.0
 Scroll of Alluring Light,"bard 1, witch 1",,0.0,0.0,25.0,0.0,25.0
 Scroll of Soothing Mud,"druid 3, ranger 3, shaman 3",Create restorative mud that heals hit point and ability damage.,375.0,0.0,0.0,525.0,375.0
@@ -2858,7 +2857,7 @@ Scroll of Infuse Self,"alchemist 3, bard 3, bloodrager 3, magus 3, sorcerer/wiza
 Scroll of Tidal Surge,"druid 5, shaman 5",Create a surge of water to bludgeon foes and extinguish fires.,1125.0,0.0,0.0,0.0,1125.0
 Scroll of Litany Of The Red Crusader,"antipaladin 1, inquisitor 2, paladin 1",,0.0,0.0,0.0,25.0,25.0
 Scroll of Mage's Evasion,sorcerer/wizard 9,,3825.0,4050.0,0.0,0.0,3825.0
-Scroll of Vine Strike,"alchemist 2, antipaladin 2, bloodrager 2, druid 2, ranger 2, shaman 2, sorcerer/wizard 2", Enhance one of your natural or unarmed attacks with thorny vine growth.,150.0,200.0,0.0,200.0,150.0
+Scroll of Vine Strike,"alchemist 2, antipaladin 2, bloodrager 2, druid 2, ranger 2, shaman 2, sorcerer/wizard 2"," Enhance one of your natural or unarmed attacks with thorny vine growth.",150.0,200.0,0.0,200.0,150.0
 Scroll of Winter Grasp,"druid 2, shaman 2, witch 2",Create a slippery sheet of ice on the ground.,150.0,0.0,0.0,0.0,150.0
 Scroll of Shadow Invasion,"magus 4, sorcerer/wizard 4, summoner 4",Create an area of darkness that strengthens shadow spells and attracts kytons.,700.0,800.0,0.0,0.0,700.0
 Scroll of Planar Aegis,"druid 5, occultist 4, ranger 3, sorcerer/wizard 5, summoner 4",,1125.0,1250.0,0.0,525.0,525.0

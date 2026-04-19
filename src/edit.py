@@ -78,6 +78,21 @@ name_key = name_lower.str.replace("’", "'", regex=False)
 group_lower = df["Group"].fillna("").str.lower()
 
 forced_potions_scrolls_names = {
+	"feather token, campsite",
+	"feather token, anchor",
+	"feather token, bird",
+	"feather token, fan",
+	"feather token, catapult",
+	"feather token, ram",
+	"feather token, siege tower",
+	"feather token, swan boat",
+	"feather token, tree",
+	"feather token, whip",
+	"feather token, floating feather",
+	"feather token, lance",
+	"feather token, sky hook",
+	"feather token, tar and feathers",
+	"feather token, returning raven",
 	"feather token (anchor)",
 	"universal solvent",
 	"ioun torch",
