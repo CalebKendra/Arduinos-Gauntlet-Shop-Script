@@ -1,0 +1,83 @@
+BoonID,BoonName,Type,Buff,Debuff
+1,Berserker Spark,Martial,+3 melee attack rolls,-1 AC penalty
+2,Arcane Overflow,Caster,+1 caster level on evocation spells,-1 caster level on all other spell schools
+3,Iron Lungs,General,"+6 bonus on Swim and Climb checks",-3 penalty on all Knowledge checks
+4,Stone Skin Lite,General,DR 2/adamantine,-10 feet base land speed
+5,Swift Hunter,General,+15 feet base land speed,-1 penalty on Fortitude and Will saves
+6,Unbridled Adrenaline,Martial,+4 bonus on damage rolls while below half HP,-2 penalty on damage rolls while above half HP
+7,Cold Discipline,General,Resist cold 25,Vulnerable to fire
+8,Fire Temper,General,Resist fire 25,Vulnerable to cold
+9,Shadow Veil,General,+6 bonus on Stealth checks,Cannot be invisible
+10,Brutal Presence,General,+4 bonus on Intimidate checks,-1 penalty on Reflex saves
+11,Spell Battery,Caster,+3 bonus on concentration checks,-2 penalty on initiative
+12,Shielded Mind,General,+2 bonus on Will saves,-2 Dexterity
+13,Long Strider,Martial,+5 feet reach with melee weapons,-3 penalty on attacks of opportunity
+14,Cocky,Martial,+4 bonus on attacks when enemies are flat-footed,Enemies gain Concealment against you
+15,Photosynthesis ,General,You do not breathe,-10 feet base land speed
+16,Total Gamble,General,+3 bonus on initiative,"If you do not go first in the initiative order, you go last"
+17,Stalwart Frame,General,+3 bonus on Fortitude saves,-2 AC penalty
+18,Cat Reflex,General,+3 bonus on Reflex saves,-1 DC penalty to your spells
+19,Mystic Ward,Martial,+2 bonus on saves against spells,-3 penalty on weapon damage rolls
+20,Arc Runner,Martial,+40 feet speed while charging,-2 AC penalty for 1 round after you begin a charge
+21,Grim Resolve,General,+4 bonus on fear saves,-1 penalty on charm and compulsion saves
+22,Creepy,General,Heal 2d8 HP after touching an enemy,-1 touch AC penalty
+23,Rending Edge,Martial,+4 bonus on critical confirmation rolls,-1 penalty on non-critical threat attack rolls and damage
+24,Armor Driller,Martial,Ignore 2 points of armor bonus on target,Take 2 damage per HD if your melee attack misses
+25,Mana Siphon,Caster,"As a free action, regain a used spell slot",Spell DCs reduced by 2 for 1d4 rounds after use
+26,Hawkeye,Martial,+2 bonus on ranged attack rolls,-2 Constitution
+27,Linebreaker,Martial,"As a swift action, bull rush an opponent",You take 1 damage per HD when doing so
+28,Posh Fencer,Martial,+4 bonus to disarm opponents,-2 penalty on grapple and disarm attempts against you
+29,Grappler Knot,Martial,+5 bonus on initial grapple checks,Enemies get +2 to escape grapples from you
+30,Jittery,General,+6 bonus on Acrobatics,You can't jump
+31,Against All Odds,Martial,+3 bonus to AC when surrounded by 3 or more opponents,-2 AC penalty when surrounded by 2 or less opponents
+32,Lazy Eye,General,Cannot be blinded and gaze attacks do not effect you,-2 initiative penalty
+33,Dawn Gaze,Martial,+3 bonus on attack rolls in bright light,-2 AC penalty in dim light or darkness
+34,Spirit Echo,General,+5 bonus on Knowledge religion checks,-1 penalty on Knowledge arcana checks
+35,Arcane Echo,General,+5 bonus on Knowledge arcana checks,-1 penalty on Knowledge religion checks
+36,Poison Nerves,General,+4 bonus on saves vs poison,"If you fail an initial poison save, it effects you until the end of combat"
+37,Plague Ward,General,+4 bonus on saves vs disease,-2 penalty on Touch attack rolls only
+38,Dumb,Martial,+2 AC after full-round attacking,-4 Intelligence
+39,Duelist Grace,Martial,+2 dodge bonus to AC with one handed weapon,-2 penalty on damage with one handed weapons
+40,Lazy,Caster,+4 deflection bonus to AC after not moving for 1 round,-15 feet base land speed
+41,Bone Deep,General,+6 bonus to CMD,-2 AC penalty
+42,Unpredictable,General,Constant Freedom of Movement spell,5% chance to fall prone for every 5 ft moved (1d100)
+43,Opportunist,Martial,+3 bonus on attacks of opportunity,-2 penalty on initiative
+44,Mercy Blade,Martial,+3 bonus on nonlethal attack rolls,Lethal damage you deal is reduced by 2
+45,Focus Crystal,Caster,+2 DC on the first spell you cast each combat,-1 DC on subsequent spells
+46,Scroll Savant,Caster,+4 bonus on Use Magic Device for scrolls,-2 penalty on Use Magic Device for wands
+47,Wand Savant,Caster,+4 bonus on Use Magic Device for wands,-2 penalty on Use Magic Device for scrolls
+48,Thorn Blood,Martial,Deal 2 damage to attackers you successfully land a melee attack,You take 1 damage every time you successfully land a melee attack
+49,Silver Tongue,General,+4 bonus on bluff checks,-1 penalty on attack rolls
+50,Siege Nerves,Martial,+4 bonus on sunder attempts,Objects you sunder gain 1 bonus AC vs you
+51,Spell Knife,Caster,+2 bonus on touch attack spells,-2 AC penalty for 1 round after attempting a ranged touch attack
+52,Arrow Sense,Martial,+2 dodge bonus vs melee attacks,-2 AC penalty vs ranged attacks
+53,Grave Calm,General,+5 bonus on saves vs death effects,-2 penalty on initiative
+54,Wild Surge,Caster,+3 bonus on caster level checks to overcome spell resistnace,-1 DC penalty to your spells
+55,Primal Fang,Martial,+4 bonus on natural attack damage,-2 penalty on manufactured weapon attack rolls
+56,Ruin Chant,Caster,+3 bonus on sonic spell damage,-2 penalty on fire spell damage
+57,Ash Pact,Caster,+3 bonus on fire spell damage,-2 penalty on cold spell damage
+58,Frost Pact,Caster,+3 bonus on cold spell damage,-2 penalty on electricity spell damage
+59,Volt Pact,Caster,+3 bonus on electricity spell damage,-2 penalty on sonic spell damage
+60,Battle Prayer,General,+2 morale bonus on attack rolls while adjacent to ally,-2 attack bonus when fighting alone
+61,Lone Wolf,Martial,+3 bonus on damage while no ally adjacent,-2 AC penalty when adjacent to allies
+62,Pack Guard,General,+2 bonus to AC per adjacent ally up to +6,-2 AC penalty
+63,Feinting Wind,Martial,+3 bonus on initiative,-2 penalty on attack rolls
+64,Second Wind,Martial,Gain 2 temporary HP per level equal after killing enemy,-1 penalty on all saves until end of next turn
+65,Heroic Gamble,Martial,Reroll one failed attack per combat,"On the subsequent d20 roll, roll twice and take the worse result"
+66,Skirmisher,Martial,+2 bonus to AC after moving 10 feet or more,-2 AC penalty if you moved 5 feet or less
+67,Blood Mage,Caster,Add 1d6 damage to a spell once per combat,You take 1d8 damage while using this boon
+68,Iron Will,General,+3 bonus on Will saves,-2 penalty on Reflex saves
+69,Relentless,General,+2 bonus on Fortitude saves,Haste spells and Speed weapons have no effect on you
+70,Attack Power,Martial,+4 bonus on damage,-2 penalty on attack rolls
+71,War Drummer,General,+1 bonus on initiative for allies,-1 penalty on iniative for yourself
+72,Quick Study,General,+4 bonus on one Knowledge check per encounter,-1 penalty on attack rolls for that encounter
+73,Piercing Spell,Caster,+2 bonus on caster level checks to overcome spell resistnace,Ranged Spells have 1/4th their normal spell range (rounded down to nearest 5 feet)
+74,Molten Core,Martial,Gain fire resistance 15 and +2 melee damage,Take 1d6 cold damage at start of turn in cold areas
+75,Frozen Core,General,Gain cold resistance 15 and +1 AC,Take 1d6 fire damage at start of turn in hot areas
+76,Guardian Thread,General,+2 bonus on all saves while above half HP,-1 penalty on saves while below half HP
+77,Desperation Thread,General,+3 bonus on all saves while below half HP,-1 penalty on saves while above half HP
+78,Soul Anchor,General,"The first time you drop below 1 HP each combat, reset your HP to max","When your HP is restored, lose your limbs past your elbows and knees"
+79,Flurry Code,Martial,+1 extra attack on full attack once per combat (stacks with other extra attacks),-4 penalty on attacks next round
+80,Cursed Speech,Caster,"Once per combat, cast a Fireball spell in a 30 foot cone that does 2d6 sonic damage per caster level (DC uses your casting ability modifier)",Take half of the damage that it does to all opponents
+81,Runic Backbone,General,+3 bonus on saves vs paralysis and petrification,-1 penalty on Reflex saves
+82,Fate Thread,General,"Once per combat, add +3 on one d20 roll",-1 on all subsequent d20 rolls
