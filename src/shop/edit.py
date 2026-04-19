@@ -3,7 +3,10 @@ from pathlib import Path
 from collections import Counter
 import re
 
-df = pd.read_csv("source_csv/magicitems.csv")
+SCRIPT_DIR = Path(__file__).resolve().parent
+SOURCE_CSV_DIR = SCRIPT_DIR / "source_csv"
+
+df = pd.read_csv(SOURCE_CSV_DIR / "magicitems.csv")
 
 
 def most_common_spell_level(spell_level_text):
@@ -71,7 +74,7 @@ for output_file in [
 	"potions_and_scrolls.csv",
 	"uniques.csv",
 ]:
-	Path(output_file).unlink(missing_ok=True)
+	(SCRIPT_DIR / output_file).unlink(missing_ok=True)
 
 name_lower = df["Name"].fillna("").str.lower()
 name_key = name_lower.str.replace("’", "'", regex=False)
@@ -275,7 +278,7 @@ mask_remove_from_uniques = (
 all_other_items_df = all_other_items_df[~mask_remove_from_uniques].copy()
 
 # Add extra potions from source_csv/potions.csv into Name and PriceValue.
-potions_source_df = pd.read_csv("source_csv/potions.csv")
+potions_source_df = pd.read_csv(SOURCE_CSV_DIR / "potions.csv")
 extra_potions = pd.DataFrame(columns=df.columns)
 extra_potions["Name"] = potions_source_df["Potion or Oil"].fillna("").astype(str).str.strip()
 extra_potions["PriceValue"] = pd.to_numeric(
@@ -301,7 +304,7 @@ potions_and_scrolls_df = pd.concat(
 )
 
 # Add extra scrolls from source_csv/scrolls.csv.
-scrolls_source_df = pd.read_csv("source_csv/scrolls.csv")
+scrolls_source_df = pd.read_csv(SOURCE_CSV_DIR / "scrolls.csv")
 extra_scrolls = pd.DataFrame(columns=df.columns)
 extra_scrolls["Name"] = scrolls_source_df["name"].fillna("").astype(str).str.strip()
 extra_scrolls["Group"] = "Scroll"
@@ -736,9 +739,9 @@ ability_and_defense_df = pd.concat(
 	[ability_and_defense_df, weapon_special_df], ignore_index=True
 )
 
-ability_and_defense_df.to_csv("big_six.csv", index=False)
-potions_and_scrolls_df.to_csv("potions_and_scrolls.csv", index=False)
-all_other_items_df.to_csv("uniques.csv", index=False)
+ability_and_defense_df.to_csv(SCRIPT_DIR / "big_six.csv", index=False)
+potions_and_scrolls_df.to_csv(SCRIPT_DIR / "potions_and_scrolls.csv", index=False)
+all_other_items_df.to_csv(SCRIPT_DIR / "uniques.csv", index=False)
 
 print("Created files:")
 print(f"- big_six.csv: {len(ability_and_defense_df)} rows")

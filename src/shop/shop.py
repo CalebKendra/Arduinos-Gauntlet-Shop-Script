@@ -8,6 +8,7 @@ from rich.table import Table
 
 
 CONSOLE = Console()
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 
 # Change this from 1 to 20 to bias the shop toward weaker or stronger items.
@@ -133,7 +134,7 @@ BIG_SIX_WEAPON_SPECIAL_MODIFIER = 0.07
 
 CSV_CONFIGS = [
 	{
-		"path": Path("big_six.csv"),
+		"path": SCRIPT_DIR / "big_six.csv",
 		"label": "Big Six",
 		"token_csv_modifier": BIG_SIX_TOKEN_CSV_MODIFIER,
 		"token_level_cost_scale": BIG_SIX_TOKEN_LEVEL_COST_SCALE,
@@ -148,7 +149,7 @@ CSV_CONFIGS = [
 		"range_max": BIG_SIX_ITEMVALUE_RANGE_MAX,
 	},
 	{
-		"path": Path("potions_and_scrolls.csv"),
+		"path": SCRIPT_DIR / "potions_and_scrolls.csv",
 		"token_csv_modifier": POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER,
 		"label": "Potions, Scrolls, and Temporary Tools",
 		"token_level_cost_scale": POTIONS_AND_SCROLLS_TOKEN_LEVEL_COST_SCALE,
@@ -163,7 +164,7 @@ CSV_CONFIGS = [
 		"range_max": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_MAX,
 	},
 	{
-		"path": Path("uniques.csv"),
+		"path": SCRIPT_DIR / "uniques.csv",
 		"label": "Uniques",
 		"token_csv_modifier": UNIQUES_TOKEN_CSV_MODIFIER,
 		"token_level_cost_scale": UNIQUES_TOKEN_LEVEL_COST_SCALE,

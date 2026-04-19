@@ -4,6 +4,7 @@ import pandas as pd
 
 
 CSV_FILES = ["big_six.csv", "potions_and_scrolls.csv", "uniques.csv"]
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 # Lower values compress ItemValue toward the mean; higher values spread it out.
 ITEMVALUE_STDDEV_SCALE = 1.0
@@ -92,7 +93,7 @@ def process_file(path: Path) -> None:
 
 def main() -> None:
 	for file_name in CSV_FILES:
-		path = Path(file_name)
+		path = SCRIPT_DIR / file_name
 		if not path.exists():
 			print(f"Skipped {file_name}: file not found")
 			continue
