@@ -1,5 +1,5 @@
 BoonName,Type,Buff,Debuff
-Berserker Spark,Martial,+3 melee attack rolls,-1 AC penalty
+Berserker Spark,Martial,+2 melee attack rolls,-1 AC penalty
 Arcane Overflow,Caster,+1 caster level on evocation spells,-1 caster level on all other spell schools
 Iron Lungs,General,+6 bonus on Swim and Climb checks,-3 penalty on all Knowledge checks
 Stone Skin Lite,General,DR 2/adamantine,-10 feet base land speed
@@ -40,7 +40,7 @@ Dumb,Martial,+2 AC after full-round attacking,-4 Intelligence
 Duelist Grace,Martial,+2 dodge bonus to AC with one handed weapon,-2 penalty on damage with one handed weapons
 Lazy,Caster,+4 deflection bonus to AC after not moving for 1 round,-15 feet base land speed
 Bone Deep,General,+6 bonus to CMD,-2 AC penalty
-Unpredictable,General,Constant Freedom of Movement spell,5% chance to fall prone for every 5 ft moved (1d100)
+Unpredictable,General,You have a constant Freedom of Movement spell,5% chance to fall prone for every 5 ft moved (1d100)
 Opportunist,Martial,+3 bonus on attacks of opportunity,-2 penalty on initiative
 Mercy Blade,Martial,+3 bonus on nonlethal attack rolls,Lethal damage you deal is reduced by 2
 Focus Crystal,Caster,+2 DC on the first spell you cast each combat,-1 DC on subsequent spells
@@ -69,7 +69,7 @@ Blood Mage,Caster,Add 1d6 damage to a spell once per combat,You take 1d8 damage 
 Iron Will,General,+3 bonus on Will saves,-2 penalty on Reflex saves
 Relentless,General,+2 bonus on Fortitude saves,Haste spells and Speed weapons have no effect on you
 Attack Power,Martial,+4 bonus on damage,-2 penalty on attack rolls
-War Drummer,General,+1 bonus on initiative for allies,-1 penalty on iniative for yourself
+War Drummer,General,+1 bonus on initiative for allies,-1 penalty on initiative for yourself
 Quick Study,General,+4 bonus on one Knowledge check per encounter,-1 penalty on attack rolls for that encounter
 Piercing Spell,Caster,+2 bonus on caster level checks to overcome spell resistnace,Ranged Spells have 1/4th their normal spell range (rounded down to nearest 5 feet)
 Molten Core,Martial,Gain fire resistance 15 and +2 melee damage,Take 1d6 cold damage at start of turn in cold areas
@@ -84,7 +84,7 @@ Fate Thread,General,"Once per combat, add +3 on one d20 roll",-1 on all subseque
 Spell Roulette,Caster,"At the start of each combat, gain +4 caster level to one random spell school",You are unable to cast one random spell school for that combat
 Cataclysm Sigil,Caster,"Once per combat, your next damaging spell deals maximum damage",After casting it you are staggered for 3 rounds
 Void Throat,Caster,+3 DC on all sonic and language-dependent spells,You cannot speak above a whisper and verbal spells have 20 percent failure chance
-Mirror Soul,Caster,"Whenever you cast a single-target spell with a saving throw, copy it to a second target within 20 feet","If they both save, die"
+Mirror Soul,Caster,"Whenever you cast a single-target spell with a saving throw, copy it to a second target within 20 feet","If they both succeed on all of their saving throws, die"
 Blinkcast Frenzy,Caster,"After casting a spell, teleport up to 30 feet as a free action","You leave behind a phantom of yourself when you teleport for 1 round. When this phantom takes damage, you take half the damage. When this phantom is the target of any non-damaging effects, they have a 50% chance to effect you "
 Leech Conduit,Caster,"When your spell drops an enemy to 0 HP, regain a spent spell slot one level lower","When using that spell slot, cast a random spell from any class at that level."
 Paradox Prep,Caster,"At combat start, roll 1d3-1 and gain that value as a bonus to spell DCs","When you cast a spell, there is a 10% chance you forget who what your casting. In this case, cast a random spell from any level you currently have prepared/know, target a random foe/ally with this spell."
@@ -95,10 +95,17 @@ Oathbreaker Charge,Martial,"Once per combat, charge as a free action and make a 
 Execution Spiral,Martial,"As a full-round action, make an attack roll on an opponent. If you hit this attack roll, make another attack roll. This continues until you miss or run out of in range opponents","If you miss, you are stunned for 1 round (you miss your next turn)."
 Piercing shot,Martial,"As a free action you can elect to make all your attacks this round be piercing shots. If your ranged weapon attacks beat your targets AC by 5 or more, they pierce through them in a straight line. That attack will move to the next target in line at a -2 penalty. This will continue on with an additional -2 penalty for each pierced foe until an attack misses.",You take a -4 to attack rolls when you make a piercing shots.
 Ricochet Rain,Martial,Your ranged weapon attacks bounce once to a second target within 15 feet for half damage,"On a natural 1 with a ranged attack, you hit a random ally in range instead. If you are full-round attacking, attack that ally with your remaining ranged attacks."
-Bloodrush Engine,Martial,"Once per combat, gain +2 attacks on a full attack action. (stacks with other extra attacks)",Take a -7 on all attack rolls.
+Bloodrush Engine,Martial,"Once per combat, gain +2 attacks on a full attack action. (stacks with other extra attacks)",Take a -6 on all attack rolls.
 Last Stand Protocol,Martial,"The first time each combat you would drop below 1 HP, stay at 1 HP","When this effect ends, you immediately fall unconscious for 1d4 rounds"
 Skullcracker Tempo,Martial,Critical threat range of your weapon increases by 2 (stacks with other crit range effects),"On any confirmed critical hit, you take 1d10 untyped damage per weapon critical multiplier"
 Kicking Mania,Martial,+8 bonus on combat manuvers,"Whenever your maneuver fails by 5 or more, you provoke attacks of opportunity from every threatened enemy"
 Warpath Roulette,Martial,"At the start of combat, roll 1d4 and gain that as a bonus to attack and damage rolls","At the start of combat, roll 1d4 and take that as a penalty to AC and all saving throws"
-Guardian Roulette,Martial,"At the start of combat, roll 1d4 and gain that as a bonus to AC and all saving throws","At the start of combat, roll 1d4 and take that as a penalty to attack and damage rolls",,
+Guardian Roulette,Martial,"At the start of combat, roll 1d4 and gain that as a bonus to AC and all saving throws","At the start of combat, roll 1d4 and take that as a penalty to attack and damage rolls"
 Gorums Last Stand,Martial,You gain a +10 bonus to all attack rolls,"If you miss, die"
+Mobile Cover,General,"Once per day as an immediate action, create a 5ft iron wall on one side of your square","The wall moves when you move. For example, if you place the wall along the southern side of your square and walk 10 feet to the east, it will also move 10 feet to the east. The wall can be destroyed normally."
+Moment of Idiocracy,General,"As a free action, you can elect to be confused for one turn. If you roll to babble incoherently, gain a +6 to all abilities for 1 round.","If you roll to attack the nearest creature, attack the nearest ally instead."
+Unstable Stalker,General,Start each combat invisible,"Once your invisibility ends, you are shaken for the rest of combat"
+Sleepy Adventurer,General,+2 initiative,You start each combat prone
+Immobilizing Concentration,General,Gain spell resistance = 10 + HD,"Every time your spell resistance prevents a spell from effecting you, lose 2 Dexterity"
+Calculated,General,You can never have the Flat-Footed condition,-3 initiative
+Hubris,General,You have a constant Blur spell,"Every time you take damage, take 2 more of that type"
