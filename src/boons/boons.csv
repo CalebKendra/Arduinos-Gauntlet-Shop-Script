@@ -44,8 +44,8 @@ Unpredictable,General,You have a constant Freedom of Movement spell,5% chance to
 Opportunist,Martial,+3 bonus on attacks of opportunity,-2 penalty on initiative
 Mercy Blade,Martial,+3 bonus on nonlethal attack rolls,Lethal damage you deal is reduced by 2
 Focus Crystal,Caster,+2 DC on the first spell you cast each combat,-1 DC on subsequent spells
-Scroll Savant,Caster,+4 bonus on Use Magic Device for scrolls,-2 penalty on Use Magic Device for wands
-Wand Savant,Caster,+4 bonus on Use Magic Device for wands,-2 penalty on Use Magic Device for scrolls
+Scroll Savant,Martial,+5 bonus on Use Magic Device for scrolls,-2 penalty on Use Magic Device for wands
+Wand Savant,Martial,+5 bonus on Use Magic Device for wands,-2 penalty on Use Magic Device for scrolls
 Thorn Blood,Martial,Deal 2 damage to attackers you successfully land a melee attack,You take 1 damage every time you successfully land a melee attack
 Silver Tongue,General,+4 bonus on bluff checks,-1 penalty on attack rolls
 Siege Nerves,Martial,+4 bonus on sunder attempts,Objects you sunder gain 1 bonus AC vs you
@@ -87,7 +87,7 @@ Void Throat,Caster,+3 Caster Level on all sonic and language-dependent spells,Yo
 Mirror Soul,Caster,"Whenever you cast a single-target spell with a saving throw, copy it to a second target within 20 feet","If they both succeed on all of their saving throws, die"
 Blinkcast Frenzy,Caster,"After casting a spell, teleport up to 30 feet as a free action","You leave behind a phantom of yourself when you teleport for 1 round. When this phantom takes damage, you take half the damage. When this phantom is the target of any non-damaging effects, they have a 50% chance to effect you "
 Leech Conduit,Caster,"When your spell drops an enemy to 0 HP, regain a spent spell slot one level lower","When using that spell slot, cast a random spell from any class at that level."
-Paradox Prep,Caster,"At combat start, roll 1d3-1 and gain that value as a bonus to spell DCs","When you cast a spell, there is a 10% chance you forget who what your casting. In this case, cast a random spell from any level you currently have prepared/know, target a random foe/ally with this spell."
+Paradox Prep,Caster,"At combat start, roll 1d3-1 and gain that value as a bonus to spell DCs","When you cast a spell, there is a 10% chance you forget what spell you were casting. In this case, cast a random spell from any level you currently have prepared/know, target a random foe/ally with this spell."
 Entropy Crown,Caster,"Once per combat as a swift action, force all enemies in 20 feet to reroll their next save and take the worse result",You must reroll your next successful save and take the worse result
 Blood Quill,Caster,You may spend 10 HP to cast one prepared spell without consuming the slot,Whenever you cast a spell normally you also lose 2 HP per spell level
 Apocalypse Whisper,Caster,"Once per combat, cast a spell as if quickened without increasing slot level",Afterward you are silenced for 2 rounds and cannot cast spells with verbal components

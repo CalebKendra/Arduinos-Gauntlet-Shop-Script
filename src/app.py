@@ -11,13 +11,18 @@ from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
     QFrame,
+    QGridLayout,
     QGroupBox,
     QHBoxLayout,
     QLabel,
+    QListWidget,
+    QListWidgetItem,
     QMainWindow,
     QMessageBox,
     QPushButton,
     QSpinBox,
+    QSpacerItem,
+    QSizePolicy,
     QTableWidget,
     QTableWidgetItem,
     QTabWidget,
@@ -33,8 +38,9 @@ BOONS_CSV_PATH = SCRIPT_DIR / "boons" / "boons.csv"
 
 
 # Change this from 1 to 20 to bias the shop toward weaker or stronger items.
-CHARACTER_LEVEL = 1
+CHARACTER_LEVEL = 2
 CHARACTER_TYPE = "Martial"
+MAX_LEVEL = 10
 
 # Set to True to show target ItemValue and per-row ItemValue numbers.
 DEBUG_MODE = False
@@ -389,6 +395,18 @@ QPushButton#DangerButton:hover {
     background: #1d2e25;
 }
 
+QPushButton#ResetButton {
+    background: #5c1a1a;
+    border: 2px solid #c41e3a;
+    color: #ffcccc;
+    font-weight: 700;
+}
+
+QPushButton#ResetButton:hover {
+    background: #7a2626;
+    border: 2px solid #e63946;
+}
+
 QPushButton#BigSixButton {
     background: #4a3510;
     border: 1px solid #7f5a16;
@@ -512,6 +530,34 @@ QLabel#StartValueLabel {
     padding: 6px 12px;
 }
 
+QGroupBox#StartInventorySection {
+    border: 1px solid #355e49;
+    background: #0b1510;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+QGroupBox#StartInventorySection::title {
+    color: #e8fff0;
+    background: #173423;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 11pt;
+    font-weight: 800;
+}
+
+QListWidget#InventoryList {
+    background: #07100b;
+    border: 1px solid #2f5f44;
+    border-radius: 8px;
+    color: #f0fff4;
+    padding: 6px;
+}
+
+QListWidget#InventoryList::item {
+    padding: 6px;
+}
+
 QWidget#BoonsRoot {
     background: #07100b;
 }
@@ -545,8 +591,9 @@ QLabel#BoonCardDebuff {
 """
 
 class ShopTab(QWidget):
-    def __init__(self) -> None:
+    def __init__(self, main_window: "MainWindow") -> None:
         super().__init__()
+        self.main_window = main_window
         self.tokens = 10
         self.character_level = int(CHARACTER_LEVEL)
         self.current_offers: dict[str, list[dict]] = {}
@@ -564,11 +611,16 @@ class ShopTab(QWidget):
         self.reroll_button.setObjectName("DangerButton")
         self.reroll_button.clicked.connect(self.reroll_shop)
 
+        self.finish_button = QPushButton("Finish Shopping")
+        self.finish_button.setObjectName("PrimaryButton")
+        self.finish_button.clicked.connect(self.finish_shopping)
+
         top_row = QHBoxLayout()
         top_row.addWidget(self.token_label)
         top_row.addWidget(self.level_label)
         top_row.addStretch(1)
         top_row.addWidget(self.reroll_button)
+        top_row.addWidget(self.finish_button)
 
         root_layout = QVBoxLayout(self)
 
@@ -580,6 +632,29 @@ class ShopTab(QWidget):
         root_layout.addWidget(subtitle)
 
         root_layout.addLayout(top_row)
+
+        # Inventory section for selling items
+        inventory_section = QGroupBox("Purchased Items (Sell Back)")
+        inventory_section.setObjectName("StartInventorySection")
+        inventory_layout = QVBoxLayout(inventory_section)
+        
+        self.purchased_items_list = QListWidget()
+        self.purchased_items_list.setObjectName("InventoryList")
+        self.purchased_items_list.setMaximumHeight(120)
+        
+        sell_button_row = QHBoxLayout()
+        sell_button_row.addStretch(1)
+        self.sell_selected_button = QPushButton("Sell Selected Item")
+        self.sell_selected_button.setObjectName("DangerButton")
+        self.sell_selected_button.clicked.connect(self.sell_selected_from_inventory)
+        sell_button_row.addWidget(self.sell_selected_button)
+        sell_button_row.addStretch(1)
+        
+        inventory_layout.addWidget(self.purchased_items_list)
+        inventory_layout.addLayout(sell_button_row)
+        
+        self.inventory_section = inventory_section
+        self.shop_sections: dict[str, QGroupBox] = {}
 
         for config in CSV_CONFIGS:
             label = str(config["label"])
@@ -606,8 +681,22 @@ class ShopTab(QWidget):
             section_layout.addWidget(buy_button)
 
             self.tables_by_label[label] = table
-            root_layout.addWidget(section)
+            self.shop_sections[label] = section
 
+        # Create 2x2 grid layout for shop sections
+        grid_layout = QGridLayout()
+        grid_layout.setSpacing(16)
+        
+        # Top-left: Big Six
+        grid_layout.addWidget(self.shop_sections.get("Big Six"), 0, 0)
+        # Top-right: Potions, Scrolls
+        grid_layout.addWidget(self.shop_sections.get("Potions, Scrolls, and Temporary Tools"), 0, 1)
+        # Bottom-left: Uniques
+        grid_layout.addWidget(self.shop_sections.get("Uniques"), 1, 0)
+        # Bottom-right: Purchased Items
+        grid_layout.addWidget(self.inventory_section, 1, 1)
+
+        root_layout.addLayout(grid_layout)
         root_layout.addStretch(1)
         self.update_token_label()
         self.update_level_label()
@@ -653,8 +742,16 @@ class ShopTab(QWidget):
         self.level_label.setText(f"Level {self.character_level}")
 
     def set_character_level(self, level: int) -> None:
-        self.character_level = max(1, min(20, int(level)))
+        self.character_level = max(1, min(MAX_LEVEL, int(level)))
         self.update_level_label()
+        self.generate_shop()
+
+    def start_new_shop_session(self) -> None:
+        # Every new shop visit starts with a fresh token bank + retained tokens
+        self.tokens = 10 + self.main_window.retained_tokens
+        self.main_window.retained_tokens = 0
+        self.update_token_label()
+        self.update_purchased_items_list()
         self.generate_shop()
 
     def reset_tokens(self) -> None:
@@ -668,6 +765,24 @@ class ShopTab(QWidget):
         self.tokens -= 1
         self.update_token_label()
         self.generate_shop()
+
+    def finish_shopping(self) -> None:
+        # Retain half of unspent tokens, rounded down
+        retained = self.tokens // 2
+        self.main_window.retained_tokens += retained
+        
+        # Check if already at max level
+        if self.character_level >= MAX_LEVEL:
+            # Completing shopping at max level ends progression; future attempts are blocked on Start.
+            self.main_window.has_completed_max_level_run = True
+            self.main_window.mark_run_completed()
+            self.main_window.tabs.setCurrentIndex(self.main_window.START_TAB_INDEX)
+            return
+        # Increment level for next run, capped at MAX_LEVEL
+        if self.character_level < MAX_LEVEL:
+            self.character_level += 1
+        self.main_window.mark_run_completed()
+        self.main_window.tabs.setCurrentIndex(self.main_window.START_TAB_INDEX)
 
     def generate_shop(self) -> None:
         character_level = self.character_level
@@ -829,7 +944,51 @@ class ShopTab(QWidget):
         self.tokens -= cost
         self.update_token_label()
         offer["Purchased"] = True
+        self.main_window.record_purchased_item(label, offer)
         self._refresh_all_row_states()
+        self.update_purchased_items_list()
+
+    def update_purchased_items_list(self) -> None:
+        """Update the list of items available to sell."""
+        self.purchased_items_list.clear()
+        for i, item in enumerate(self.main_window.inventory_items):
+            item_name = str(item.get("Name", "Unknown Item"))
+            token_value = item.get("Tokens", 0)
+            sell_price = token_value // 2
+            self.purchased_items_list.addItem(
+                QListWidgetItem(f"{item_name} (Sell for {sell_price} tokens)")
+            )
+
+    def sell_selected_from_inventory(self) -> None:
+        """Sell the selected item from the purchased items list."""
+        selected_row = self.purchased_items_list.currentRow()
+        if selected_row < 0:
+            QMessageBox.warning(self, "No Selection", "Please select an item to sell.")
+            return
+
+        if selected_row >= len(self.main_window.inventory_items):
+            return
+
+        item = self.main_window.inventory_items[selected_row]
+        item_name = str(item.get("Name", "Unknown Item"))
+        token_value = item.get("Tokens", 0)
+        sell_price = token_value // 2
+
+        # Add tokens back
+        self.tokens += sell_price
+        self.update_token_label()
+
+        # Remove from inventory
+        self.main_window.inventory_items.pop(selected_row)
+
+        # Update the list
+        self.update_purchased_items_list()
+
+        QMessageBox.information(
+            self,
+            "Item Sold",
+            f"Sold {item_name} for {sell_price} tokens.\n\nTokens: {self.tokens}",
+        )
 
 
 class BoonCard(QFrame):
@@ -971,6 +1130,11 @@ class BoonsTab(QWidget):
         allowed_types = {self.character_type, "General"}
 
         pool = [boon for boon in self.boons if boon["Type"] in allowed_types]
+        
+        # Filter out boons already taken in this run
+        taken_boon_names = {boon["BoonName"] for boon in self.main_window.inventory_boons}
+        pool = [boon for boon in pool if boon["BoonName"] not in taken_boon_names]
+        
         if len(pool) < 3:
             self.current_rolled_boons = []
             self._render_boon_cards()
@@ -1007,36 +1171,45 @@ class BoonsTab(QWidget):
     def confirm_boon(self) -> None:
         if self.selected_boon is None:
             return
-        self.main_window.tabs.setCurrentIndex(0)
+        self.main_window.record_selected_boon(self.selected_boon)
+        self.main_window.shop_tab.start_new_shop_session()
+        self.main_window.tabs.setCurrentIndex(self.main_window.SHOP_TAB_INDEX)
 
 
 class StartTab(QWidget):
     def __init__(self, main_window: "MainWindow") -> None:
         super().__init__()
         self.main_window = main_window
-        self.selected_level = int(CHARACTER_LEVEL)
+        self.current_level = int(CHARACTER_LEVEL)
         self.selected_type = CHARACTER_TYPE.strip().title()
 
         self.setObjectName("StartRoot")
 
-        title = QLabel("Run Setup")
+        title = QLabel("Arduino's Gauntlet")
         title.setObjectName("SectionTitle")
         title.setAlignment(Qt.AlignHCenter)
-        subtitle = QLabel("Set your level and fighting style before shopping or rolling boons.")
+        subtitle = QLabel("Begin shopping and rolling boons for your next combat.")
         subtitle.setObjectName("SectionSubtitle")
         subtitle.setAlignment(Qt.AlignHCenter)
 
-        self.level_value_label = QLabel()
-        self.level_value_label.setObjectName("StartValueLabel")
-        self.level_value_label.setAlignment(Qt.AlignHCenter)
+        self.reset_button = QPushButton("RESET RUN")
+        self.reset_button.setObjectName("ResetButton")
+        self.reset_button.setMaximumWidth(120)
+        self.reset_button.clicked.connect(self.on_reset_run_clicked)
 
-        level_down_button = QPushButton("LEVEL -")
-        level_down_button.setObjectName("StartSquareButton")
-        level_down_button.clicked.connect(lambda: self.change_level(-1))
+        reset_row = QHBoxLayout()
+        reset_row.addStretch(1)
+        reset_row.addWidget(self.reset_button)
+        reset_row.setContentsMargins(0, 0, 20, 0)
 
-        level_up_button = QPushButton("LEVEL +")
-        level_up_button.setObjectName("StartSquareButton")
-        level_up_button.clicked.connect(lambda: self.change_level(1))
+        title_row = QHBoxLayout()
+        title_row.addStretch(1)
+        title_row.addWidget(title)
+        title_row.addStretch(1)
+
+        self.level_display_label = QLabel()
+        self.level_display_label.setObjectName("StartValueLabel")
+        self.level_display_label.setAlignment(Qt.AlignHCenter)
 
         self.martial_button = QPushButton("MARTIAL")
         self.martial_button.setObjectName("StartTypeButton")
@@ -1052,17 +1225,6 @@ class StartTab(QWidget):
         self.type_value_label.setObjectName("StartValueLabel")
         self.type_value_label.setAlignment(Qt.AlignHCenter)
 
-        level_section = QGroupBox("Level")
-        level_section.setObjectName("StartSelectorSection")
-        level_buttons = QHBoxLayout()
-        level_buttons.addWidget(level_down_button)
-        level_buttons.addWidget(level_up_button)
-        level_layout = QVBoxLayout(level_section)
-        level_layout.addWidget(self.level_value_label)
-        level_layout.addStretch(1)
-        level_layout.addLayout(level_buttons)
-        level_layout.addStretch(1)
-
         type_section = QGroupBox("Type")
         type_section.setObjectName("StartSelectorSection")
         type_buttons = QHBoxLayout()
@@ -1074,14 +1236,20 @@ class StartTab(QWidget):
         type_layout.addLayout(type_buttons)
         type_layout.addStretch(1)
 
+        self.type_section = type_section
+
+        selectors_col = QVBoxLayout()
+        selectors_col.setSpacing(16)
+        selectors_col.addWidget(self.level_display_label)
+        selectors_col.addWidget(self.type_section)
+
         selectors_row = QHBoxLayout()
         selectors_row.setSpacing(24)
         selectors_row.addStretch(1)
-        selectors_row.addWidget(level_section)
-        selectors_row.addWidget(type_section)
+        selectors_row.addLayout(selectors_col)
         selectors_row.addStretch(1)
 
-        apply_button = QPushButton("Apply Settings")
+        apply_button = QPushButton("Continue to Boons")
         apply_button.setObjectName("PrimaryButton")
         apply_button.clicked.connect(self.apply_settings)
         apply_button.setMinimumHeight(44)
@@ -1091,20 +1259,54 @@ class StartTab(QWidget):
         actions.addWidget(apply_button)
         actions.addStretch(1)
 
-        layout = QVBoxLayout(self)
-        layout.addStretch(2)
-        layout.addWidget(title)
-        layout.addWidget(subtitle)
-        layout.addSpacing(10)
-        layout.addLayout(selectors_row)
-        layout.addSpacing(10)
-        layout.addLayout(actions)
-        layout.addStretch(3)
+        self.inventory_section = QGroupBox("Inventory")
+        self.inventory_section.setObjectName("StartInventorySection")
+        self.inventory_section.setVisible(False)
+        self.inventory_section.setMinimumHeight(420)
 
-        self.refresh_start_display()
+        self.boon_inventory_list = QListWidget()
+        self.boon_inventory_list.setObjectName("InventoryList")
+        self.item_inventory_list = QListWidget()
+        self.item_inventory_list.setObjectName("InventoryList")
 
-    def change_level(self, delta: int) -> None:
-        self.selected_level = max(1, min(20, self.selected_level + delta))
+        boon_column = QVBoxLayout()
+        boon_title = QLabel("Boons Taken")
+        boon_title.setObjectName("SectionSubtitle")
+        boon_column.addWidget(boon_title)
+        boon_column.addWidget(self.boon_inventory_list)
+
+        item_column = QVBoxLayout()
+        item_title = QLabel("Items Purchased")
+        item_title.setObjectName("SectionSubtitle")
+        item_column.addWidget(item_title)
+        item_column.addWidget(self.item_inventory_list)
+
+        inventory_layout = QHBoxLayout(self.inventory_section)
+        inventory_layout.setSpacing(16)
+        inventory_layout.addLayout(boon_column)
+        inventory_layout.addLayout(item_column)
+
+        self.inventory_offset_spacer = QSpacerItem(
+            0,
+            0,
+            QSizePolicy.Minimum,
+            QSizePolicy.Fixed,
+        )
+
+        self.root_layout = QVBoxLayout(self)
+        self.root_layout.addStretch(1)
+        self.root_layout.addItem(self.inventory_offset_spacer)
+        self.root_layout.addLayout(reset_row)
+        self.root_layout.addLayout(title_row)
+        self.root_layout.addWidget(subtitle)
+        self.root_layout.addSpacing(10)
+        self.root_layout.addLayout(selectors_row)
+        self.root_layout.addSpacing(10)
+        self.root_layout.addLayout(actions)
+        self.root_layout.addSpacing(12)
+        self.root_layout.addWidget(self.inventory_section, 1)
+        self.root_layout.addStretch(1)
+
         self.refresh_start_display()
 
     def select_type(self, character_type: str) -> None:
@@ -1115,33 +1317,185 @@ class StartTab(QWidget):
         self.refresh_start_display()
 
     def refresh_start_display(self) -> None:
-        self.level_value_label.setText(f"Level {self.selected_level}")
+        # Show level and type when past starting level, just level at start
+        level_text = f"Level {self.current_level}"
+        if self.current_level > CHARACTER_LEVEL:
+            level_text += f" - {self.selected_type}"
+        # Add retained tokens info if any
+        if self.main_window.retained_tokens > 0:
+            level_text += f" | +{self.main_window.retained_tokens} Tokens"
+        self.level_display_label.setText(level_text)
         self.type_value_label.setText(f"Type {self.selected_type}")
+        # Only allow type selection at starting level
+        can_select_type = self.current_level == CHARACTER_LEVEL
+        self.type_section.setVisible(can_select_type)
+        self.martial_button.setEnabled(can_select_type)
+        self.caster_button.setEnabled(can_select_type)
         self.martial_button.setChecked(self.selected_type == "Martial")
         self.caster_button.setChecked(self.selected_type == "Caster")
 
     def apply_settings(self) -> None:
-        self.main_window.shop_tab.set_character_level(self.selected_level)
+        if self.current_level >= MAX_LEVEL and self.main_window.has_completed_max_level_run:
+            QMessageBox.information(
+                self,
+                "Max Level Reached",
+                f"You already completed your level {MAX_LEVEL} run. Reset to start a new run.",
+            )
+            return
+        self.main_window.shop_tab.set_character_level(self.current_level)
         self.main_window.boons_tab.set_character_type(self.selected_type)
-        self.main_window.tabs.setCurrentIndex(1)
+        self.main_window.tabs.setCurrentIndex(self.main_window.BOONS_TAB_INDEX)
+
+    def update_level_display(self, level: int) -> None:
+        self.current_level = level
+        self.refresh_start_display()
+        # Disable type selection when level changes from starting level
+        can_select_type = self.current_level == CHARACTER_LEVEL
+        self.martial_button.setEnabled(can_select_type)
+        self.caster_button.setEnabled(can_select_type)
+
+    def on_reset_run_clicked(self) -> None:
+        choice = QMessageBox.warning(
+            self,
+            "Reset Run",
+            "Are you sure you want to reset your run? All boons and items will be lost and you will start back at level 2.",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
+        if choice == QMessageBox.Yes:
+            self.main_window.reset_run()
+
+    def update_inventory_panel(
+        self,
+        boons_taken: list[dict[str, str]],
+        items_purchased: list[dict[str, str]],
+        visible: bool,
+    ) -> None:
+        self.inventory_section.setVisible(visible)
+        self.inventory_offset_spacer.changeSize(
+            0,
+            24 if visible else 0,
+            QSizePolicy.Minimum,
+            QSizePolicy.Fixed,
+        )
+        self.root_layout.invalidate()
+        if not visible:
+            return
+
+        self.boon_inventory_list.clear()
+        self.boon_inventory_list.setUniformItemSizes(False)
+        list_width = self.boon_inventory_list.viewport().width() if self.boon_inventory_list.viewport().width() > 0 else 280
+        
+        for boon in boons_taken:
+            boon_name = boon.get("BoonName", "Unknown Boon")
+            boon_buff = boon.get("Buff", "")
+            boon_debuff = boon.get("Debuff", "")
+            
+            # Create container widget with fixed width for proper text wrapping
+            container = QWidget()
+            container.setFixedWidth(list_width - 20)
+            container.setStyleSheet("background: transparent;")
+            container_layout = QVBoxLayout(container)
+            container_layout.setContentsMargins(6, 6, 6, 6)
+            container_layout.setSpacing(2)
+            
+            # Create a label with HTML for colored text
+            boon_label = QLabel()
+            boon_label.setText(
+                f"{boon_name}<br/><span style='color: #00FF00;'>+ {boon_buff}</span><br/><span style='color: #FF0000;'>- {boon_debuff}</span>"
+            )
+            boon_label.setWordWrap(True)
+            container_layout.addWidget(boon_label)
+            
+            # Add item and set the container as its widget
+            item = QListWidgetItem()
+            self.boon_inventory_list.addItem(item)
+            self.boon_inventory_list.setItemWidget(item, container)
+            # Calculate actual height needed
+            item.setSizeHint(container.sizeHint())
+
+        self.item_inventory_list.clear()
+        for item in items_purchased:
+            item_name = str(item.get("Name", "Unknown Item"))
+            item_source = str(item.get("Section", ""))
+            self.item_inventory_list.addItem(
+                QListWidgetItem(f"{item_name} ({item_source})" if item_source else item_name)
+            )
 
 
 class MainWindow(QMainWindow):
+    START_TAB_INDEX = 0
+    BOONS_TAB_INDEX = 1
+    SHOP_TAB_INDEX = 2
+
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowTitle("Arduino's Gauntlet Shop And Boons")
+        self.inventory_boons: list[dict[str, str]] = []
+        self.inventory_items: list[dict[str, str]] = []
+        self.has_completed_run = False
+        self.has_completed_max_level_run = False
+        self.retained_tokens: int = 0
+
+        self.setWindowTitle("Arduino's Gauntlet")
         self.resize(1380, 1200)
         self.setMinimumHeight(1100)
 
         self.tabs = QTabWidget()
-        self.shop_tab = ShopTab()
+        self.shop_tab = ShopTab(self)
         self.boons_tab = BoonsTab(self)
         self.start_tab = StartTab(self)
 
         self.tabs.addTab(self.start_tab, "Start")
-        self.tabs.addTab(self.shop_tab, "Shop")
         self.tabs.addTab(self.boons_tab, "Boons")
+        self.tabs.addTab(self.shop_tab, "Shop")
+        self.tabs.tabBar().hide()
+        self.tabs.setCurrentIndex(self.START_TAB_INDEX)
         self.setCentralWidget(self.tabs)
+        self.start_tab.update_inventory_panel(
+            self.inventory_boons,
+            self.inventory_items,
+            self.has_completed_run,
+        )
+
+    def record_selected_boon(self, boon: dict[str, str]) -> None:
+        self.inventory_boons.append(dict(boon))
+
+    def record_purchased_item(self, section_label: str, offer: dict[str, object]) -> None:
+        self.inventory_items.append(
+            {
+                "Name": str(offer.get("Name", "Unknown Item")),
+                "Section": section_label,
+                "Tokens": int(offer.get("Tokens", 0)),
+            }
+        )
+
+    def mark_run_completed(self) -> None:
+        self.has_completed_run = True
+        # Update level display after shop completion
+        self.start_tab.update_level_display(self.shop_tab.character_level)
+        self.start_tab.update_inventory_panel(
+            self.inventory_boons,
+            self.inventory_items,
+            self.has_completed_run,
+        )
+
+    def reset_run(self) -> None:
+        """Reset the entire run back to the start."""
+        self.inventory_boons = []
+        self.inventory_items = []
+        self.has_completed_run = False
+        self.has_completed_max_level_run = False
+        self.retained_tokens = 0
+        self.shop_tab.character_level = int(CHARACTER_LEVEL)
+        self.shop_tab.update_level_label()
+        self.shop_tab.generate_shop()
+        self.start_tab.current_level = int(CHARACTER_LEVEL)
+        self.start_tab.refresh_start_display()
+        self.start_tab.update_inventory_panel(
+            self.inventory_boons,
+            self.inventory_items,
+            self.has_completed_run,
+        )
 
 
 def main() -> None:
