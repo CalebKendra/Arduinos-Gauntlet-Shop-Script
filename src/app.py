@@ -1,0 +1,1156 @@
+from __future__ import annotations
+
+import csv
+import random
+from pathlib import Path
+
+import pandas as pd
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
+from PySide6.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QFrame,
+    QGroupBox,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QSpinBox,
+    QTableWidget,
+    QTableWidgetItem,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
+)
+
+from shop import shop as shop_logic
+
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+BOONS_CSV_PATH = SCRIPT_DIR / "boons" / "boons.csv"
+
+
+# Change this from 1 to 20 to bias the shop toward weaker or stronger items.
+CHARACTER_LEVEL = 1
+CHARACTER_TYPE = "Martial"
+
+# Set to True to show target ItemValue and per-row ItemValue numbers.
+DEBUG_MODE = False
+
+#
+# TARGET VALUE SCALING SETTINGS
+#
+
+# Determines the rate at which target ItemValue increasingly grows by level.
+# Linear means the target ItemValue at level 20 will reach the ending value and at level 1 will match the starting value, with the curve shape determined by the exponent.
+# 1.0 = linear, >1.0 grows slower early and faster later, <1.0 does the opposite.
+TARGET_VALUE_SCALING_EXPONENT = 2.5
+
+# Starting and ending target ItemValue for the level curve.
+# Level 1 uses the starting value and level 20 uses the ending value.
+TARGET_VALUE_START = 0.0
+TARGET_VALUE_END = 75.0
+
+#
+# ITEMVALUE RANGE SETTINGS
+#
+
+# Controls how wide the offered ItemValue band is around the level target.
+# Example: 15 means roughly target +/- 15 ItemValue.
+BIG_SIX_ITEMVALUE_RANGE_WIDTH = 1.5
+POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH = 5.0
+UNIQUES_ITEMVALUE_RANGE_WIDTH = 0.5
+
+# Maximum width allowed for each CSV's ItemValue band.
+BIG_SIX_ITEMVALUE_RANGE_MAX = 15.0
+POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_MAX = 10.0
+UNIQUES_ITEMVALUE_RANGE_MAX = 5.0
+
+# Additional width added per level above 1.
+# Example: 1.0 means level 10 adds +9 width.
+BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.5
+POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.7
+UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.25
+
+# Controls how strongly items closer to target ItemValue are favored during selection.
+# 1.0 = standard inverse-distance weighting, >1.0 = strongly prefer items near target,
+# <1.0 = items more evenly weighted regardless of distance.
+TARGET_ITEMVALUE_CONCENTRATION = 1.2
+
+#
+# ITEMS PER SECTION SETTINGS
+#
+
+# Number of items to show per shop section.
+BIG_SIX_ITEMS_PER_SECTION = 3
+POTIONS_AND_SCROLLS_ITEMS_PER_SECTION = 4
+UNIQUES_ITEMS_PER_SECTION = 5
+
+#
+# GROUP TOKEN COST SETTINGS
+#
+
+# Per-CSV token modifiers applied to every item in that CSV.
+# 1.0 = no change, 1.2 = 20% more expensive, 0.8 = 20% cheaper.
+BIG_SIX_TOKEN_CSV_MODIFIER = 1.7
+POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER = 0.5
+UNIQUES_TOKEN_CSV_MODIFIER = 1.6
+
+# Per-CSV level cost scales.
+# 1.0 = no change across levels, 1.2 = gets 20% more expensive by level 20,
+# 0.8 = gets 20% cheaper by level 20.
+BIG_SIX_TOKEN_LEVEL_COST_SCALE = 1.0
+POTIONS_AND_SCROLLS_TOKEN_LEVEL_COST_SCALE = 1.0
+UNIQUES_TOKEN_LEVEL_COST_SCALE = 1.0
+
+
+# Specific item group token cost modifiers.
+# JSON-style token modifiers applied after the base relative price is calculated.
+# Keys are checked as substrings against the item group, and matching entries multiply the final token cost.
+BIG_SIX_TOKEN_SPECIAL_MODIFIERS = {
+    "Weapon": 0.7,
+    "Armor": 0.7,
+}
+POTIONS_AND_SCROLLS_TOKEN_SPECIAL_MODIFIERS = {
+}
+UNIQUES_TOKEN_SPECIAL_MODIFIERS = {
+}
+
+#
+# TOKEN COST COMPARED TO ITEMVALUE SETTINGS
+#
+
+# Items near the TOKEN_BASE_COST_AT_TARGET variable have this token cost amount before modifiers.
+TOKEN_BASE_COST_AT_TARGET = 4.0
+# Cost shift applied per 1x range width above target for each CSV.
+# Higher values make items above target ramp up faster.
+BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
+POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
+UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
+
+# Cost shift applied per 1x range width below target for each CSV.
+# Higher values make items below target drop faster.
+BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 1.0
+POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 2.0
+UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 2.5
+
+#
+# ITEM SELECTION AMOUNT RATIO SETTINGS
+#
+
+# Lower than 1.0 makes scrolls less likely to be selected in Potions and Scrolls.
+# Example: 0.5 means scrolls get half the normal selection weight.
+POTIONS_AND_SCROLLS_SCROLL_WEIGHT_MULTIPLIER = 0.08
+
+# Lower than 1.0 makes potions less likely to be selected in Potions and Scrolls.
+# Example: 0.5 means potions get half the normal selection weight.
+POTIONS_AND_SCROLLS_POTION_WEIGHT_MULTIPLIER = 0.5
+
+# Special Ability percent chance modifier. Lower than 1.0 makes that group less likely.
+# These only affect the Big Six table, where Armor and Weapon rows are weighted separately.
+BIG_SIX_ARMOR_SPECIAL_MODIFIER = 0.07
+BIG_SIX_WEAPON_SPECIAL_MODIFIER = 0.07
+
+
+CSV_CONFIGS = [
+    {
+        "path": SCRIPT_DIR / "shop" / "big_six.csv",
+        "label": "Big Six",
+        "token_csv_modifier": BIG_SIX_TOKEN_CSV_MODIFIER,
+        "token_level_cost_scale": BIG_SIX_TOKEN_LEVEL_COST_SCALE,
+        "token_shift_above_target": BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET,
+        "token_shift_below_target": BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET,
+        "token_special_modifiers": BIG_SIX_TOKEN_SPECIAL_MODIFIERS,
+        "armor_special_modifier": BIG_SIX_ARMOR_SPECIAL_MODIFIER,
+        "weapon_special_modifier": BIG_SIX_WEAPON_SPECIAL_MODIFIER,
+        "items_per_section": BIG_SIX_ITEMS_PER_SECTION,
+        "range_width": BIG_SIX_ITEMVALUE_RANGE_WIDTH,
+        "range_growth_per_level": BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
+        "range_max": BIG_SIX_ITEMVALUE_RANGE_MAX,
+    },
+    {
+        "path": SCRIPT_DIR / "shop" / "potions_and_scrolls.csv",
+        "token_csv_modifier": POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER,
+        "label": "Potions, Scrolls, and Temporary Tools",
+        "token_level_cost_scale": POTIONS_AND_SCROLLS_TOKEN_LEVEL_COST_SCALE,
+        "token_shift_above_target": POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET,
+        "token_shift_below_target": POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET,
+        "token_special_modifiers": POTIONS_AND_SCROLLS_TOKEN_SPECIAL_MODIFIERS,
+        "scroll_weight_multiplier": POTIONS_AND_SCROLLS_SCROLL_WEIGHT_MULTIPLIER,
+        "potion_weight_multiplier": POTIONS_AND_SCROLLS_POTION_WEIGHT_MULTIPLIER,
+        "items_per_section": POTIONS_AND_SCROLLS_ITEMS_PER_SECTION,
+        "range_width": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH,
+        "range_growth_per_level": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
+        "range_max": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_MAX,
+    },
+    {
+        "path": SCRIPT_DIR / "shop" / "uniques.csv",
+        "label": "Uniques",
+        "token_csv_modifier": UNIQUES_TOKEN_CSV_MODIFIER,
+        "token_level_cost_scale": UNIQUES_TOKEN_LEVEL_COST_SCALE,
+        "token_shift_above_target": UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET,
+        "token_shift_below_target": UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET,
+        "token_special_modifiers": UNIQUES_TOKEN_SPECIAL_MODIFIERS,
+        "items_per_section": UNIQUES_ITEMS_PER_SECTION,
+        "range_width": UNIQUES_ITEMVALUE_RANGE_WIDTH,
+        "range_growth_per_level": UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
+        "range_max": UNIQUES_ITEMVALUE_RANGE_MAX,
+    },
+]
+
+APP_STYLE = """
+QMainWindow {
+    background: #050806;
+}
+
+QWidget {
+    background: #050806;
+    color: #f5fff7;
+    font-family: "Bahnschrift", "Segoe UI", sans-serif;
+    font-size: 11pt;
+}
+
+QLabel {
+    background: transparent;
+}
+
+QTabWidget::pane {
+    border: 1px solid #1f3d2b;
+    border-radius: 8px;
+    top: -1px;
+    background: #0a120d;
+}
+
+QTabBar::tab {
+    background: #0f1b14;
+    color: #d8ebdd;
+    padding: 10px 18px;
+    border: 1px solid #1f3d2b;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-right: 4px;
+    min-width: 110px;
+    font-weight: 600;
+}
+
+QTabBar::tab:selected {
+    color: #ffffff;
+    background: #1a3a2a;
+}
+
+QLabel#SectionTitle {
+    font-size: 17pt;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 4px 0px;
+}
+
+QLabel#SectionSubtitle {
+    font-size: 10pt;
+    color: #a6c5b0;
+    padding-bottom: 8px;
+}
+
+QLabel#TokenPill {
+    background: #06110b;
+    border: 2px solid #57d38c;
+    color: #f4fff8;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-weight: 900;
+    font-size: 12.5pt;
+    letter-spacing: 1px;
+}
+
+QGroupBox {
+    margin-top: 16px;
+    border: 1px solid #244833;
+    border-radius: 10px;
+    background: #0b1610;
+    padding: 14px 10px 10px 10px;
+    font-weight: 700;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 12px;
+    padding: 2px 10px;
+    color: #e7fff0;
+    background: #0b1610;
+    border-radius: 6px;
+    font-size: 11pt;
+    font-weight: 800;
+}
+
+QGroupBox#BigSixSection {
+    border: 1px solid #6f4d12;
+    background: #1f1607;
+}
+
+QGroupBox#BigSixSection::title {
+    color: #fff2cf;
+    background: #4a3510;
+}
+
+QTableWidget#BigSixTable {
+    border: 1px solid #845a15;
+    background: #130d04;
+    alternate-background-color: #1a1207;
+    selection-background-color: #6f4d12;
+}
+
+QTableWidget#BigSixTable QHeaderView::section {
+    background: #4a3510;
+    color: #fff4d9;
+    border-right: 1px solid #7a5313;
+}
+
+QGroupBox#PotionsSection {
+    border: 1px solid #1f5a64;
+    background: #091a1e;
+}
+
+QGroupBox#PotionsSection::title {
+    color: #ddf8ff;
+    background: #174753;
+}
+
+QTableWidget#PotionsTable {
+    border: 1px solid #2f7380;
+    background: #051215;
+    alternate-background-color: #08191d;
+    selection-background-color: #1f5a64;
+}
+
+QTableWidget#PotionsTable QHeaderView::section {
+    background: #174753;
+    color: #e6faff;
+    border-right: 1px solid #2a6d79;
+}
+
+QGroupBox#UniquesSection {
+    border: 1px solid #5a1f4e;
+    background: #1a0917;
+}
+
+QGroupBox#UniquesSection::title {
+    color: #ffe0fa;
+    background: #4a1a41;
+}
+
+QTableWidget#UniquesTable {
+    border: 1px solid #7a2c6c;
+    background: #12050f;
+    alternate-background-color: #1a0a16;
+    selection-background-color: #5a1f4e;
+}
+
+QTableWidget#UniquesTable QHeaderView::section {
+    background: #4a1a41;
+    color: #ffe8fc;
+    border-right: 1px solid #743066;
+}
+
+QPushButton {
+    background: #20402d;
+    border: 1px solid #367552;
+    border-radius: 8px;
+    padding: 7px 12px;
+    color: #f7fff9;
+    font-weight: 600;
+}
+
+QPushButton:hover {
+    background: #2a573e;
+}
+
+QPushButton:pressed {
+    background: #183223;
+}
+
+QPushButton#PrimaryButton {
+    background: #2b6e49;
+    border: 1px solid #52ad79;
+}
+
+QPushButton#PrimaryButton:hover {
+    background: #398f61;
+}
+
+QPushButton#DangerButton {
+    background: #15201a;
+    border: 1px solid #2f5640;
+}
+
+QPushButton#DangerButton:hover {
+    background: #1d2e25;
+}
+
+QPushButton#BigSixButton {
+    background: #4a3510;
+    border: 1px solid #7f5a16;
+    color: #fff5dd;
+}
+
+QPushButton#BigSixButton:hover {
+    background: #604718;
+}
+
+QPushButton#PotionsButton {
+    background: #174753;
+    border: 1px solid #2e7481;
+    color: #e9fbff;
+}
+
+QPushButton#PotionsButton:hover {
+    background: #205c6a;
+}
+
+QPushButton#UniquesButton {
+    background: #4a1a41;
+    border: 1px solid #7b2f6e;
+    color: #ffe8fb;
+}
+
+QPushButton#UniquesButton:hover {
+    background: #5e2454;
+}
+
+QTableWidget {
+    background: #070e0a;
+    border: 1px solid #29533a;
+    border-radius: 8px;
+    gridline-color: #1b3828;
+    alternate-background-color: #0a140f;
+    selection-background-color: #1f4d36;
+    selection-color: #ffffff;
+}
+
+QHeaderView::section {
+    background: #163121;
+    color: #f0fff4;
+    border: none;
+    border-right: 1px solid #28533a;
+    padding: 7px;
+    font-weight: 700;
+}
+
+QComboBox, QSpinBox {
+    background: #0b1510;
+    border: 1px solid #2e6244;
+    border-radius: 7px;
+    padding: 5px 9px;
+    min-height: 24px;
+}
+
+QWidget#StartRoot {
+    background: #07100b;
+}
+
+QGroupBox#StartSelectorSection {
+    border: 1px solid #35684c;
+    background: #0a140f;
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 260px;
+}
+
+QGroupBox#StartSelectorSection::title {
+    color: #e8fff0;
+    background: #173423;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 11pt;
+    font-weight: 800;
+}
+
+QPushButton#StartSquareButton {
+    min-width: 150px;
+    min-height: 150px;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 12px;
+    border: 2px solid #2d6c4a;
+    background: #123222;
+    color: #f2fff7;
+    font-size: 12pt;
+    font-weight: 800;
+    padding: 10px;
+}
+
+QPushButton#StartSquareButton:hover {
+    background: #184630;
+}
+
+QPushButton#StartTypeButton {
+    min-width: 150px;
+    min-height: 150px;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 12px;
+    border: 2px solid #2d6c4a;
+    background: #102b1d;
+    color: #eafcf1;
+    font-size: 12pt;
+    font-weight: 800;
+    padding: 10px;
+}
+
+QPushButton#StartTypeButton:checked {
+    background: #2b7b53;
+    border: 2px solid #6be0a0;
+    color: #ffffff;
+}
+
+QLabel#StartValueLabel {
+    font-size: 16pt;
+    font-weight: 900;
+    color: #ffffff;
+    padding: 6px 12px;
+}
+
+QWidget#BoonsRoot {
+    background: #07100b;
+}
+
+QFrame#BoonCard {
+    background: #0f1f17;
+    border: 2px solid #2c6848;
+    border-radius: 12px;
+}
+
+QFrame#BoonCard[selected="true"] {
+    background: #1a3d2b;
+    border: 2px solid #6be0a0;
+}
+
+QLabel#BoonCardTitle {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+QLabel#BoonCardBuff {
+    color: #75e89f;
+    font-weight: 700;
+}
+
+QLabel#BoonCardDebuff {
+    color: #ff8b8b;
+    font-weight: 700;
+}
+"""
+
+class ShopTab(QWidget):
+    def __init__(self) -> None:
+        super().__init__()
+        self.tokens = 10
+        self.character_level = int(CHARACTER_LEVEL)
+        self.current_offers: dict[str, list[dict]] = {}
+        self.tables_by_label: dict[str, QTableWidget] = {}
+
+        self.token_label = QLabel()
+        self.token_label.setObjectName("TokenPill")
+        self.token_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+
+        self.level_label = QLabel()
+        self.level_label.setObjectName("SectionSubtitle")
+        self.level_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+
+        self.reroll_button = QPushButton("Reroll Shop (-1 Token)")
+        self.reroll_button.setObjectName("DangerButton")
+        self.reroll_button.clicked.connect(self.reroll_shop)
+
+        top_row = QHBoxLayout()
+        top_row.addWidget(self.token_label)
+        top_row.addWidget(self.level_label)
+        top_row.addStretch(1)
+        top_row.addWidget(self.reroll_button)
+
+        root_layout = QVBoxLayout(self)
+
+        title = QLabel("Shop Forge")
+        title.setObjectName("SectionTitle")
+        subtitle = QLabel("Generate rotating offers, spend tokens, and reroll the market.")
+        subtitle.setObjectName("SectionSubtitle")
+        root_layout.addWidget(title)
+        root_layout.addWidget(subtitle)
+
+        root_layout.addLayout(top_row)
+
+        for config in CSV_CONFIGS:
+            label = str(config["label"])
+            section = QGroupBox(label)
+            section.setObjectName(self._section_object_name(label))
+            section_layout = QVBoxLayout(section)
+
+            table = QTableWidget(0, len(self._shop_table_headers()))
+            table.setObjectName(self._table_object_name(label))
+            table.setHorizontalHeaderLabels(self._shop_table_headers())
+            table.horizontalHeader().setStretchLastSection(True)
+            table.setSelectionBehavior(QTableWidget.SelectRows)
+            table.setSelectionMode(QTableWidget.SingleSelection)
+            table.setEditTriggers(QTableWidget.NoEditTriggers)
+            table.setAlternatingRowColors(True)
+
+            buy_button = QPushButton(f"Buy Selected From {label}")
+            buy_button.setObjectName(self._buy_button_object_name(label))
+            buy_button.clicked.connect(
+                lambda _checked=False, section_label=label: self.buy_selected(section_label)
+            )
+
+            section_layout.addWidget(table)
+            section_layout.addWidget(buy_button)
+
+            self.tables_by_label[label] = table
+            root_layout.addWidget(section)
+
+        root_layout.addStretch(1)
+        self.update_token_label()
+        self.update_level_label()
+        self.generate_shop()
+
+    def _shop_table_headers(self) -> list[str]:
+        if DEBUG_MODE:
+            return ["Name", "Group", "CL", "ItemValue", "Tokens", "Description"]
+        return ["Name", "Group", "Tokens", "Description"]
+
+    def _section_object_name(self, label: str) -> str:
+        if label == "Big Six":
+            return "BigSixSection"
+        if label == "Potions, Scrolls, and Temporary Tools":
+            return "PotionsSection"
+        if label == "Uniques":
+            return "UniquesSection"
+        return ""
+
+    def _table_object_name(self, label: str) -> str:
+        if label == "Big Six":
+            return "BigSixTable"
+        if label == "Potions, Scrolls, and Temporary Tools":
+            return "PotionsTable"
+        if label == "Uniques":
+            return "UniquesTable"
+        return ""
+
+    def _buy_button_object_name(self, label: str) -> str:
+        if label == "Big Six":
+            return "BigSixButton"
+        if label == "Potions, Scrolls, and Temporary Tools":
+            return "PotionsButton"
+        if label == "Uniques":
+            return "UniquesButton"
+        return ""
+
+    def update_token_label(self) -> None:
+        self.token_label.setText(f"TOKEN BANK  {self.tokens}")
+        self._refresh_all_row_states()
+
+    def update_level_label(self) -> None:
+        self.level_label.setText(f"Level {self.character_level}")
+
+    def set_character_level(self, level: int) -> None:
+        self.character_level = max(1, min(20, int(level)))
+        self.update_level_label()
+        self.generate_shop()
+
+    def reset_tokens(self) -> None:
+        self.tokens = 10
+        self.update_token_label()
+
+    def reroll_shop(self) -> None:
+        if self.tokens < 1:
+            QMessageBox.warning(self, "Not Enough Tokens", "You need 1 token to reroll.")
+            return
+        self.tokens -= 1
+        self.update_token_label()
+        self.generate_shop()
+
+    def generate_shop(self) -> None:
+        character_level = self.character_level
+        target_value = shop_logic.level_to_target_value(character_level)
+
+        for config in CSV_CONFIGS:
+            label = str(config["label"])
+            table = self.tables_by_label[label]
+            table.setRowCount(0)
+            self.current_offers[label] = []
+
+            csv_path = Path(config["path"])
+            if not csv_path.exists():
+                continue
+
+            frame = pd.read_csv(csv_path)
+            if "ItemValue" not in frame.columns:
+                continue
+
+            range_width = shop_logic.level_to_range_width(
+                character_level,
+                config["range_width"],
+                config["range_growth_per_level"],
+                config["range_max"],
+            )
+
+            sampled_items = shop_logic.weighted_sample(
+                frame,
+                target_value,
+                range_width=range_width,
+                scroll_weight_multiplier=config.get("scroll_weight_multiplier", 1.0),
+                potion_weight_multiplier=config.get("potion_weight_multiplier", 1.0),
+                armor_special_modifier=config.get("armor_special_modifier", 1.0),
+                weapon_special_modifier=config.get("weapon_special_modifier", 1.0),
+                target_itemvalue_concentration=TARGET_ITEMVALUE_CONCENTRATION,
+                count=config["items_per_section"],
+            )
+
+            offers: list[dict] = []
+            for _, row in sampled_items.iterrows():
+                item_value = float(pd.to_numeric(row.get("ItemValue"), errors="coerce"))
+                item_group = shop_logic.clean_description(row.get("Group", ""))
+                token_cost = shop_logic.token_cost_for_item(
+                    item_value,
+                    target_value,
+                    range_width,
+                    character_level,
+                    config.get("token_csv_modifier", 1.0),
+                    config.get("token_level_cost_scale", 1.0),
+                    config.get("token_shift_above_target", 9.0),
+                    config.get("token_shift_below_target", 2.0),
+                    item_group,
+                    config.get("token_special_modifiers"),
+                )
+
+                offers.append(
+                    {
+                        "Name": shop_logic.clean_description(row.get("Name", "")),
+                        "Group": item_group,
+                        "CL": shop_logic.clean_description(row.get("CL", "")),
+                        "ItemValue": item_value,
+                        "Description": shop_logic.clean_description(row.get("Description", "")),
+                        "Tokens": token_cost,
+                        "Purchased": False,
+                    }
+                )
+
+            self.current_offers[label] = offers
+            self._populate_shop_table(label)
+
+    def _populate_shop_table(self, label: str) -> None:
+        table = self.tables_by_label[label]
+        offers = self.current_offers.get(label, [])
+        table.setRowCount(len(offers))
+
+        for row_index, offer in enumerate(offers):
+            if DEBUG_MODE:
+                row_values = [
+                    offer["Name"],
+                    offer["Group"],
+                    str(offer["CL"]),
+                    f"{float(offer['ItemValue']):.2f}",
+                    str(offer["Tokens"]),
+                    offer["Description"],
+                ]
+            else:
+                row_values = [
+                    offer["Name"],
+                    offer["Group"],
+                    str(offer["Tokens"]),
+                    offer["Description"],
+                ]
+            for col_index, value in enumerate(row_values):
+                table.setItem(row_index, col_index, QTableWidgetItem(value))
+
+        self._refresh_row_states(label)
+        self._fit_table_height_to_rows(table)
+        table.resizeColumnsToContents()
+
+    def _fit_table_height_to_rows(self, table: QTableWidget) -> None:
+        # Keep each table only as tall as its rows so there is no empty gap under items.
+        row_count = table.rowCount()
+        row_height = table.verticalHeader().defaultSectionSize()
+        content_height = table.horizontalHeader().height() + (row_count * row_height)
+
+        total_height = content_height + (table.frameWidth() * 2) + 4
+        table.setMinimumHeight(total_height)
+        table.setMaximumHeight(total_height)
+
+    def _refresh_all_row_states(self) -> None:
+        for label in self.tables_by_label:
+            self._refresh_row_states(label)
+
+    def _refresh_row_states(self, label: str) -> None:
+        table = self.tables_by_label.get(label)
+        offers = self.current_offers.get(label, [])
+        if table is None:
+            return
+
+        for row_index, offer in enumerate(offers):
+            purchased = bool(offer.get("Purchased", False))
+            unaffordable = int(offer.get("Tokens", 0)) > self.tokens
+
+            for col_index in range(table.columnCount()):
+                item = table.item(row_index, col_index)
+                if item is None:
+                    continue
+
+                if purchased:
+                    item.setFlags(Qt.ItemIsEnabled)
+                    item.setForeground(QColor("#7f8e86"))
+                    item.setBackground(QColor("#0f1813"))
+                else:
+                    item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
+                    item.setBackground(QColor(0, 0, 0, 0))
+                    if unaffordable:
+                        item.setForeground(QColor("#ff7373"))
+                    else:
+                        item.setForeground(QColor("#f5fff7"))
+
+    def buy_selected(self, label: str) -> None:
+        table = self.tables_by_label[label]
+        selected_row = table.currentRow()
+        if selected_row < 0:
+            return
+
+        offers = self.current_offers.get(label, [])
+        if selected_row >= len(offers):
+            return
+
+        offer = offers[selected_row]
+        if bool(offer.get("Purchased", False)):
+            return
+
+        cost = int(offer["Tokens"])
+        if cost > self.tokens:
+            return
+
+        self.tokens -= cost
+        self.update_token_label()
+        offer["Purchased"] = True
+        self._refresh_all_row_states()
+
+
+class BoonCard(QFrame):
+    def __init__(self, boon: dict[str, str], on_select) -> None:
+        super().__init__()
+        self.boon = boon
+        self.on_select = on_select
+        self.setObjectName("BoonCard")
+        self.setProperty("selected", False)
+        self.setCursor(Qt.PointingHandCursor)
+        self.setMinimumSize(320, 280)
+        self.setMaximumWidth(360)
+
+        title_label = QLabel(boon["BoonName"])
+        title_label.setObjectName("BoonCardTitle")
+        title_label.setWordWrap(True)
+        title_label.setAlignment(Qt.AlignHCenter)
+
+        buff_label = QLabel(boon["Buff"])
+        buff_label.setObjectName("BoonCardBuff")
+        buff_label.setWordWrap(True)
+
+        debuff_label = QLabel(boon["Debuff"])
+        debuff_label.setObjectName("BoonCardDebuff")
+        debuff_label.setWordWrap(True)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(14, 14, 14, 14)
+        layout.setSpacing(10)
+        layout.addWidget(title_label)
+        layout.addSpacing(8)
+        layout.addWidget(buff_label)
+        layout.addSpacing(6)
+        layout.addWidget(debuff_label)
+        layout.addStretch(1)
+
+    def set_selected(self, selected: bool) -> None:
+        self.setProperty("selected", selected)
+        self.style().unpolish(self)
+        self.style().polish(self)
+        self.update()
+
+    def mousePressEvent(self, event) -> None:
+        if callable(self.on_select):
+            self.on_select(self)
+        super().mousePressEvent(event)
+
+
+class BoonsTab(QWidget):
+    def __init__(self, main_window: "MainWindow") -> None:
+        super().__init__()
+        self.main_window = main_window
+        self.boons = self.load_boons()
+        self.character_type = CHARACTER_TYPE.strip().title()
+        self.current_rolled_boons: list[dict[str, str]] = []
+        self.selected_boon: dict[str, str] | None = None
+        self.boon_cards: list[BoonCard] = []
+
+        self.setObjectName("BoonsRoot")
+
+        self.current_type_label = QLabel()
+        self.current_type_label.setObjectName("SectionSubtitle")
+        self.current_type_label.setAlignment(Qt.AlignHCenter)
+
+        self.cards_row = QHBoxLayout()
+        self.cards_row.setSpacing(20)
+        self.cards_row.addStretch(1)
+        self.cards_row.addStretch(1)
+
+        center_panel = QWidget()
+        center_layout = QVBoxLayout(center_panel)
+        center_layout.setSpacing(16)
+        center_layout.setContentsMargins(0, 0, 0, 0)
+        center_layout.addWidget(self.current_type_label)
+        center_layout.addLayout(self.cards_row)
+
+        self.confirm_button = QPushButton("Confirm Boon")
+        self.confirm_button.setObjectName("PrimaryButton")
+        self.confirm_button.setMinimumHeight(44)
+        self.confirm_button.setEnabled(False)
+        self.confirm_button.clicked.connect(self.confirm_boon)
+
+        actions = QHBoxLayout()
+        actions.addStretch(1)
+        actions.addWidget(self.confirm_button)
+        actions.addStretch(1)
+
+        layout = QVBoxLayout(self)
+        title = QLabel("Boon Crucible")
+        title.setObjectName("SectionTitle")
+        title.setAlignment(Qt.AlignHCenter)
+        subtitle = QLabel("Choose your path and roll three fate-touched boons.")
+        subtitle.setObjectName("SectionSubtitle")
+        subtitle.setAlignment(Qt.AlignHCenter)
+        layout.addStretch(2)
+        layout.addWidget(title)
+        layout.addWidget(subtitle)
+        layout.addSpacing(10)
+        layout.addWidget(center_panel)
+        layout.addSpacing(10)
+        layout.addLayout(actions)
+        layout.addStretch(3)
+
+        self.set_character_type(CHARACTER_TYPE)
+
+    def load_boons(self) -> list[dict[str, str]]:
+        if not BOONS_CSV_PATH.exists():
+            return []
+
+        with BOONS_CSV_PATH.open("r", newline="", encoding="utf-8") as csv_file:
+            reader = csv.DictReader(csv_file)
+            cleaned_rows: list[dict[str, str]] = []
+            for row in reader:
+                boon_name = (row.get("BoonName") or "").strip()
+                boon_type = (row.get("Type") or "").strip().title()
+                buff = (row.get("Buff") or "").strip()
+                debuff = (row.get("Debuff") or "").strip()
+                if not boon_name or boon_type not in {"Martial", "Caster", "General"}:
+                    continue
+                cleaned_rows.append(
+                    {
+                        "BoonName": boon_name,
+                        "Type": boon_type,
+                        "Buff": buff,
+                        "Debuff": debuff,
+                    }
+                )
+            return cleaned_rows
+
+    def set_character_type(self, character_type: str) -> None:
+        normalized = character_type.strip().title()
+        if normalized not in {"Martial", "Caster"}:
+            normalized = "Martial"
+        self.character_type = normalized
+        self.current_type_label.setText(f"Current Type: {self.character_type}")
+        self.prepare_boons()
+
+    def prepare_boons(self) -> None:
+        allowed_types = {self.character_type, "General"}
+
+        pool = [boon for boon in self.boons if boon["Type"] in allowed_types]
+        if len(pool) < 3:
+            self.current_rolled_boons = []
+            self._render_boon_cards()
+            return
+
+        self.current_rolled_boons = random.sample(pool, 3)
+        self._render_boon_cards()
+
+    def _render_boon_cards(self) -> None:
+        while self.cards_row.count() > 0:
+            item = self.cards_row.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+
+        self.cards_row.addStretch(1)
+        self.selected_boon = None
+        self.confirm_button.setEnabled(False)
+        self.boon_cards = []
+
+        for boon in self.current_rolled_boons:
+            card = BoonCard(boon, self._handle_card_selected)
+            self.boon_cards.append(card)
+            self.cards_row.addWidget(card)
+
+        self.cards_row.addStretch(1)
+
+    def _handle_card_selected(self, selected_card: BoonCard) -> None:
+        for card in self.boon_cards:
+            card.set_selected(card is selected_card)
+        self.selected_boon = selected_card.boon
+        self.confirm_button.setEnabled(True)
+
+    def confirm_boon(self) -> None:
+        if self.selected_boon is None:
+            return
+        self.main_window.tabs.setCurrentIndex(0)
+
+
+class StartTab(QWidget):
+    def __init__(self, main_window: "MainWindow") -> None:
+        super().__init__()
+        self.main_window = main_window
+        self.selected_level = int(CHARACTER_LEVEL)
+        self.selected_type = CHARACTER_TYPE.strip().title()
+
+        self.setObjectName("StartRoot")
+
+        title = QLabel("Run Setup")
+        title.setObjectName("SectionTitle")
+        title.setAlignment(Qt.AlignHCenter)
+        subtitle = QLabel("Set your level and fighting style before shopping or rolling boons.")
+        subtitle.setObjectName("SectionSubtitle")
+        subtitle.setAlignment(Qt.AlignHCenter)
+
+        self.level_value_label = QLabel()
+        self.level_value_label.setObjectName("StartValueLabel")
+        self.level_value_label.setAlignment(Qt.AlignHCenter)
+
+        level_down_button = QPushButton("LEVEL -")
+        level_down_button.setObjectName("StartSquareButton")
+        level_down_button.clicked.connect(lambda: self.change_level(-1))
+
+        level_up_button = QPushButton("LEVEL +")
+        level_up_button.setObjectName("StartSquareButton")
+        level_up_button.clicked.connect(lambda: self.change_level(1))
+
+        self.martial_button = QPushButton("MARTIAL")
+        self.martial_button.setObjectName("StartTypeButton")
+        self.martial_button.setCheckable(True)
+        self.martial_button.clicked.connect(lambda: self.select_type("Martial"))
+
+        self.caster_button = QPushButton("CASTER")
+        self.caster_button.setObjectName("StartTypeButton")
+        self.caster_button.setCheckable(True)
+        self.caster_button.clicked.connect(lambda: self.select_type("Caster"))
+
+        self.type_value_label = QLabel()
+        self.type_value_label.setObjectName("StartValueLabel")
+        self.type_value_label.setAlignment(Qt.AlignHCenter)
+
+        level_section = QGroupBox("Level")
+        level_section.setObjectName("StartSelectorSection")
+        level_buttons = QHBoxLayout()
+        level_buttons.addWidget(level_down_button)
+        level_buttons.addWidget(level_up_button)
+        level_layout = QVBoxLayout(level_section)
+        level_layout.addWidget(self.level_value_label)
+        level_layout.addStretch(1)
+        level_layout.addLayout(level_buttons)
+        level_layout.addStretch(1)
+
+        type_section = QGroupBox("Type")
+        type_section.setObjectName("StartSelectorSection")
+        type_buttons = QHBoxLayout()
+        type_buttons.addWidget(self.martial_button)
+        type_buttons.addWidget(self.caster_button)
+        type_layout = QVBoxLayout(type_section)
+        type_layout.addWidget(self.type_value_label)
+        type_layout.addStretch(1)
+        type_layout.addLayout(type_buttons)
+        type_layout.addStretch(1)
+
+        selectors_row = QHBoxLayout()
+        selectors_row.setSpacing(24)
+        selectors_row.addStretch(1)
+        selectors_row.addWidget(level_section)
+        selectors_row.addWidget(type_section)
+        selectors_row.addStretch(1)
+
+        apply_button = QPushButton("Apply Settings")
+        apply_button.setObjectName("PrimaryButton")
+        apply_button.clicked.connect(self.apply_settings)
+        apply_button.setMinimumHeight(44)
+
+        actions = QHBoxLayout()
+        actions.addStretch(1)
+        actions.addWidget(apply_button)
+        actions.addStretch(1)
+
+        layout = QVBoxLayout(self)
+        layout.addStretch(2)
+        layout.addWidget(title)
+        layout.addWidget(subtitle)
+        layout.addSpacing(10)
+        layout.addLayout(selectors_row)
+        layout.addSpacing(10)
+        layout.addLayout(actions)
+        layout.addStretch(3)
+
+        self.refresh_start_display()
+
+    def change_level(self, delta: int) -> None:
+        self.selected_level = max(1, min(20, self.selected_level + delta))
+        self.refresh_start_display()
+
+    def select_type(self, character_type: str) -> None:
+        normalized = character_type.strip().title()
+        if normalized not in {"Martial", "Caster"}:
+            return
+        self.selected_type = normalized
+        self.refresh_start_display()
+
+    def refresh_start_display(self) -> None:
+        self.level_value_label.setText(f"Level {self.selected_level}")
+        self.type_value_label.setText(f"Type {self.selected_type}")
+        self.martial_button.setChecked(self.selected_type == "Martial")
+        self.caster_button.setChecked(self.selected_type == "Caster")
+
+    def apply_settings(self) -> None:
+        self.main_window.shop_tab.set_character_level(self.selected_level)
+        self.main_window.boons_tab.set_character_type(self.selected_type)
+        self.main_window.tabs.setCurrentIndex(1)
+
+
+class MainWindow(QMainWindow):
+    def __init__(self) -> None:
+        super().__init__()
+        self.setWindowTitle("Arduino's Gauntlet Shop And Boons")
+        self.resize(1380, 1200)
+        self.setMinimumHeight(1100)
+
+        self.tabs = QTabWidget()
+        self.shop_tab = ShopTab()
+        self.boons_tab = BoonsTab(self)
+        self.start_tab = StartTab(self)
+
+        self.tabs.addTab(self.start_tab, "Start")
+        self.tabs.addTab(self.shop_tab, "Shop")
+        self.tabs.addTab(self.boons_tab, "Boons")
+        self.setCentralWidget(self.tabs)
+
+
+def main() -> None:
+    app = QApplication([])
+    app.setStyleSheet(APP_STYLE)
+    window = MainWindow()
+    window.show()
+    app.exec()
+
+
+if __name__ == "__main__":
+    main()

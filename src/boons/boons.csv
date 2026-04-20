@@ -81,9 +81,9 @@ Flurry Code,Martial,+1 extra attack on full attack once per combat (stacks with 
 Cursed Speech,Caster,"Once per combat, cast a Fireball spell in a 30 foot cone that does 2d6 sonic damage per caster level (DC uses your casting ability modifier)",Take half of the damage that it does to all opponents
 Runic Backbone,General,+3 bonus on saves vs paralysis and petrification,-1 penalty on Reflex saves
 Fate Thread,General,"Once per combat, add +3 on one d20 roll",-1 on all subsequent d20 rolls
-Spell Roulette,Caster,"At the start of each combat, gain +4 caster level to one random spell school",You are unable to cast one random spell school for that combat
+Spell Roulette,Caster,"At the start of each combat, gain +3 caster level to one random spell school",You are unable to cast from two random spell schools for that combat
 Cataclysm Sigil,Caster,"Once per combat, your next damaging spell deals maximum damage",After casting it you are staggered for 3 rounds
-Void Throat,Caster,+3 DC on all sonic and language-dependent spells,You cannot speak above a whisper and verbal spells have 20 percent failure chance
+Void Throat,Caster,+3 Caster Level on all sonic and language-dependent spells,You cannot speak above a whisper and verbal spells have 20 percent failure chance
 Mirror Soul,Caster,"Whenever you cast a single-target spell with a saving throw, copy it to a second target within 20 feet","If they both succeed on all of their saving throws, die"
 Blinkcast Frenzy,Caster,"After casting a spell, teleport up to 30 feet as a free action","You leave behind a phantom of yourself when you teleport for 1 round. When this phantom takes damage, you take half the damage. When this phantom is the target of any non-damaging effects, they have a 50% chance to effect you "
 Leech Conduit,Caster,"When your spell drops an enemy to 0 HP, regain a spent spell slot one level lower","When using that spell slot, cast a random spell from any class at that level."
