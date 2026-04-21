@@ -12,10 +12,11 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 
 # Change this from 1 to 20 to bias the shop toward weaker or stronger items.
+# THIS IS NOT USED IN APP.py
 CHARACTER_LEVEL = 1
 
 # Set to True to show target ItemValue and per-row ItemValue numbers.
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 #
 # TARGET VALUE SCALING SETTINGS

@@ -3,3 +3,4 @@ potions_and_scrolls.csv
 uniques.csv
 .vscode
 __pycache__
+/build

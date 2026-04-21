@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import csv
 import random
+import re
 from pathlib import Path
 
 import pandas as pd
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QApplication,
@@ -42,169 +43,10 @@ CHARACTER_LEVEL = 2
 CHARACTER_TYPE = "Martial"
 MAX_LEVEL = 10
 
-# Set to True to show target ItemValue and per-row ItemValue numbers.
-DEBUG_MODE = False
-
-#
-# TARGET VALUE SCALING SETTINGS
-#
-
-# Determines the rate at which target ItemValue increasingly grows by level.
-# Linear means the target ItemValue at level 20 will reach the ending value and at level 1 will match the starting value, with the curve shape determined by the exponent.
-# 1.0 = linear, >1.0 grows slower early and faster later, <1.0 does the opposite.
-TARGET_VALUE_SCALING_EXPONENT = 2.5
-
-# Starting and ending target ItemValue for the level curve.
-# Level 1 uses the starting value and level 20 uses the ending value.
-TARGET_VALUE_START = 0.0
-TARGET_VALUE_END = 75.0
-
-#
-# ITEMVALUE RANGE SETTINGS
-#
-
-# Controls how wide the offered ItemValue band is around the level target.
-# Example: 15 means roughly target +/- 15 ItemValue.
-BIG_SIX_ITEMVALUE_RANGE_WIDTH = 1.5
-POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH = 5.0
-UNIQUES_ITEMVALUE_RANGE_WIDTH = 0.5
-
-# Maximum width allowed for each CSV's ItemValue band.
-BIG_SIX_ITEMVALUE_RANGE_MAX = 15.0
-POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_MAX = 10.0
-UNIQUES_ITEMVALUE_RANGE_MAX = 5.0
-
-# Additional width added per level above 1.
-# Example: 1.0 means level 10 adds +9 width.
-BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.5
-POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.7
-UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL = 0.25
-
-# Controls how strongly items closer to target ItemValue are favored during selection.
-# 1.0 = standard inverse-distance weighting, >1.0 = strongly prefer items near target,
-# <1.0 = items more evenly weighted regardless of distance.
-TARGET_ITEMVALUE_CONCENTRATION = 1.2
-
-#
-# ITEMS PER SECTION SETTINGS
-#
-
-# Number of items to show per shop section.
-BIG_SIX_ITEMS_PER_SECTION = 3
-POTIONS_AND_SCROLLS_ITEMS_PER_SECTION = 4
-UNIQUES_ITEMS_PER_SECTION = 5
-
-#
-# GROUP TOKEN COST SETTINGS
-#
-
-# Per-CSV token modifiers applied to every item in that CSV.
-# 1.0 = no change, 1.2 = 20% more expensive, 0.8 = 20% cheaper.
-BIG_SIX_TOKEN_CSV_MODIFIER = 1.7
-POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER = 0.5
-UNIQUES_TOKEN_CSV_MODIFIER = 1.6
-
-# Per-CSV level cost scales.
-# 1.0 = no change across levels, 1.2 = gets 20% more expensive by level 20,
-# 0.8 = gets 20% cheaper by level 20.
-BIG_SIX_TOKEN_LEVEL_COST_SCALE = 1.0
-POTIONS_AND_SCROLLS_TOKEN_LEVEL_COST_SCALE = 1.0
-UNIQUES_TOKEN_LEVEL_COST_SCALE = 1.0
-
-
-# Specific item group token cost modifiers.
-# JSON-style token modifiers applied after the base relative price is calculated.
-# Keys are checked as substrings against the item group, and matching entries multiply the final token cost.
-BIG_SIX_TOKEN_SPECIAL_MODIFIERS = {
-    "Weapon": 0.7,
-    "Armor": 0.7,
-}
-POTIONS_AND_SCROLLS_TOKEN_SPECIAL_MODIFIERS = {
-}
-UNIQUES_TOKEN_SPECIAL_MODIFIERS = {
-}
-
-#
-# TOKEN COST COMPARED TO ITEMVALUE SETTINGS
-#
-
-# Items near the TOKEN_BASE_COST_AT_TARGET variable have this token cost amount before modifiers.
-TOKEN_BASE_COST_AT_TARGET = 4.0
-# Cost shift applied per 1x range width above target for each CSV.
-# Higher values make items above target ramp up faster.
-BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
-POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
-UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET = 9.0
-
-# Cost shift applied per 1x range width below target for each CSV.
-# Higher values make items below target drop faster.
-BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 1.0
-POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 2.0
-UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET = 2.5
-
-#
-# ITEM SELECTION AMOUNT RATIO SETTINGS
-#
-
-# Lower than 1.0 makes scrolls less likely to be selected in Potions and Scrolls.
-# Example: 0.5 means scrolls get half the normal selection weight.
-POTIONS_AND_SCROLLS_SCROLL_WEIGHT_MULTIPLIER = 0.08
-
-# Lower than 1.0 makes potions less likely to be selected in Potions and Scrolls.
-# Example: 0.5 means potions get half the normal selection weight.
-POTIONS_AND_SCROLLS_POTION_WEIGHT_MULTIPLIER = 0.5
-
-# Special Ability percent chance modifier. Lower than 1.0 makes that group less likely.
-# These only affect the Big Six table, where Armor and Weapon rows are weighted separately.
-BIG_SIX_ARMOR_SPECIAL_MODIFIER = 0.07
-BIG_SIX_WEAPON_SPECIAL_MODIFIER = 0.07
-
-
-CSV_CONFIGS = [
-    {
-        "path": SCRIPT_DIR / "shop" / "big_six.csv",
-        "label": "Big Six",
-        "token_csv_modifier": BIG_SIX_TOKEN_CSV_MODIFIER,
-        "token_level_cost_scale": BIG_SIX_TOKEN_LEVEL_COST_SCALE,
-        "token_shift_above_target": BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET,
-        "token_shift_below_target": BIG_SIX_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET,
-        "token_special_modifiers": BIG_SIX_TOKEN_SPECIAL_MODIFIERS,
-        "armor_special_modifier": BIG_SIX_ARMOR_SPECIAL_MODIFIER,
-        "weapon_special_modifier": BIG_SIX_WEAPON_SPECIAL_MODIFIER,
-        "items_per_section": BIG_SIX_ITEMS_PER_SECTION,
-        "range_width": BIG_SIX_ITEMVALUE_RANGE_WIDTH,
-        "range_growth_per_level": BIG_SIX_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
-        "range_max": BIG_SIX_ITEMVALUE_RANGE_MAX,
-    },
-    {
-        "path": SCRIPT_DIR / "shop" / "potions_and_scrolls.csv",
-        "token_csv_modifier": POTIONS_AND_SCROLLS_TOKEN_CSV_MODIFIER,
-        "label": "Potions, Scrolls, and Temporary Tools",
-        "token_level_cost_scale": POTIONS_AND_SCROLLS_TOKEN_LEVEL_COST_SCALE,
-        "token_shift_above_target": POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET,
-        "token_shift_below_target": POTIONS_AND_SCROLLS_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET,
-        "token_special_modifiers": POTIONS_AND_SCROLLS_TOKEN_SPECIAL_MODIFIERS,
-        "scroll_weight_multiplier": POTIONS_AND_SCROLLS_SCROLL_WEIGHT_MULTIPLIER,
-        "potion_weight_multiplier": POTIONS_AND_SCROLLS_POTION_WEIGHT_MULTIPLIER,
-        "items_per_section": POTIONS_AND_SCROLLS_ITEMS_PER_SECTION,
-        "range_width": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_WIDTH,
-        "range_growth_per_level": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
-        "range_max": POTIONS_AND_SCROLLS_ITEMVALUE_RANGE_MAX,
-    },
-    {
-        "path": SCRIPT_DIR / "shop" / "uniques.csv",
-        "label": "Uniques",
-        "token_csv_modifier": UNIQUES_TOKEN_CSV_MODIFIER,
-        "token_level_cost_scale": UNIQUES_TOKEN_LEVEL_COST_SCALE,
-        "token_shift_above_target": UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_ABOVE_TARGET,
-        "token_shift_below_target": UNIQUES_TOKEN_COST_SHIFT_PER_RANGE_BELOW_TARGET,
-        "token_special_modifiers": UNIQUES_TOKEN_SPECIAL_MODIFIERS,
-        "items_per_section": UNIQUES_ITEMS_PER_SECTION,
-        "range_width": UNIQUES_ITEMVALUE_RANGE_WIDTH,
-        "range_growth_per_level": UNIQUES_ITEMVALUE_RANGE_GROWTH_PER_LEVEL,
-        "range_max": UNIQUES_ITEMVALUE_RANGE_MAX,
-    },
-]
+# Shared shop tuning/config values are sourced from shop.py to avoid duplication.
+DEBUG_MODE = shop_logic.DEBUG_MODE
+TARGET_ITEMVALUE_CONCENTRATION = shop_logic.TARGET_ITEMVALUE_CONCENTRATION
+CSV_CONFIGS = shop_logic.CSV_CONFIGS
 
 APP_STYLE = """
 QMainWindow {
@@ -666,6 +508,7 @@ class ShopTab(QWidget):
             table.setObjectName(self._table_object_name(label))
             table.setHorizontalHeaderLabels(self._shop_table_headers())
             table.horizontalHeader().setStretchLastSection(True)
+            table.verticalHeader().setDefaultSectionSize(34)
             table.setSelectionBehavior(QTableWidget.SelectRows)
             table.setSelectionMode(QTableWidget.SingleSelection)
             table.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -883,12 +726,13 @@ class ShopTab(QWidget):
         table.resizeColumnsToContents()
 
     def _fit_table_height_to_rows(self, table: QTableWidget) -> None:
-        # Keep each table only as tall as its rows so there is no empty gap under items.
+        # Keep each table tall enough for all rows with a little breathing room.
         row_count = table.rowCount()
-        row_height = table.verticalHeader().defaultSectionSize()
-        content_height = table.horizontalHeader().height() + (row_count * row_height)
+        content_height = table.horizontalHeader().height()
+        for row_index in range(row_count):
+            content_height += table.rowHeight(row_index)
 
-        total_height = content_height + (table.frameWidth() * 2) + 4
+        total_height = content_height + (table.frameWidth() * 2) + 16
         table.setMinimumHeight(total_height)
         table.setMaximumHeight(total_height)
 
@@ -1266,6 +1110,8 @@ class StartTab(QWidget):
 
         self.boon_inventory_list = QListWidget()
         self.boon_inventory_list.setObjectName("InventoryList")
+        self.big_six_inventory_list = QListWidget()
+        self.big_six_inventory_list.setObjectName("InventoryList")
         self.item_inventory_list = QListWidget()
         self.item_inventory_list.setObjectName("InventoryList")
 
@@ -1276,6 +1122,10 @@ class StartTab(QWidget):
         boon_column.addWidget(self.boon_inventory_list)
 
         item_column = QVBoxLayout()
+        big_six_title = QLabel("Big 6 Summary")
+        big_six_title.setObjectName("SectionSubtitle")
+        item_column.addWidget(big_six_title)
+        item_column.addWidget(self.big_six_inventory_list)
         item_title = QLabel("Items Purchased")
         item_title.setObjectName("SectionSubtitle")
         item_column.addWidget(item_title)
@@ -1405,14 +1255,17 @@ class StartTab(QWidget):
                 f"{boon_name}<br/><span style='color: #00FF00;'>+ {boon_buff}</span><br/><span style='color: #FF0000;'>- {boon_debuff}</span>"
             )
             boon_label.setWordWrap(True)
+            boon_label.setFixedWidth(list_width - 32)
             container_layout.addWidget(boon_label)
             
             # Add item and set the container as its widget
             item = QListWidgetItem()
             self.boon_inventory_list.addItem(item)
             self.boon_inventory_list.setItemWidget(item, container)
-            # Calculate actual height needed
-            item.setSizeHint(container.sizeHint())
+            # Calculate height from rendered wrapped text so entries never clip.
+            boon_label.adjustSize()
+            required_height = boon_label.sizeHint().height() + 30
+            item.setSizeHint(QSize(list_width - 20, required_height))
 
         self.item_inventory_list.clear()
         for item in items_purchased:
@@ -1421,6 +1274,89 @@ class StartTab(QWidget):
             self.item_inventory_list.addItem(
                 QListWidgetItem(f"{item_name} ({item_source})" if item_source else item_name)
             )
+
+        self.big_six_inventory_list.clear()
+        big_six_totals = self._compute_big_six_bonus_totals(items_purchased)
+        if not big_six_totals:
+            self.big_six_inventory_list.addItem(QListWidgetItem("No Big 6 bonuses yet"))
+        else:
+            for label, value in big_six_totals.items():
+                self.big_six_inventory_list.addItem(QListWidgetItem(f"{label}: +{value}"))
+
+    def _extract_bonus_value(self, item_name: str) -> int:
+        match = re.search(r"\+(\d+)", item_name)
+        if not match:
+            return 0
+        return int(match.group(1))
+
+    def _compute_big_six_bonus_totals(
+        self,
+        items_purchased: list[dict[str, str]],
+    ) -> dict[str, int]:
+        totals: dict[str, int] = {
+            "Cloak Resistance": 0,
+            "Ring Protection": 0,
+            "Amulet Natural Armor": 0,
+            "Magic Weapon": 0,
+            "Magic Armor": 0,
+        }
+
+        for item in items_purchased:
+            item_name = str(item.get("Name", ""))
+            item_source = str(item.get("Section", ""))
+
+            if item_source != "Big Six":
+                continue
+
+            bonus_value = self._extract_bonus_value(item_name)
+            if bonus_value <= 0:
+                continue
+
+            lowered_name = item_name.lower()
+            if "cloak of resistance" in lowered_name:
+                totals["Cloak Resistance"] += bonus_value
+            elif "ring of protection" in lowered_name:
+                totals["Ring Protection"] += bonus_value
+            elif "amulet of natural armor" in lowered_name:
+                totals["Amulet Natural Armor"] += bonus_value
+            elif "headband" in lowered_name:
+                label = self._headband_bonus_label(lowered_name)
+                totals[label] = totals.get(label, 0) + bonus_value
+            elif "belt" in lowered_name:
+                label = self._belt_bonus_label(lowered_name)
+                totals[label] = totals.get(label, 0) + bonus_value
+            elif "magic weapon" in lowered_name:
+                totals["Magic Weapon"] += bonus_value
+            elif "magic armor" in lowered_name:
+                totals["Magic Armor"] += bonus_value
+
+        return {key: value for key, value in totals.items() if value > 0}
+
+    def _belt_bonus_label(self, lowered_name: str) -> str:
+        if "giant strength" in lowered_name:
+            return "Belt (STR)"
+        if "incredible dexterity" in lowered_name:
+            return "Belt (DEX)"
+        if "mighty constitution" in lowered_name:
+            return "Belt (CON)"
+        if "physical perfection" in lowered_name:
+            return "Belt (All Physical)"
+        if "physical might" in lowered_name:
+            return "Belt (Physical Might)"
+        return "Belt (Other)"
+
+    def _headband_bonus_label(self, lowered_name: str) -> str:
+        if "vast intelligence" in lowered_name:
+            return "Headband (INT)"
+        if "inspired wisdom" in lowered_name:
+            return "Headband (WIS)"
+        if "alluring charisma" in lowered_name:
+            return "Headband (CHA)"
+        if "mental superiority" in lowered_name:
+            return "Headband (All Mental)"
+        if "mental prowess" in lowered_name:
+            return "Headband (Mental Prowess)"
+        return "Headband (Other)"
 
 
 class MainWindow(QMainWindow):
