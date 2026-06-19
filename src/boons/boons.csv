@@ -1,62 +1,62 @@
-Specialist,Rarity,Type,Buff,Debuff
+BoonName,Rarity,Type,Buff,Debuff
 Berserker Spark,Common,Martial,+2 melee attack rolls,-1 AC penalty
-Arcane Overflow,Common,Caster,`+1 caster level on a school of your choice (chosen during prep phase),-1 caster level on all other spell schools
-Overflowing Power,Common,Caster,`+1 damage/die on spells,-1 caster level on all spells
+Arcane Overflow,Common,Caster,+1 caster level on a school of your choice (chosen during prep phase),-1 caster level on all other spell schools
+Overflowing Power,Common,Caster,+1 damage/die on spells,-1 caster level on all spells
 Iron Lungs,Rare,General,You gain a Swim and Climb speed equal to half your base land speed,
 Stone Skin Lite,Rare,General,DR 2/adamantine,-10 feet base land speed
-Jittery,Rare,General,`+15 feet base land speed and gain the Mobility feat,You must take a move action each round
+Jittery,Rare,General,+15 feet base land speed and gain the Mobility feat,You must take a move action each round
 Unbridled Adrenaline,Common,Martial,+4 bonus on damage rolls while below half HP,-2 penalty on damage rolls while above half HP
-Cold Discipline,Rare,General,`+Resist cold 25. Whenever you take cold damage (before resistance) heal 2d8 hp,Vulnerable to fire
-Fire Temper,Rare,General,`+Resist fire 25. Whenever you take fire damage (before resistance) heal 2d8 hp,Vulnerable to cold
-Shadow Veil,Common,General,`+10 bonus on Stealth checks,
-Brutal Presence,Common,General,"`+6 bonus on Intimidate checks. As a Full-Round action, Intimidate check to demoralize all foes within 30 feet who can see you.",-1 penalty on Will saves
-Spell Battery,Common,Caster,`+4 bonus on concentration checks,
-Shielded Mind,Common,General,`+3 bonus on Will saves,`-1 penalty to Reflex and Fortitude saves
-Quick Feat,Common,General,`+4 bonus on Reflex saves,`-1 penalty to Will and Fortitude saves
-Strong Heart,Common,General,`+3 bonus on Fortitude saves,`-1 penalty to Reflex and Will saves
+Cold Discipline,Rare,General,+Resist cold 25. Whenever you take cold damage (before resistance) heal 2d8 hp,Vulnerable to fire
+Fire Temper,Rare,General,+Resist fire 25. Whenever you take fire damage (before resistance) heal 2d8 hp,Vulnerable to cold
+Shadow Veil,Common,General,+10 bonus on Stealth checks,
+Brutal Presence,Common,General,"+6 bonus on Intimidate checks. As a Full-Round action, Intimidate check to demoralize all foes within 30 feet who can see you.",-1 penalty on Will saves
+Spell Battery,Common,Caster,+4 bonus on concentration checks,
+Shielded Mind,Common,General,+3 bonus on Will saves,-1 penalty to Reflex and Fortitude saves
+Quick Feat,Common,General,+4 bonus on Reflex saves,-1 penalty to Will and Fortitude saves
+Strong Heart,Common,General,+3 bonus on Fortitude saves,-1 penalty to Reflex and Will saves
 Elongation,Rare,Martial,+5 feet reach with melee weapons,-3 penalty on attacks of opportunity
-Cocky,Common,Martial,`+3 bonus on damage when enemies are flat-footed,You are flat-footed for your first round
+Cocky,Common,Martial,+3 bonus on damage when enemies are flat-footed,You are flat-footed for your first round
 Photosynthesis ,Rare,General,You do not breathe. You gain fast-healing 2 while under natural sunlight.,-10 feet base land speed
-Total Gamble,Rare,General,`+5 bonus on initiative,"If you do not go first in the initiative order, you go last"
+Total Gamble,Rare,General,+5 bonus on initiative,"If you do not go first in the initiative order, you go last"
 Mystic Ward,Common,General,+2 bonus on saves against spells,You can never be the willing target of a spell or spell like ability
-Arc Runner,Common,Martial,`+40 feet speed while charging. Ignore difficult terrain. Charge over water,
-Aura of Bravery,Common,General,`+2 bonus on fear saves for all allies within 10ft,-1 penalty on charm and compulsion saves
+Arc Runner,Common,Martial,+40 feet speed while charging. Ignore difficult terrain. Charge over water,
+Aura of Bravery,Common,General,+2 bonus on fear saves for all allies within 10ft,-1 penalty on charm and compulsion saves
 Creepy,Rare,General,Heal 1d4 HP per HD once per round after touching an enemy,-2 penalty to touch AC penalty
 Rending Edge,Common,Martial,+4 bonus on critical confirmation rolls,
 Armor Driller,Rare,Martial,Ignore 2 points of armor bonus on target,
 Linebreaker,Rare,Martial,"As a swift action, bull rush an opponent",You take 1 damage per HD when doing so
-Posh Fencer,Common,Martial,`+4 bonus to disarm opponents. You do not provoke on disarm attempts.,-2 penalty on all other CMB checks
+Posh Fencer,Common,Martial,+4 bonus to disarm opponents. You do not provoke on disarm attempts.,-2 penalty on all other CMB checks
 Grappler Knot,Common,Martial,+5 bonus on initial grapple checks,Enemies get +2 to escape grapples from you
-Grounded,Common,General,`+8 bonus on Acrobatics,You can't jump
-Against All Odds,Common,Martial,`+3 bonus to AC when surrounded by 2 or more opponents,-2 AC penalty when surrounded by 1 or less opponents
+Grounded,Common,General,+8 bonus on Acrobatics,You can't jump
+Against All Odds,Common,Martial,+3 bonus to AC when surrounded by 2 or more opponents,-2 AC penalty when surrounded by 1 or less opponents
 Lazy Eye,Rare,General,Cannot be blinded and gaze attacks do not effect you,-2 penalty on ranged attacks
-Sun Warrior,Common,General,`+2 bonus on attack rolls in sunlight,-1 penalty on attack rolls in dim light or darkness
-Dim Dweller,Common,General,`+2 AC in dim light or darker,-1 AC in sunlight
-Spirit Echo,Common,Caster,`+5 bonus on Knowledge religion and planes checks,
-Adventure Echo,Common,Caster,`+5 bonus on Knowledge nature and dungeoneering checks,
-Arcane Echo,Common,Caster,`+5 bonus on Knowledge arcana and spellcraft checks,
-Puddle Drinker,Common,General,`+4 bonus on saves vs poison and disease,-1 penalty against mind affecting effects
+Sun Warrior,Common,General,+2 bonus on attack rolls in sunlight,-1 penalty on attack rolls in dim light or darkness
+Dim Dweller,Common,General,+2 AC in dim light or darker,-1 AC in sunlight
+Spirit Echo,Common,Caster,+5 bonus on Knowledge religion and planes checks,
+Adventure Echo,Common,Caster,+5 bonus on Knowledge nature and dungeoneering checks,
+Arcane Echo,Common,Caster,+5 bonus on Knowledge arcana and spellcraft checks,
+Puddle Drinker,Common,General,+4 bonus on saves vs poison and disease,-1 penalty against mind affecting effects
 Dumb,Epic,Martial,Immune to mind affecting effects,Can only attack nearest enemy
 Duelist Grace,Common,Martial,+2 dodge bonus to AC with one handed weapon,-2 penalty on damage with one handed weapons
 Lazy,Rare,Caster,+4 deflection bonus to AC after not moving for 1 round,-15 feet base land speed
-Bone Deep,Common,General,`+4 bonus to CMD,
+Bone Deep,Common,General,+4 bonus to CMD,
 Slippery,Epic,General,You have a constant Freedom of Movement spell,25% chance to fall prone at the beginning of every round
-Opportunist,Common,Martial,`+3 bonus on attacks of opportunity and you can make attacks of opportunity flat-footed,-2 penalty on initiative
+Opportunist,Common,Martial,+3 bonus on attacks of opportunity and you can make attacks of opportunity flat-footed,-2 penalty on initiative
 Focus Crystal,Epic,Caster,+2 DC on the first spell you cast each combat,-1 DC on subsequent spells
-Savant,Common,General,`+5 bonus on Use Magic Device for scrolls and wands,
+Savant,Common,General,+5 bonus on Use Magic Device for scrolls and wands,
 Thorn Blood,Rare,General,Deal 1d6 damage to attackers who successfully land a melee attack on you,You take 1 damage every time you successfully land a melee attack
-Silver Tongue,Common,Martial,`+4 bonus on bluff checks made to feint and you can feint as a move action instead of a standard,
-Siege Nerves,Common,Martial,`+4 bonus on sunder attempts. You do not provoke on sunder attempts.,-2 penalty on all other CMB checks
+Silver Tongue,Common,Martial,+4 bonus on bluff checks made to feint and you can feint as a move action instead of a standard,
+Siege Nerves,Common,Martial,+4 bonus on sunder attempts. You do not provoke on sunder attempts.,-2 penalty on all other CMB checks
 Spell Knife,Common,Caster,+2 bonus on touch attack spells,-1 AC penalty
 Tunnel Vision,Common,Martial,+2 dodge bonus vs melee attacks,-2 AC penalty vs ranged attacks
-Grave Calm,Common,General,`+4 bonus on saves vs death effects and to stablize when dying,
-Wild Surge,Rare,Caster,`+4 bonus on caster level checks to overcome spell resistnace,-1 DC penalty to your spells
+Grave Calm,Common,General,+4 bonus on saves vs death effects and to stablize when dying,
+Wild Surge,Rare,Caster,+4 bonus on caster level checks to overcome spell resistnace,-1 DC penalty to your spells
 Primal Surge,Epic,Martial,Gain a secondary natural attack. +2 bonus on natural attack damage.,-2 penalty on manufactured weapon attack rolls
-Rune Chant,Epic,Caster,"`+3 bonus damage to an element of your choice. Once per combat as a standard action, shoot a ray that deals 1d8 damage per caster level of your chosen type",-2 damage penalty on all other elemental damage types.
+Rune Chant,Epic,Caster,"+3 bonus damage to an element of your choice. Once per combat as a standard action, shoot a ray that deals 1d8 damage per caster level of your chosen type",-2 damage penalty on all other elemental damage types.
 Battle Prayer,Common,Martial,+2 morale bonus on attack rolls while adjacent to ally,-1 attack bonus when fighting alone
-Lone Wolf,Common,Martial,`+2 bonus on damage while no ally adjacent,-1 AC penalty when adjacent to allies
-Pack Guard,Common,General,`+2 bonus to AC per adjacent ally up to +4,-1 AC penalty when alone
-Early Pacifist,Epic,General,`+10 bonus on initiative,You cannot affect enemies in the first round of combat
+Lone Wolf,Common,Martial,+2 bonus on damage while no ally adjacent,-1 AC penalty when adjacent to allies
+Pack Guard,Common,General,+2 bonus to AC per adjacent ally up to +4,-1 AC penalty when alone
+Early Pacifist,Epic,General,+10 bonus on initiative,You cannot affect enemies in the first round of combat
 Second Wind,Rare,Martial,Gain 2 temporary HP per level equal after killing enemy,
 Heroic Gamble,Rare,Martial,Reroll one failed attack per combat,"On your next saving throw, roll twice and take the worse result"
 Skirmisher,Common,Martial,+2 bonus to AC after moving 10 feet or more,-1 AC penalty if you moved 5 feet or less
@@ -64,8 +64,8 @@ Pure Focus,Rare,Caster,Empower a spell once per combat,You are exhausted for the
 Relentless Focus,Epic,Caster,Maximize a Spell once per combat,You are staggered for one round and exhausted 
 Attack Power,Common,Martial,+4 bonus on damage,-2 penalty on attack rolls
 War Drummer,Common,General,+1 bonus on initiative for allies,-1 penalty on initiative for yourself
-Focused Study,Common,Caster,`+4 bonus on one Knowledge check per encounter,You can only attempt one knowledge check per encounter
-Intense Magic,Rare,Caster,`+1 spell DC,Ranged Spells have 20ft spell range
+Focused Study,Common,Caster,+4 bonus on one Knowledge check per encounter,You can only attempt one knowledge check per encounter
+Intense Magic,Rare,Caster,+1 spell DC,Ranged Spells have 20ft spell range
 Molten Core,Epic,Martial,Gain fire resistance 15 and melee attacks deal +1d6 fire damage,You are permanently fatigued
 Frozen Core,Epic,Caster,"Gain cold resistance 15, all elemental spell damage changes to a cold descriptor. All spells are affected as rime spell",You become permanently staggered
 Guardian Thread,Common,General,+2 bonus on all saves while above half HP,-1 penalty on saves while below half HP
@@ -104,17 +104,17 @@ The Specialist,Rare,General,Gain one Ranger's favored enemy and favored terrain,
 Divine Blessing,Rare,Martial,Choose 2 level 1 cleric/oracle spells to gain as spells known. They are usable once per day each with a CL = your level and a DC = 11 + Con modifier,-1 on attack rolls
 Arcane Blessing,Rare,Martial,Choose 2 level 1 wizard/sorcerer spells to gain as spells known. They are usable once per day each with a CL = your level and a DC = 11 + Con modifier,-1 on attack rolls
 Combat Blessing,Rare,Caster,Increase your BAB by one step (Ex. Wizard BAB becomes Cleric BAB. Cleric BAB becomes Fighter BAB),-1 spell per day on each spell level
-Tank,Common,General,`+5 bonus to your armor bonus,-2 attack rolls and saving throws
-Stalwart,Common,General,`+5 bonus on saving throws,-4 AC and attack rolls
-Striker,Common,General,`+5 attack bonus,-2 on AC and saving throws
-Ultra Tank,Epic,General,`+10 bonus to your armor bonus,-3 attack Rolls and saving throws
-Ultra Stalwart,Epic,General,`+10 bonus on saving throws,-8 AC and attack rolls
-Ultra Striker,Epic,General,`+10 bonus on attack rolls,-4 on AC and saving throws
+Tank,Common,General,+5 bonus to your armor bonus,-2 attack rolls and saving throws
+Stalwart,Common,General,+5 bonus on saving throws,-4 AC and attack rolls
+Striker,Common,General,+5 attack bonus,-2 on AC and saving throws
+Ultra Tank,Epic,General,+10 bonus to your armor bonus,-3 attack Rolls and saving throws
+Ultra Stalwart,Epic,General,+10 bonus on saving throws,-8 AC and attack rolls
+Ultra Striker,Epic,General,+10 bonus on attack rolls,-4 on AC and saving throws
 Time Stutter,Epic,General,Gain a second swift/immediate action every turn,You lose track of time.There is a 5% chance that you are dazed each round
-Well Rounded,Common,General,"`+1 attack rolls, saving throws, AC",-5 max hp
-Tough as Nails,Common,General,`+10 max hp,-1 saving throws
-Gym Bro,Rare,General,`+2 to one physical ability score,-2 to one mental ability score
-Nerd,Rare,General,`+2 to one mental ability score,-2 to one physical ability score
+Well Rounded,Common,General,"+1 attack rolls, saving throws, AC",-5 max hp
+Tough as Nails,Common,General,+15 max hp,-1 saving throws
+Gym Bro,Rare,General,+2 to one physical ability score,-2 to one mental ability score
+Nerd,Rare,General,+2 to one mental ability score,-2 to one physical ability score
 Life Lashes,Common ,Martial,Heal 1 hp on each successful hit,Take 1 damage on each miss
 Trade Blows,Rare,Martial,"When a creature takes an AOO against you, you can take an AOO against them (after the original AOO)",You take a -2 AC against AOO's
 Sculpter,Common,Caster,You can manipulate your AOE spells to include or exlude 3 additional squares. These squares must be touching the original square area.,-1 DC on this spell
@@ -122,7 +122,7 @@ Prying Eyes,Common,General,You can see through the first 15 feet of darkness or 
 Unfazed,Rare,General,Treat all conditions with tiers as one step less (Ex. Panicked --> frightened --> shaken --> nothing.... Exhausted -->fatigued-->nothing... etc.),You take a -2 penalty on saving throws against effects that cause these conditions
 Competitive Companion,Rare,General,"Your companion (familiar, eidolon, or animal companion) gains a +2 attack, damage, AC, saving throws, and hp per HD",Not being adjacent to your companion imparts the same penalty to them
 GMO,Epic,General,You permanently gain the effects of enlarge person or reduce person (your choice),-2 Fortitude saves
-Bestiary Reader,Common,Caster,`+2 on knowledge checks to identify creatures,
+Bestiary Reader,Common,Caster,+2 on knowledge checks to identify creatures,
 Ol Reliable,Rare,General,You may choose to roll 1d12+5 in place of a d20 roll. Add any other bonuses that you would have normally had on the d20 roll. Usable once per combat,Your next d20 roll uses a d12 instead of a d20
 HIt on the Run,Rare,Martial,You may make an attack at any point in a move action,You become fatigued
 Careful Hits,Common,Martial,"Your attacks can be manipulated to bypass any DR that limits damage type (bludgeoning, piercing, slashing)",

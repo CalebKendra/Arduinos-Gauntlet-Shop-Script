@@ -1,3 +1,9 @@
+"""Entry point launcher for Arduino's Gauntlet Shop Script.
+
+Manages the execution order of shop data processing and the GUI application,
+with special handling for PyInstaller bundled executables. Runs edit.py, value.py,
+and app.py in sequence with comprehensive error logging.
+"""
 from __future__ import annotations
 
 import os

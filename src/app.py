@@ -1,3 +1,9 @@
+"""Main GUI application for Arduino's Gauntlet Shop Script.
+
+Provides a PySide6-based interface for browsing and managing magical items
+in a Pathfinder shop system. Displays items organized by category, handles
+character level selection, and integrates with the shop logic system.
+"""
 from __future__ import annotations
 
 import csv
@@ -47,6 +53,12 @@ MAX_LEVEL = 10
 DEBUG_MODE = shop_logic.DEBUG_MODE
 TARGET_ITEMVALUE_CONCENTRATION = shop_logic.TARGET_ITEMVALUE_CONCENTRATION
 CSV_CONFIGS = shop_logic.CSV_CONFIGS
+BOON_ROLL_FREQUENCY = shop_logic.BOON_ROLL_FREQUENCY
+BOON_RARITY_WEIGHTS = {
+    "Common": shop_logic.BOON_RARITY_WEIGHT_COMMON,
+    "Rare": shop_logic.BOON_RARITY_WEIGHT_RARE,
+    "Epic": shop_logic.BOON_RARITY_WEIGHT_EPIC,
+}
 
 APP_STYLE = """
 QMainWindow {
@@ -948,6 +960,7 @@ class BoonsTab(QWidget):
             for row in reader:
                 boon_name = (row.get("BoonName") or "").strip()
                 boon_type = (row.get("Type") or "").strip().title()
+                rarity = (row.get("Rarity") or "").strip().title()
                 buff = (row.get("Buff") or "").strip()
                 debuff = (row.get("Debuff") or "").strip()
                 if not boon_name or boon_type not in {"Martial", "Caster", "General"}:
@@ -956,6 +969,7 @@ class BoonsTab(QWidget):
                     {
                         "BoonName": boon_name,
                         "Type": boon_type,
+                        "Rarity": rarity,
                         "Buff": buff,
                         "Debuff": debuff,
                     }
@@ -984,8 +998,24 @@ class BoonsTab(QWidget):
             self._render_boon_cards()
             return
 
-        self.current_rolled_boons = random.sample(pool, 3)
+        self.current_rolled_boons = self._sample_boons_without_replacement(pool, 3)
         self._render_boon_cards()
+
+    def _sample_boons_without_replacement(
+        self,
+        pool: list[dict[str, str]],
+        count: int,
+    ) -> list[dict[str, str]]:
+        remaining = list(pool)
+        selected: list[dict[str, str]] = []
+
+        while remaining and len(selected) < count:
+            weights = [BOON_RARITY_WEIGHTS.get(boon.get("Rarity", "Common"), 1.0) for boon in remaining]
+            chosen = random.choices(remaining, weights=weights, k=1)[0]
+            selected.append(chosen)
+            remaining = [boon for boon in remaining if boon["BoonName"] != chosen["BoonName"]]
+
+        return selected
 
     def _render_boon_cards(self) -> None:
         while self.cards_row.count() > 0:
@@ -1093,7 +1123,7 @@ class StartTab(QWidget):
         selectors_row.addLayout(selectors_col)
         selectors_row.addStretch(1)
 
-        apply_button = QPushButton("Continue to Boons")
+        apply_button = QPushButton("Continue")
         apply_button.setObjectName("PrimaryButton")
         apply_button.clicked.connect(self.apply_settings)
         apply_button.setMinimumHeight(44)
@@ -1194,7 +1224,18 @@ class StartTab(QWidget):
             return
         self.main_window.shop_tab.set_character_level(self.current_level)
         self.main_window.boons_tab.set_character_type(self.selected_type)
-        self.main_window.tabs.setCurrentIndex(self.main_window.BOONS_TAB_INDEX)
+        
+        # Check if player should roll for a boon at this level
+        # Roll if level - CHARACTER_LEVEL is divisible by BOON_ROLL_FREQUENCY
+        levels_since_start = self.current_level - CHARACTER_LEVEL
+        should_roll_boon = (levels_since_start % BOON_ROLL_FREQUENCY) == 0
+        
+        if should_roll_boon:
+            self.main_window.tabs.setCurrentIndex(self.main_window.BOONS_TAB_INDEX)
+        else:
+            # Skip boons and go straight to shopping
+            self.main_window.shop_tab.start_new_shop_session()
+            self.main_window.tabs.setCurrentIndex(self.main_window.SHOP_TAB_INDEX)
 
     def update_level_display(self, level: int) -> None:
         self.current_level = level

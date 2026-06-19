@@ -1,3 +1,9 @@
+"""Magic item data processing and transformation module.
+
+Processes source CSV files to extract and derive magic item metadata including
+spell levels, caster levels, and prices. Transforms raw item data into a
+standardized format for use by the shop system.
+"""
 import pandas as pd
 from pathlib import Path
 from collections import Counter

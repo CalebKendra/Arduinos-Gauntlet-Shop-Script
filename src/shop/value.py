@@ -1,3 +1,9 @@
+"""Item value calculation and normalization module.
+
+Computes and scales ItemValue scores for magic items using various statistical
+methods including min-max scaling, standard deviation spreading, and exponential
+weighting. Processes CSV data from multiple item categories.
+"""
 from pathlib import Path
 
 import pandas as pd

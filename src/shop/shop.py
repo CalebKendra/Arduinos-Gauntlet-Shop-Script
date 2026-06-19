@@ -1,3 +1,9 @@
+"""Core shop configuration and logic system.
+
+Defines shop mechanics including item value scaling curves by character level,
+ItemValue range settings for different item categories (Big Six, Potions/Scrolls,
+Uniques), and related tuning parameters. Uses Rich library for console output.
+"""
 from pathlib import Path
 import random
 import textwrap
@@ -131,6 +137,20 @@ POTIONS_AND_SCROLLS_POTION_WEIGHT_MULTIPLIER = 0.5
 # These only affect the Big Six table, where Armor and Weapon rows are weighted separately.
 BIG_SIX_ARMOR_SPECIAL_MODIFIER = 0.07
 BIG_SIX_WEAPON_SPECIAL_MODIFIER = 0.07
+
+#
+# BOON RARITY WEIGHTING SETTINGS
+#
+
+# Relative weights for boon rarities when rolling boons. Higher values = more likely to appear.
+# Example: Common=1.0, Rare=0.5, Epic=0.2 means Common is 2x more likely than Rare, and 5x more likely than Epic.
+BOON_RARITY_WEIGHT_COMMON = 1.0
+BOON_RARITY_WEIGHT_RARE = 0.5
+BOON_RARITY_WEIGHT_EPIC = 0.2
+
+# How many levels must pass before players get to roll for a boon.
+# 1 = get a boon after every level, 2 = get a boon every 2 levels, etc.
+BOON_ROLL_FREQUENCY = 2
 
 
 CSV_CONFIGS = [
